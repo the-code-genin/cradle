@@ -1,0 +1,7 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_URI} ^(/(((assets|uploads)/(.*))|robots\.txt|favicon\.ico|sitemap\.xml|(\.well-known/.*)))$
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f
+RewriteRule ^(.*)$ $1 [END,L]
+
+RewriteRule ^(.*)$ index.php [END,L]
