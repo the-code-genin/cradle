@@ -1,5 +1,5 @@
 <?php
-namespace Hola\Util;
+namespace Iyiola\Util;
 
 /**
  * This class adds pagination functionality thereby decreasing the overall page load time and making the page easier to read
