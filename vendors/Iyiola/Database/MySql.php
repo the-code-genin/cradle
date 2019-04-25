@@ -1,7 +1,7 @@
 <?php
 namespace Iyiola\Database;
 
-use MySqlResult;
+use \Iyiola\Database\MySqlResult;
 
 class MySql
 {
@@ -24,8 +24,7 @@ class MySql
 		
         // On failed db connection
         if (!$conn) {
-            $this->error = mysqli_error($conn);
-            $this->conn = null;
+            throw new Exception('Unable to connect to database');
             return;
         }
 
@@ -39,10 +38,6 @@ class MySql
     public function escape(string $string): string
     {
 		$string = trim($string);
-		if (!$this->is_connected()) {
-			$this->error = 'Not connected to the database';
-			return addslashes($string);
-		}
         return mysqli_real_escape_string($this->conn, $string);
     }
     
@@ -93,10 +88,10 @@ class MySql
     /**
      * Executes a sql query without returning a result object
      */
-    public function exec(string $query): bool
+    public function execute(string $query): bool
     {
         // First check if the object is connected to the database
-        if (!$this->is_connected()) {
+        if (!$this->isConnected()) {
             $this->error = 'Not connected to the database';
             return false;
         }
@@ -104,8 +99,8 @@ class MySql
         // Store the query for future refrences
         $this->query = $query;
         
-        // Execute the $query
-        $result = mysqli_execute($this->conn, $query);
+        // Execute the query
+        $result = mysqli_query($this->conn, $query);
 
         // If query execution failed, store the error encountered
         if (!$result) {
@@ -125,7 +120,7 @@ class MySql
         $null = null;
 
 		// First check if the object is connected to the database
-        if (!$this->is_connected()) {
+        if (!$this->isConnected()) {
 			$this->error = 'Not connected to the database';
             return $null;
         }

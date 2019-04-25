@@ -1,8 +1,7 @@
 <?php
 namespace Cradle\Core;
 
-use Cradle\Core\ViewCompiler;
-use Cradle\Core\View;
+use Cradle\Core\{ViewCompiler, View};
 use const Cradle\Application\CONFIG;
 
 /**

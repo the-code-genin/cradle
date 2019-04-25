@@ -41,7 +41,7 @@ class Cookie
     /**
      * Removes a cookie
      */
-    public function remove(string $key): void
+    public static function remove(string $key): void
     {
 		setcookie($key, ' ', time() - 3600, '/', $_SERVER['HTTP_HOST'], isset($_SERVER['HTTPS']), true);
     }
