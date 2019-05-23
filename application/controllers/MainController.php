@@ -1,7 +1,9 @@
 <?php
 namespace Cradle\Application\Controllers;
 
-class MainController extends \Cradle\Core\Controller
+use \Cradle\Framework\Controller;
+
+class MainController extends Controller
 {
 	/**
 	 * The index page
@@ -9,6 +11,14 @@ class MainController extends \Cradle\Core\Controller
 	public function index(): void
 	{
 		$this->loadView('home');
+	}
+
+	/**
+	 * The site maintenance page
+	 */
+	public function maintenance(): void
+	{
+		$this->loadView('maintenance');
 	}
 
 	/**

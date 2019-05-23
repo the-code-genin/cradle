@@ -2,7 +2,7 @@
 namespace Iyiola\Database;
 
 /**
- * Acts as a wrapper for a MySQL query result
+ * Acts as a wrapper for a MySQL query result.
  */
 class MySqlResult
 {

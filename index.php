@@ -9,48 +9,57 @@
  * error handling, URI routing and dynamic page generation.
  *
  * @package Cradle
- * @author Adekunle Mohammed Iyiola
+ * @author Mohammed Adekunle <adekunle3317@gmail.com>
  */
 
+// Define the working environment.
+// Valid options are 'development', 'production' and 'maintenance'.
+define('CRADLE_ENVIRONMENT', 'development');
 
-// Output buffering is started
-ob_start();
-
-// The current session is started
-session_start();
-
-
-/**
- * ------------------------------------------------------------------
- * BOOTSTRAPPING
- * ------------------------------------------------------------------
- *
- * The autoloader functions and the configuration object are loaded into the environment.
- */
-
-// The autoloading functions and CONFIG object are loaded
-require_once __DIR__ . '/application/config.php';
-require_once __DIR__ . '/vendors/autoload.php';
 
 
 /*
- * ------------------------------------------------------------------
- * ERROR HANDLING
- * ------------------------------------------------------------------
- *
- * Different environments will require different levels of error reporting.
- * By default 'development' will show all errors but 'production' will hide them.
- */
+| ------------------------------------------------------------------
+| BOOTSTRAPPING
+| ------------------------------------------------------------------
+|
+| 
+*/
 
-switch (Cradle\Application\CONFIG['environment']) {
-	case 'development': // All errors are reported
+ob_start();
+session_start();
+require_once __DIR__ . '/vendors/autoload.php';
+require_once __DIR__ . '/application/config/autoload.php';
+
+// Require all the site configuration files
+foreach ($configFiles as $file) {
+	require_once __DIR__ . '/application/config/' . $file . '.php';
+}
+
+
+
+/*
+| ------------------------------------------------------------------
+| ERROR HANDLING
+| ------------------------------------------------------------------
+|
+| Different environments will require different levels of error reporting.
+| By default 'development' will show all errors but 'production' will hide them.
+| 'maintenance' will show a generic maintenance page
+*/
+
+switch (CRADLE_ENVIRONMENT) {
+	case 'development': // All errors are reported in development mode
 		error_reporting(E_ALL);
 		ini_set('display_errors', 'stdout');
 	break;
 
-	case 'production': // No errors are reported
-		ini_set('display_errors', 'stderr');
+	case 'maintenance': // Site maintenance mode
+		// Fall through
+
+	case 'production': // No errors are reported in production mode
 		error_reporting(0);
+		ini_set('display_errors', 'stderr');
 	break;
 
 	default: // Incase the environment was incorrectly set
@@ -60,56 +69,62 @@ switch (Cradle\Application\CONFIG['environment']) {
 }
 
 
+
 /**
- * ------------------------------------------------------------------
- * URI ROUTING
- * ------------------------------------------------------------------
- *
- * The request URI is mapped to a defined route.
- */
+| ------------------------------------------------------------------
+| ROUTING
+| ------------------------------------------------------------------
+|
+|
+*/
 
-// Get the routing rule to be used to handle the request
-$rule = Cradle\Core\Router::getRouteRule();
+// If the site if running under the normal conditions
+if (CRADLE_ENVIRONMENT != 'maintenance') {
+	$rule = Cradle\Framework\Router::getRouteRule();
+} else {
+	$rule = Cradle\Application\Config\ROUTES['maintenance'];
+}
 
-// Resolve the routing rule
+// Resolve the rule into a route
 try {
-	$route = Cradle\Core\Router::parseRouteRule($rule);
+	$route = Cradle\Framework\Router::parseRouteRule($rule);
 } catch (Exception $e) {
-	echo "<b>Fatal Error:</b> {$e->getMessage()}";
+	echo "<b>Error:</b> {$e->getMessage()}";
 	http_response_code(503);
 	exit(1);
 }
 
-// Construct the eval string to point to the requested controller
+// Construct the eval string to point to the requested controller and the corresponding method
 $controllerClass = 'Cradle\\Application\\Controllers\\' . $route['controller'];
 $controller = new $controllerClass;
+
 $controllerMethod = $route['method'] . '(';
 if (count($route['parameters'])) {
 	$controllerMethod .= implode(',', $route['parameters']);
 }
+$controllerMethod .= ');';
 
 // Instantiate the requested controller
 try {
-	eval('$controller->' . "$controllerMethod);");
+	eval('$controller->' . "$controllerMethod");
 } catch (Exception $e) {
-	echo "<b>Fatal Error:</b> {$e->getMessage()}";
+	echo "<b>Error:</b> {$e->getMessage()}";
 	http_response_code(503);
 	exit(1);
 }
 
 
+
 /**
- * ------------------------------------------------------------------
- * RESPONSE
- * ------------------------------------------------------------------
- *
- * Get and send response to the client.
- */
+| ------------------------------------------------------------------
+| OUTPUT
+| ------------------------------------------------------------------
+|
+| 
+*/
 
-// Get the final output to be sent to the client
+// Send the final output to the client
 $output = $controller->getOutput();
-
-// Send final output to the client
 echo $output;
 ob_end_flush();
 

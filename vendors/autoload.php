@@ -1,39 +1,39 @@
 <?php
 /**
- * The autoloader file contains function which help fetch classes from packages in the vendors application subdirectory
+ * The autoloader file contains functions which help fetch classes from packages in the vendors directory
  */
 
 // Autoloader function for PSR-4 namespaced packages in the vendors directory
 spl_autoload_register(function ($class) {
 	// Get the file path of the class to be loaded
-	$class_path = str_replace('\\', '/', $class);
-	$file_path = __DIR__ . '/' . $class_path . '.php';
+	$classPath = str_replace('\\', '/', $class);
+	$filePath = __DIR__ . '/' . $classPath . '.php';
 
-	// Include the class file if it exists	
-	if (file_exists($file_path)) {
-		require_once $file_path;
+	// Include the file if it exists
+	if (file_exists($filePath)) {
+		require_once $filePath;
 	}
 });
 
 
 
-// Autoloader function for Cradle framework components
+// Autoloader function for cradle core framework components
 spl_autoload_register(function ($class) {
-	// Confirm a that a cradle component is to be loaded
-	$class_path = explode('\\', $class);
-	if ($class_path[0] != 'Cradle') {
+	// Confirm a that a cradle core framework component is to be loaded
+	$classPath = explode('\\', $class);
+	if ($classPath[0] != 'Cradle') {
 		return;
 	}
 
-	// Get the filepath of the component
-	array_shift($class_path);
-	for ($i = 0; $i < count($class_path) - 1; $i++) {
-		$class_path[$i] = strtolower($class_path[$i]);
+	// Get the file path of the component to be loaded
+	array_shift($classPath);
+	for ($i = 0; $i < count($classPath) - 1; $i++) {
+		$classPath[$i] = strtolower($classPath[$i]);
 	}
-	$file_path = $_SERVER['DOCUMENT_ROOT'] . '/' . implode('/', $class_path) . '.php';
+	$filePath = $_SERVER['DOCUMENT_ROOT'] . '/' . implode('/', $classPath) . '.php';
 
-	// Include the class file if it exists
-	if (file_exists($file_path)) {
-		require_once $file_path;
+	// Include the file if it exists
+	if (file_exists($filePath)) {
+		require_once $filePath;
 	}
 });

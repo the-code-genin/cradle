@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Welcome to Cradle</title>
+	<title>Site under maintenance</title>
 	<meta name="viewport" content="width=device-width;initial-scale=1.0" />
 	<style>
 		body {
@@ -58,15 +58,13 @@
 
 	<div class="box">
 
-		<h1>Welcome to Cradle!</h1>
+		<h1>Site under maintenance</h1>
 
 		<div class="divider"></div>
 
-		<p>Cradle is a light and extensible framework made with the goal of working in a MVC environment and to avoid working with monolithic web apps.</p>
-
-		<p>Cradle is aimed at being easily extensible and as such only ships with the basic functionalities of autoloading, uri routing and dynamic view generation so that you can focus on your core app design.</p>
+		<p>Come back in a few hours and we'll be ready to take your order.</p>
 
 	</div>
-
+	
 </body>
 </html>

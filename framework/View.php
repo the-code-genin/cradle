@@ -1,16 +1,16 @@
 <?php
-namespace Cradle\Core;
+namespace Cradle\Framework;
 
 /**
- * Acts as a manager for a view file.
+ * Acts as a wrapper for a view file.
  */
 class View
 {
 	// Holds the file path to the view file
-	private $filePath;
+	protected $filePath;
 
 	// Holds the parameters to be passed into the view file for dynamic page rendering
-	private $parameters;
+	protected $parameters;
 
 	public function __construct(string $file, array $param = [])
 	{

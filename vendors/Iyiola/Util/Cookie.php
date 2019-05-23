@@ -5,7 +5,7 @@ namespace Iyiola\Util;
  * This class helps manage cookie data
  */
 class Cookie
-{             
+{
     /**
      * Checks if a cookie has been set
      */
@@ -13,7 +13,7 @@ class Cookie
     {
         return isset($_COOKIE[$key]);
     }
-     
+
     /**
      * Gets a cookie
      */
@@ -25,7 +25,7 @@ class Cookie
 
 		return $_COOKIE[$key];
     }
-    
+
     /**
      * Sets a cookie
      */
@@ -37,7 +37,7 @@ class Cookie
 
 		setcookie($key, $value, $expires, '/', $_SERVER['HTTP_HOST'], isset($_SERVER['HTTPS']), $http_only);
     }
-     
+
     /**
      * Removes a cookie
      */
