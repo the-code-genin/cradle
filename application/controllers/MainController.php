@@ -1,7 +1,7 @@
 <?php
 namespace Cradle\Application\Controllers;
 
-use \Cradle\Framework\Controller;
+use Cradle\Framework\Controller;
 
 class MainController extends Controller
 {

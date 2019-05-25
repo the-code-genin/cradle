@@ -27,7 +27,7 @@ class ViewCompiler
 		// Check if the file to be compiled exists
 		$filePath = $view->getFilePath();
 		if (!file_exists($filePath)) {
-			throw new Exception("View file with file path '$file_path' was not found!");
+			throw new \Exception("View file with file path '$file_path' was not found!");
 			return null;
 		}
 

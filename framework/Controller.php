@@ -1,7 +1,7 @@
 <?php
 namespace Cradle\Framework;
 
-use Cradle\Framework\{ViewCompiler, View};
+use Cradle\Framework\{ViewCompiler, View, AssetManager};
 
 /**
  * The abstract base class for all controllers in the system.
@@ -9,6 +9,9 @@ use Cradle\Framework\{ViewCompiler, View};
  */
 abstract class Controller
 {
+	// The AssetManager for the controller
+	protected $assetManager;
+
 	// Holds the ViewCompiler object for the controller
 	protected $viewCompiler;
 
@@ -21,12 +24,13 @@ abstract class Controller
 	public function __construct()
 	{
 		$this->viewCompiler = new ViewCompiler();
+		$this->assetManager = new AssetManager();
 	}
 
 	/**
 	 * Loads a view file into the ViewCompiler.
 	 */
-	protected final function loadView(string $filePath, array $param = []): void
+	protected function loadView(string $filePath, array $param = []): void
 	{
 		$view = new View($filePath, $param);
 		$this->viewCompiler->addView($view);
@@ -35,7 +39,7 @@ abstract class Controller
 	/**
 	 * Gets the output to be sent as response to the client.
 	 */
-	public final function getOutput()
+	public function getOutput()
 	{
 		// If a custom output has already been specified
 		if ($this->outputOverridden) {
@@ -49,7 +53,7 @@ abstract class Controller
 	/**
 	 * Sets the response to be sent back to the client
 	 */
-	protected final function setOutput($output): void
+	protected function setOutput($output): void
 	{
 		$this->outputOverridden = true;
 		$this->output = $output;
@@ -58,8 +62,16 @@ abstract class Controller
 	/**
 	 * Sets an header value to be sent back to the client
 	 */
-	protected final function setHeader(string $header, string $value): void
+	protected function setHeader(string $header, string $value): void
 	{
 		header("$header: $value");
+	}
+
+	/**
+	 * Returns a reference to the controller's AssetManager instance
+	 */
+	protected function &getAssetManager(): AssetManager
+	{
+		return $this->assetManager;
 	}
 }

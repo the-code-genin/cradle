@@ -1,7 +1,11 @@
 <?php
 namespace Iyiola\Database;
 
-use \Iyiola\Database\MySqlResult;
+use Iyiola\Database\MySqlResult;
+
+/**
+ * Acts as a wrapper for interacting with a MySQL database or a similar technology
+ */
 
 class MySql
 {

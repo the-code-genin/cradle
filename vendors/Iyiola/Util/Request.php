@@ -4,6 +4,7 @@ namespace Iyiola\Util;
 /**
  * The class handles query data and purifies it automatically for use by the application
  */
+
 class Request
 {	
 	/**

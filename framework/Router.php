@@ -1,7 +1,7 @@
 <?php
 namespace Cradle\Framework;
 
-use const \Cradle\Application\Config\ROUTES;
+use const Cradle\Application\Config\ROUTES;
 
 /**
  * The Router class contains static methods for mapping a request URI to a defined route.

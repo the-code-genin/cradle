@@ -4,6 +4,7 @@ namespace Iyiola\Database;
 /**
  * Acts as a wrapper for a MySQL query result.
  */
+
 class MySqlResult
 {
     // Holds the mysql result resource

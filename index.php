@@ -9,11 +9,13 @@
  * error handling, URI routing and dynamic page generation.
  *
  * @package Cradle
+ * @version 1.0
  * @author Mohammed Adekunle <adekunle3317@gmail.com>
  */
 
-// Define the working environment.
+// The working environment.
 // Valid options are 'development', 'production' and 'maintenance'.
+// If you can define a custom environment you should ensure you create a case for it in error handling.
 define('CRADLE_ENVIRONMENT', 'development');
 
 
@@ -23,7 +25,9 @@ define('CRADLE_ENVIRONMENT', 'development');
 | BOOTSTRAPPING
 | ------------------------------------------------------------------
 |
-| 
+| The autoloader functions are included.
+| Site constants are loaded.
+| The session is started and buffering is initiated.
 */
 
 ob_start();
@@ -44,8 +48,8 @@ foreach ($configFiles as $file) {
 | ------------------------------------------------------------------
 |
 | Different environments will require different levels of error reporting.
-| By default 'development' will show all errors but 'production' will hide them.
-| 'maintenance' will show a generic maintenance page
+| By default 'development' will show all errors but 'production' and 'maintenance' will hide them.
+| If you define a custom environment setting you should make sure to create a case for it.
 */
 
 switch (CRADLE_ENVIRONMENT) {
@@ -75,10 +79,12 @@ switch (CRADLE_ENVIRONMENT) {
 | ROUTING
 | ------------------------------------------------------------------
 |
-|
+| The URI is matched with a routing rule.
+| If no valid rule is found the 404 error route is served.
+| In maintenance mode the maintenance route is served.
 */
 
-// If the site if running under the normal conditions
+// Get the rule to be used
 if (CRADLE_ENVIRONMENT != 'maintenance') {
 	$rule = Cradle\Framework\Router::getRouteRule();
 } else {
@@ -104,7 +110,7 @@ if (count($route['parameters'])) {
 }
 $controllerMethod .= ');';
 
-// Instantiate the requested controller
+// Instantiate the requested controller and method
 try {
 	eval('$controller->' . "$controllerMethod");
 } catch (Exception $e) {
@@ -120,7 +126,8 @@ try {
 | OUTPUT
 | ------------------------------------------------------------------
 |
-| 
+| Response is sent back to the user.
+| Output buffering is ended.
 */
 
 // Send the final output to the client
@@ -128,5 +135,5 @@ $output = $controller->getOutput();
 echo $output;
 ob_end_flush();
 
-// Exit successfully
+// Exit successfully.
 exit(0);

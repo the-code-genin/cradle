@@ -1,14 +1,14 @@
 RewriteEngine On
 
-# If the robots.txt, favicon, sitemap or .well-known is requested
+# If the robots.txt, favicon, sitemap or .well-known is requested serve directly from the root directory
 RewriteCond %{REQUEST_URI} ^(/(robots\.txt|favicon\.ico|sitemap\.xml|(\.well-known/.*)))$
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f
 RewriteRule ^(.*)$ $1 [END,L]
 
-# If an asset file is requested
-RewriteCond %{REQUEST_URI} ^(/assets/.*)$
-RewriteCond %{DOCUMENT_ROOT}/application%{REQUEST_URI} -f
-RewriteRule ^(.*)$ application/$1 [END,L]
+# If an asset file is requested serve directly from the assets directory
+#RewriteCond %{REQUEST_URI} ^(/assets/.*)$
+#RewriteCond %{DOCUMENT_ROOT}/application%{REQUEST_URI} -f
+#RewriteRule ^(.*)$ application/$1 [END,L]
 
 # Redirect all other URI requests to the framework
 RewriteRule ^(.*)$ index.php [END,L]
