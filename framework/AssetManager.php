@@ -190,7 +190,7 @@ class AssetManager
 	/**
 	 * Checks whether a directory exists
 	 */
-	public function dirExists(string $path): bool
+	public function dirExists(string $path = ''): bool
 	{
 		$dirPath = $this->basePath . $path;
 		return is_dir($dirPath) & file_exists($dirPath);
@@ -199,7 +199,7 @@ class AssetManager
 	/**
 	 * Gets the list of files and subdirectories present in a directory
 	 */
-	public function listDir(string $path): ?array
+	public function listDir(string $path = ''): ?array
 	{
 		$dirPath = $this->basePath . $path;
 		$contents = scandir($dirPath);

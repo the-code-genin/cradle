@@ -4,9 +4,10 @@ namespace Cradle\Framework;
 use Cradle\Framework\{ViewCompiler, View, AssetManager};
 
 /**
- * The abstract base class for all controllers in the system.
+ * The base class for all controllers in the system.
  * All valid controllers must either extend this class or extend one of its subclasses.
  */
+
 abstract class Controller
 {
 	// The AssetManager for the controller
@@ -21,10 +22,14 @@ abstract class Controller
 	// Stores the overridden output to be sent back to the client
 	protected $output = '';
 
-	public function __construct()
+	// The time this cradle app is fired up
+	protected $startTime;
+
+	public function __construct(int $startTime)
 	{
 		$this->viewCompiler = new ViewCompiler();
 		$this->assetManager = new AssetManager();
+		$this->startTime = $startTime;
 	}
 
 	/**
@@ -51,12 +56,33 @@ abstract class Controller
 	}
 
 	/**
-	 * Sets the response to be sent back to the client
+	 * Manually sets the response to be sent back to the client
 	 */
-	protected function setOutput($output): void
+	protected function setOutput($output): bool
 	{
-		$this->outputOverridden = true;
-		$this->output = $output;
+		if (!$this->outputOverridden) {
+			$this->outputOverridden = true;
+			$this->output = $output;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Manually sets the asset file to be sent back to the client
+	 * It automatically detects the file MIME type and sets the Content-Type header
+	 */
+	protected function setOutputFile(string $path): bool
+	{
+		if (!$this->outputOverridden & $this->assetManager->fileExists($path)) {
+			$this->outputOverridden = true;
+			$this->setHeader('Content-Type', $this->assetManager->fileMIME($path));
+			$this->output = $this->assetManager->readFile($path);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -73,5 +99,43 @@ abstract class Controller
 	protected function &getAssetManager(): AssetManager
 	{
 		return $this->assetManager;
+	}
+
+	/**
+	 * Gets how many seconds this cradle app has been running for
+	 */
+	public function getExecutionTime(): int
+	{
+		return time() - $this->startTime;
+	}
+
+	/**
+	 * Gets the maximum execution time for this cradle app
+	 */
+	public function getMaxExecutionTime(): int
+	{
+		return @ini_get('max_execution_time');
+	}
+
+	/**
+	 * Adds to the max timeout limit for the application
+	 * It is useful if your application will do some long processing at this point
+	 * NOTE: Only works in safe mode
+	 */
+	protected function addExecutionTime(int $secs): bool
+	{
+		if ($secs < 0) {
+			throw new \Exception('Invalid timeout limit');
+			return false;
+		}
+
+		// Compute the remaining execution time
+		$remainingTime = $this->getMaxExecutionTime() - $this->getExecutionTime();
+
+		if ($remainingTime >= 0) {
+			return set_time_limit($remainingTime + $secs);
+		}
+
+		return set_time_limit($secs);
 	}
 }

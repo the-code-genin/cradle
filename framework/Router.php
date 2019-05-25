@@ -6,6 +6,7 @@ use const Cradle\Application\Config\ROUTES;
 /**
  * The Router class contains static methods for mapping a request URI to a defined route.
  */
+
 class Router
 {
 	/**

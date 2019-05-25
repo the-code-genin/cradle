@@ -13,10 +13,21 @@
  * @author Mohammed Adekunle <adekunle3317@gmail.com>
  */
 
+// Get the time cradle is fired up.
+define('CRADLE_START', time());
+
 // The working environment.
 // Valid options are 'development', 'production' and 'maintenance'.
 // If you can define a custom environment you should ensure you create a case for it in error handling.
 define('CRADLE_ENVIRONMENT', 'development');
+
+// Ensure the server is running the minimum PHP version.
+// Current minimum: 7.2
+if (version_compare(PHP_VERSION, '7.2', '<')) {
+	http_response_code(503);
+	echo '<b>Fatal Error:</b> Cradle requires a minimum PHP version of 7.2 to run. Current PHP version: ' . PHP_VERSION;
+	exit(1);
+}
 
 
 
@@ -34,11 +45,6 @@ ob_start();
 session_start();
 require_once __DIR__ . '/vendors/autoload.php';
 require_once __DIR__ . '/application/config/autoload.php';
-
-// Require all the site configuration files
-foreach ($configFiles as $file) {
-	require_once __DIR__ . '/application/config/' . $file . '.php';
-}
 
 
 
@@ -102,7 +108,7 @@ try {
 
 // Construct the eval string to point to the requested controller and the corresponding method
 $controllerClass = 'Cradle\\Application\\Controllers\\' . $route['controller'];
-$controller = new $controllerClass;
+$controller = new $controllerClass(CRADLE_START);
 
 $controllerMethod = $route['method'] . '(';
 if (count($route['parameters'])) {

@@ -4,6 +4,7 @@ namespace Cradle\Framework;
 /**
  * Acts as a wrapper for a view file.
  */
+
 class View
 {
 	// Holds the file path to the view file

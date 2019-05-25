@@ -6,6 +6,7 @@ use Cradle\Framework\View;
 /**
  * Acts as a compiler for the views that will eventually be sent to the client.
  */
+
 class ViewCompiler
 {
 	// Stores the view objects in the order that they will be compiled
