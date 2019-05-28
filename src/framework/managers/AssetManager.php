@@ -58,7 +58,7 @@ class AssetManager
 	}
 
 	/**
-	 * Copys a file from one location to another in the assets folder.
+	 * Copies a file from one location to another in the assets folder.
 	 */
 	public function copyFile(string $src, string $dest): bool
 	{

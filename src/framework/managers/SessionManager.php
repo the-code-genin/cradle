@@ -14,12 +14,12 @@ class SessionManager
 
     public function __construct(string $flashVariable = '_SESSMANAGER_FLASHDATA')
     {
-        // Extract flashdata if it exists
+        // Extract flash data if it exists
         if ($this->exists($flashVariable)) {
             $this->flashData = $this->get($flashVariable);
         }
 
-        // Reset the flashdata
+        // Reset the flash data
         $this->flashVariable = $flashVariable;
         $this->set($flashVariable, []);
     }

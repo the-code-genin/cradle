@@ -9,7 +9,7 @@
  *
  * @package Cradle
  * @version 1.0
- * @author Mohammed Adekunle <adekunle3317@gmail.com>
+ * @author Mohammed Adekunle (Iyiola) <adekunle3317@gmail.com>
  */
 
 // Get the time cradle is fired up.
@@ -30,15 +30,16 @@ if (version_compare(PHP_VERSION, '7.2', '<')) {
 
 
 
-/*
-| ------------------------------------------------------------------
-| BOOTSTRAPPING
-| ------------------------------------------------------------------
-|
-| The autoloader functions are included.
-| Site constants are loaded.
-| The session is started and buffering is initiated.
-*/
+
+/**
+ * ------------------------------------------------------------------
+ * BOOTSTRAPPING
+ * ------------------------------------------------------------------
+ *
+ * The autoloader functions are included.
+ * Site constants are loaded.
+ * The session is started and buffering is initiated.
+ */
 
 ob_start();
 session_start([
@@ -51,15 +52,17 @@ require_once __DIR__ . '/application/config/autoload.php';
 
 
 
-/*
-| ------------------------------------------------------------------
-| ERROR HANDLING
-| ------------------------------------------------------------------
-|
-| Different environments will require different levels of error reporting.
-| By default 'development' will show all errors and exceptions but 'production' and 'maintenance' will hide them.
-| If you define a custom environment setting you should make sure to create a case for it.
-*/
+
+/**
+ * ------------------------------------------------------------------
+ * ERROR HANDLING
+ * ------------------------------------------------------------------
+ *
+ * Different environments will require different levels of error reporting.
+ * By default 'development' will show all errors and exceptions
+ * but 'production' and 'maintenance' will hide them.
+ * If you define a custom environment setting you should make sure to create a case for it.
+ */
 
 // Determines if exceptions should be logged
 $showThrowables = true;
@@ -81,23 +84,28 @@ switch (CRADLE_ENVIRONMENT) {
 		$showThrowables = false;
 	break;
 
-	default: // Incase the environment was incorrectly set
+	default: // In case the environment was incorrectly set
 		http_response_code(503);
 		echo '<b>Error:</b> The application environment is not set correctly.';
 		exit(1);
 }
 
+// Define a custom error handler for uncaught errors, you shall not pass ;)
+Cradle\Framework\Components\Logger::$showErrors = $showThrowables;
+set_error_handler('Cradle\Framework\Components\Logger::handleError');
+
+
 
 
 /**
-| ------------------------------------------------------------------
-| ROUTING
-| ------------------------------------------------------------------
-|
-| The URI is matched with a routing rule.
-| If no valid rule is found the 404 error route is served.
-| In maintenance mode the maintenance route is served.
-*/
+ * ------------------------------------------------------------------
+ * ROUTING
+ * ------------------------------------------------------------------
+ *
+ * The URI is matched with a routing rule.
+ * If no valid rule is found the 404 error route is served.
+ * In maintenance mode the maintenance route is served.
+ */
 
 try {
 	// Get the route rule to be used
@@ -121,14 +129,15 @@ try {
 
 
 
+
 /**
-| ------------------------------------------------------------------
-| OUTPUT
-| ------------------------------------------------------------------
-|
-| Response is sent back to the user.
-| Output buffering is ended.
-*/
+ * ------------------------------------------------------------------
+ * OUTPUT
+ * ------------------------------------------------------------------
+ *
+ * Response is sent back to the user.
+ * Output buffering is ended.
+ */
 
 // Send the final output to the client
 $output = $dispatcher->getResult();

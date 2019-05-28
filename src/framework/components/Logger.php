@@ -6,6 +6,9 @@ namespace Cradle\Framework\Components;
  */
 class Logger
 {
+	// Determines if errors should be logged to stdout
+	public static $showErrors = true;
+
 	/**
 	 * Gets the type of throwable object.
 	 */
@@ -17,6 +20,16 @@ class Logger
 			$type = is_subclass_of($e, '\Exception') ? 'Exception' : 'Error';
 		}
 		return $type;
+	}
+
+	/**
+	 * Custom error handler for uncaught errors
+	 */
+	public static function handleError(int $errno, string $errstr, string $errfile, int $errline): void
+	{
+		Logger::logThrowable(new UncaughtError($errstr, $errfile, $errline));
+		http_response_code(503);
+		exit(1);
 	}
 
 	/**
@@ -35,9 +48,11 @@ class Logger
 			'throwableTrace' => $e->getTrace(),
 		];
 
-		// Generate the output
-		$viewCompiler = new ViewCompiler();
-		$viewCompiler->addView(new View('framework/error_exception', $params));
-		echo $viewCompiler->compileViews();
+		// Generate the output and send to stdout if error reporting is allowed
+		if (Logger::$showErrors) {
+			$viewCompiler = new ViewCompiler();
+			$viewCompiler->addView(new View('framework/error_exception', $params));
+			echo $viewCompiler->compileViews();
+		}
 	}
 }

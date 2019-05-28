@@ -77,11 +77,13 @@
 				<?php foreach ($throwableTrace as $trace): ?>
 					<li>
 						<?php
-							if (!empty($trace['file']) & !empty($trace['line'])) {
+							if (!empty($trace['class']) & !empty($trace['type']) 
+								& !empty($trace['function']) & !empty($trace['file'])
+								& !empty($trace['line'])) {
 								printf("%s%s%s(%s) in file <b>%s</b> on <b>line %s</b>",
-									@$trace['class'],
-									@$trace['type'],
-									@$trace['function'],
+									$trace['class'],
+									$trace['type'],
+									$trace['function'],
 									@implode(', ', $trace['args']),
 									$trace['file'],
 									$trace['line'],
