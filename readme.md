@@ -1,4 +1,4 @@
-# Cradle
+# Cradle v1.0
 
 Cradle is a light weight framework built with the aim to avoid working with monolithic web apps while still giving the developer as much freedom as possible to work in an MVC environment.
 
@@ -16,7 +16,7 @@ To install cradle, simply place the entire framework files in your webserver's w
 
 ## Basic Usage
 
-
+Basic documentation coming soon!
 
 ## License
 
