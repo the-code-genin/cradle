@@ -102,7 +102,7 @@ class Router
 	protected static function replaceShorthand(string $pattern): string
 	{
 		foreach (ROUTES['shorthand'] as $shorthand => $regex) {
-			$pattern = preg_replace("#<$shorthand>#i", "($regex)", $pattern);
+			$pattern = preg_replace("#<%$shorthand%>#i", "($regex)", $pattern);
 		}
 		return $pattern;
 	}

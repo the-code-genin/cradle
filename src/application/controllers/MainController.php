@@ -2,7 +2,6 @@
 namespace Cradle\Application\Controllers;
 
 use Cradle\Framework\Components\BaseController;
-use const Cradle\Application\Config\DATABASE;
 
 class MainController extends BaseController
 {

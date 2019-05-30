@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><?=$throwableType?> Encountered</title>
+	<title><?=htmlspecialchars($throwableType)?> Encountered</title>
 	<meta name="viewport" content="width=device-width;initial-scale=1.0" />
 	<style>
 		body {
@@ -63,15 +63,15 @@
 
 	<div class="box">
 
-		<h1>An <?=$throwableType?> was encountered</h1>
+		<h1>An <?=htmlspecialchars($throwableType)?> was encountered</h1>
 
 		<div class="divider"></div>
 
-		<p><b>Type:</b> <?=$throwableClass?></p>
-		<p><b>Message:</b> <?=$throwableMessage?></p>
-		<p><b>Code:</b> <?=$throwableCode?></p>
-		<p><b>File:</b> <?=$throwableFile?></p>
-		<p><b>Line:</b> <?=$throwableLine?></p>
+		<p><b>Type:</b> <?=htmlspecialchars($throwableClass)?></p>
+		<p><b>Message:</b> <?=htmlspecialchars($throwableMessage)?></p>
+		<p><b>Code:</b> <?=htmlspecialchars($throwableCode)?></p>
+		<p><b>File:</b> <?=htmlspecialchars($throwableFile)?></p>
+		<p><b>Line:</b> <?=htmlspecialchars($throwableLine)?></p>
 		<p><b>BackTrace:</b>
 			<ul>
 				<?php foreach ($throwableTrace as $trace): ?>
@@ -81,12 +81,12 @@
 								& !empty($trace['function']) & !empty($trace['file'])
 								& !empty($trace['line'])) {
 								printf("%s%s%s(%s) in file <b>%s</b> on <b>line %s</b>",
-									$trace['class'],
-									$trace['type'],
-									$trace['function'],
-									@implode(', ', $trace['args']),
-									$trace['file'],
-									$trace['line'],
+									htmlspecialchars($trace['class']),
+									htmlspecialchars($trace['type']),
+									htmlspecialchars($trace['function']),
+									htmlspecialchars(@implode(', ', $trace['args'])),
+									htmlspecialchars($trace['file']),
+									htmlspecialchars($trace['line']),
 								);
 							}
 						?>

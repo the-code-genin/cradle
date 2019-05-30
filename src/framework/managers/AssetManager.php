@@ -27,6 +27,15 @@ class AssetManager
 	}
 
 	/**
+	 * Prepends the assets path to the string supplied to turn it into the full filepath for that asset.
+	 * Note: Ensure the path supplied does not start with a forward slash '/' this might cause issues.
+	 */
+	public function getFullAssetPath(string $path): string
+	{
+		return $this->basePath . $path;
+	}
+
+	/**
 	 * Creates a new file.
 	 * An alias of writeFile.
 	 */
@@ -201,7 +210,7 @@ class AssetManager
 			return null;
 		}
 
-		// Remove the '.' and '..' elements
+		// The '.' and '..' elements are removed
 		array_splice($contents, array_search('.', $contents), 1);
 		array_splice($contents, array_search('..', $contents), 1);
 

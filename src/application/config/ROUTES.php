@@ -10,15 +10,16 @@ const ROUTES = [
 	// The keys must not contain any regex patterns
 	// The values must be valid regex patterns
 	'shorthand' => [
-		'any' => '[a-z0-9~%:_\-\.\+]+',
+		'text' => '[a-z0-9~%:_\-\.\+]+',
 		'num' => '[0-9]+',
 	],
 
 	// The routing rules
 	// The keys must be valid regex patterns and can contain shorthands
-	// To use a shorthand: <shorthand>
+	// To use a shorthand: <%shorthand%>
 	'routes' => [
 		'/' => 'MainController/index',
+		'/favicon\.ico' => 'AssetController/serveFavicon',
 	],
 
 	// The 404 error route

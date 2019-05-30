@@ -36,9 +36,9 @@ if (version_compare(PHP_VERSION, '7.2', '<')) {
  * BOOTSTRAPPING
  * ------------------------------------------------------------------
  *
- * The autoloader functions are included.
+ * The autoloaders are included.
  * Site constants are loaded.
- * The session is started and buffering is initiated.
+ * The session is started and output buffering is initiated.
  */
 
 ob_start();
@@ -48,6 +48,7 @@ session_start([
 	'use_strict_mode' => true,
 ]);
 require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/vendor/cradle-autoloader.php';
 require_once __DIR__ . '/application/config/autoload.php';
 
 
