@@ -6,9 +6,42 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitd3c9595ae8d315755250366c096df934
 {
+    public static $files = array (
+        'cbe46a525a36d93b0c273657152b3e5e' => __DIR__ . '/../..' . '/config/autoload.php',
+    );
+
+    public static $prefixLengthsPsr4 = array (
+        'C' => 
+        array (
+            'Cradle\\' => 7,
+        ),
+        'A' => 
+        array (
+            'App\\Models\\' => 11,
+            'App\\Controllers\\' => 16,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Cradle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/cradle',
+        ),
+        'App\\Models\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/models',
+        ),
+        'App\\Controllers\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/controllers',
+        ),
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInitd3c9595ae8d315755250366c096df934::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitd3c9595ae8d315755250366c096df934::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }

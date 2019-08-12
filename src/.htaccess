@@ -1,4 +1,8 @@
 RewriteEngine On
 
-# Redirect all URI requests to the framework
+# Serve the file if its a public asset file
+RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f
+RewriteRule ^(.*) public/$1 [END,L]
+
+# Redirect all other URI requests to the framework
 RewriteRule ^(.*)$ index.php [END,L]

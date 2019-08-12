@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * ------------------------------------------------------------------
+ * Cradle
+ * ------------------------------------------------------------------
+ *
+ * 
+ *
+ * @package Cradle
+ * @version 1.0
+ * @author Mohammed Adekunle (Iyiola) <adekunle3317@gmail.com>
+ */
+
+// Ensure the server is running the minimum PHP version.
+// Current minimum: 7.2
+if (version_compare(PHP_VERSION, '7.2', '<')) {
+    http_response_code(503);
+    echo "<b>Error:</b> Cradle requires a minimum PHP version of 7.2 to run.<br/><b>Current PHP version:</b> PHP_VERSION";
+    exit(1);
+}
+
+require_once __DIR__ . '/vendor/autoload.php'; // Include the composer autoloader
+$console = new Cradle\Components\Console();
+
+
+$console->print('Nanny - The cradle command line tool');
+

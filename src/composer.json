@@ -1,9 +1,19 @@
 {
     "name": "iyiola/cradle",
-    "description": "Cradle is a light weight framework built with the aim to avoid working with monolithic web apps while still giving the developer as much freedom as possible to work in an MVC environment.",
+    "description": "",
     "type": "project",
     "license": "MIT",
     "require": {
-    	
+    	"php": "^7.2"
+    },
+    "autoload": {
+    	"psr-4": {
+    		"App\\Controllers\\": "app/controllers/",
+            "App\\Models\\": "app/models/",
+            "Cradle\\": "vendor/cradle/"
+        },
+        "files": [
+            "config/autoload.php"
+        ]
     }
 }
