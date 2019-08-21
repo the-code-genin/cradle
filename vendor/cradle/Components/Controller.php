@@ -9,24 +9,35 @@ use const App\Config\ROUTES;
  * The base class for all controllers in the system.
  * All valid controllers must either extend this class or extend one of its subclasses.
  */
-abstract class BaseController
+abstract class Controller
 {
-	// The resource managers for the controller
+	/** @var FileManager $files A file manager instance */
 	protected $files;
+
+	/** @var CookieManager $cookies A cookie manager instance */
 	protected $cookies;
+
+	/** @var SessionManager $session A session manager instance */
 	protected $session;
+
+	/** @var RequestManager $request A request manager instance */
 	protected $request;
 
-	// Holds the ViewCompiler object for the controller
+	/** @var ViewCompiler $viewCompiler Holds the ViewCompiler object for the controller */
 	protected $viewCompiler;
 
-	// Alternate output to be sent back to the client
+	/** @var bool $outputOverridden Confirms if there is alternate output to be sent back to the client */
 	protected $outputOverridden = false;
+
+	/** @var string $output Alternate output to be sent back to the client */
 	protected $output = '';
 
-	// The time this cradle app was fired up
+	/** @var int $startTime The time this cradle app was fired up */
 	protected $startTime;
 
+	/**
+	 * @param int $startTime The time this cradle app was fired up
+	 */
 	public function __construct(int $startTime)
 	{
 		$this->viewCompiler = new ViewCompiler();
@@ -39,6 +50,11 @@ abstract class BaseController
 
 	/**
 	 * Loads a view file into the ViewCompiler.
+	 * 
+	 * @param string $filePath The file path of the view file to be loaded relative to the views directory
+	 * @param array $param An array of parameters to be passed into the view file
+	 * 
+	 * @return null
 	 */
 	protected function loadView(string $filePath, array $param = []): void
 	{
@@ -48,6 +64,8 @@ abstract class BaseController
 
 	/**
 	 * Gets the output to be sent as response to the client.
+	 * 
+	 * @return mixed Output of the controller operation
 	 */
 	public function getOutput()
 	{
@@ -62,6 +80,10 @@ abstract class BaseController
 
 	/**
 	 * Manually sets the response to be sent back to the client.
+	 * 
+	 * @param mixed $output Alternate output to be send back to the client
+	 * 
+	 * @return bool Returns true on success and false on failure
 	 */
 	protected function setOutput($output): bool
 	{
@@ -77,6 +99,10 @@ abstract class BaseController
 	/**
 	 * Manually sets the asset file to be sent back to the client.
 	 * It automatically detects the file MIME type and sets the Content-Type header.
+	 * 
+	 * @param string $path The file path of the file to be set as the output file
+	 * 
+	 * @return bool Returns true on success and false on failure
 	 */
 	protected function setOutputFile(string $path): bool
 	{
@@ -92,6 +118,11 @@ abstract class BaseController
 
 	/**
 	 * Sets an header value to be sent back to the client.
+	 * 
+	 * @param string $header The header to be set
+	 * @param string $value The value of the header to be set
+	 * 
+	 * @return null
 	 */
 	protected function setHeader(string $header, string $value): void
 	{
@@ -100,6 +131,10 @@ abstract class BaseController
 
 	/**
 	 * Sets the http response code
+	 * 
+	 * @param int $code The status code to be set
+	 * 
+	 * @return null
 	 */
 	protected function setStatusCode(int $code): void
 	{
@@ -108,6 +143,8 @@ abstract class BaseController
 
 	/**
 	 * Gets how many seconds this cradle app has been running for.
+	 * 
+	 * @return int The amount of seconds this cradle app has been running for
 	 */
 	public function getExecutionTime(): int
 	{
@@ -116,6 +153,8 @@ abstract class BaseController
 
 	/**
 	 * Gets the maximum execution time for this cradle app.
+	 * 
+	 * @return int The max execution time for the cradle app
 	 */
 	public function getMaxExecutionTime(): int
 	{
@@ -123,29 +162,10 @@ abstract class BaseController
 	}
 
 	/**
-	 * Adds to the max timeout limit for the application.
-	 * NOTE: Only works in safe mode.
-	 */
-	public function addExecutionTime(int $secs): bool
-	{
-		if ($secs < 0) {
-			throw new \Exception('Invalid timeout limit');
-			return false;
-		}
-
-		// Compute the remaining execution time
-		$remainingTime = $this->getMaxExecutionTime() - $this->getExecutionTime();
-
-		if ($remainingTime >= 0) {
-			return set_time_limit($remainingTime + $secs);
-		}
-
-		return set_time_limit($secs);
-	}
-
-	/**
 	 * Show the 404 error page.
-	 * Do not call this method from the 404 error controller!
+	 * Never call this method from the 404 error controller, will cause recursion hell!
+	 * 
+	 * @return null
 	 */
 	protected function show404(): void
 	{

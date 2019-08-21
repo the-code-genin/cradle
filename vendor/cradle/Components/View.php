@@ -6,10 +6,10 @@ namespace Cradle\Components;
  */
 class View
 {
-	// Holds the file path to the view file
+	/** @var string $filePath Holds the file path to the view file */
 	protected $filePath;
 
-	// Holds the parameters to be passed into the view file for dynamic page rendering
+	/** @var array $parameters Holds the parameters to be passed into the view file for dynamic page rendering */
 	protected $parameters;
 
 	public function __construct(string $file, array $param = [])

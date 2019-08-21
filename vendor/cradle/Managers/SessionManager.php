@@ -6,10 +6,10 @@ namespace Cradle\Managers;
  */
 class SessionManager
 {
-    // Stores the flash data sent from the last session
+    /** @var array $flashData Stores the flash data sent from the last session */
     private $flashData = [];
 
-    // The variable responsible for storing flash data in the session
+    /** @var string $flashVariable The variable responsible for storing flash data in the session */
     private $flashVariable;
 
     public function __construct(string $flashVariable = '_CRADLE_SESSION_MANAGER_FLASHDATA')

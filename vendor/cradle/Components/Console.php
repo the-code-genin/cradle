@@ -2,12 +2,14 @@
 namespace Cradle\Components;
 
 /**
- * Helps write to and get input from the command line
+ * Provides useful methods to write to and get input from the command line.
  */
 class Console
 {
-    // The streams to work with
+    /** @var resource $streamIn The input stream */
 	private $streamIn;
+
+	/** @var resource $streamOut The output stream */
 	private $streamOut;
 
 	public function __construct()
@@ -17,19 +19,19 @@ class Console
 	}
 
     /**
-     * Prints to standard output
+     * Prints data to standard output stream
 	 * 
-	 * @param mixed Data to be printed to the console
+	 * @param mixed $output Data to be printed to the console
 	 * 
 	 * @return null
      */
 	public function print($output): void
 	{
-		fwrite($this->streamOut, sprintf(">>>%s\n", $output));
+		fwrite($this->streamOut, sprintf("%s\n", $output));
 	}
 
     /**
-     * Reads a line from standard output
+     * Reads a line from the standard input stream
 	 * 
 	 * @return string
      */

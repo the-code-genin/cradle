@@ -18,12 +18,12 @@ const ROUTES = [
 	// The keys must be valid regex patterns and can contain shorthands
 	// To use a shorthand: {shorthand}
 	'routes' => [
-		'/' => 'MainController@index'
+		'/' => 'Home@index'
 	],
 
 	// The 404 error route
-	'404_error' => 'MainController@error404',
+	'404_error' => 'Home@error404',
 
 	// The maintenance route
-	'maintenance' => 'MainController@maintenance',
+	'maintenance' => 'Home@maintenance',
 ];

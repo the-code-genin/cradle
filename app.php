@@ -36,6 +36,7 @@ if (version_compare(PHP_VERSION, '7.2', '<')) {
 define('CRADLE_ENVIRONMENT', 'development'); // The working environment
 define('CRADLE_START', time()); // The timestamp this app is started
 define('BASE_DIR', __DIR__); // Define the base directory
+define('CONFIG_DIR', __DIR__ . '/config'); // Define the site configurations directory
 define('VIEWS_DIR', __DIR__ . '/app/views'); // Define the views directory
 define('STORAGE_DIR', __DIR__ . '/storage'); // Define the storage directory
 

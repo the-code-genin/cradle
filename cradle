@@ -1,0 +1,109 @@
+<?php
+
+/**
+ * ------------------------------------------------------------------
+ * Cradle
+ * ------------------------------------------------------------------
+ *
+ *
+ *
+ * @package Cradle
+ * @version 1.0
+ * @author Mohammed Adekunle (Iyiola) <adekunle3317@gmail.com>
+ */
+
+// Ensure the server is running the minimum PHP version.
+// Current minimum: 7.2
+if (version_compare(PHP_VERSION, '7.2', '<')) {
+    http_response_code(503);
+    echo <<<TXT
+Error: Cradle requires a minimum PHP version of 7.2 to run.
+Current PHP version: PHP_VERSION
+TXT;
+    exit(1);
+}
+
+
+require_once __DIR__ . '/vendor/autoload.php'; // Include the composer autoloader
+
+
+$console = new Cradle\Components\Console();
+$args = array_splice($argv, 1); // Get the arguments supplied to the cli tool
+$msg = <<<TXT
+==Cradle CLI tool==
+\n
+TXT;
+
+
+
+if ($argc > 1 & !@in_array($args[0], ['new-controller', 'new-model', 'new-view'])) { // If an invalid command is passed
+    $cmd = $args[0];
+
+    $msg .= <<<TXT
+--Error--
+
+Unknown command "$cmd"
+TXT;
+
+} else if ($argc > 3) { // If arguments are supplied to the cli tool are more than the standard no of arguments
+    $cmd = $args[0];
+    $argCount = $argc - 2;
+
+    $msg .= <<<TXT
+--Error--
+
+$cmd requires exactly one argument, $argCount arguments passed
+TXT;
+
+} else if ($argc == 2) { // If only one argument is supplied to the cli tool
+    $cmd = $args[0];
+
+    $msg .= <<<TXT
+--Error--
+$cmd requires an argument
+TXT;
+
+} else if ($argc == 3) {
+    $name = $args[1];
+    switch($args[0]) {
+        case 'new-controller':
+            $controller = <<<PHP
+
+PHP;
+            break;
+
+        case 'new-model':
+            $model = <<<PHP
+
+PHP;
+            break;
+            
+        case 'new-view':
+            $view = <<<HTML
+
+HTML;
+            break;
+    }
+} else { // If the cli tool is being used without any arguments
+
+    $msg .= <<<TXT
+--Available Commands--
+
+new-controller {controller_name}
+new-model {model_name}
+new-view {view_name}
+
+==Note==
+The values in parenthesis and the parenthesis themselves are just for demonstration
+For example to make a controller "Main" use the following command:
+--      php cradle new-controller Main
+A new controller called "Main" will be created for you in your app/controllers directory
+
+You may also use unix-style directory separators like below:
+--      php cradle new-controller sub_directory/Main
+This will create a new controller for you in the app/controllers/sub_directory directory called "Main"
+TXT;
+
+}
+
+$console->print($msg);

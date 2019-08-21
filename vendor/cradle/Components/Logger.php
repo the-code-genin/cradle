@@ -51,19 +51,19 @@ class Logger
 	 */
 	public static function logThrowable(\Throwable $e): void
 	{
-		// Get the throwable's parameters
-		$params = [
-			'throwableType' => ucfirst(Logger::getThrowableType($e)),
-			'throwableClass' => get_class($e),
-			'throwableCode' => $e->getCode(),
-			'throwableMessage' => $e->getMessage(),
-			'throwableFile' => $e->getFile(),
-			'throwableLine' => $e->getLine(),
-			'throwableTrace' => $e->getTrace(),
-		];
-
 		// Generate the output and send to stdout if error reporting is allowed
 		if (Logger::$showErrors) {
+			// Get the throwable's parameters
+			$params = [
+				'throwableType' => ucfirst(Logger::getThrowableType($e)),
+				'throwableClass' => get_class($e),
+				'throwableCode' => $e->getCode(),
+				'throwableMessage' => $e->getMessage(),
+				'throwableFile' => $e->getFile(),
+				'throwableLine' => $e->getLine(),
+				'throwableTrace' => $e->getTrace(),
+			];
+
 			$viewCompiler = new ViewCompiler();
 			$viewCompiler->addView(new View('framework/error_exception', $params));
 			echo $viewCompiler->compileViews();

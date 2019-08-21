@@ -6,7 +6,7 @@ namespace Cradle\Routing;
  */
 class Dispatcher
 {
-	// Stores the output of the recently dispatched controller
+	/** @var string $result The output of the recently dispatched controller*/
 	private $result = '';
 
 	/**

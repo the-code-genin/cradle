@@ -8,7 +8,7 @@ use Cradle\Components\Exceptions\CompileException;
  */
 class ViewCompiler
 {
-	// Stores the view objects in the order that they will be compiled
+	/** @var array $views Stores the view objects in the order that they will be compiled */
 	protected $views = [];
 
 	/**

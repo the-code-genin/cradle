@@ -1,9 +1,9 @@
 <?php
 namespace App\Controllers;
 
-use Cradle\Components\BaseController;
+use Cradle\Components\Controller;
 
-class MainController extends BaseController
+class Home extends Controller
 {
     /**
     * The index page.
