@@ -40,6 +40,7 @@ class Router
 			throw new RoutingException;
 		}
 
+		$rule[1] = explode('/', $rule[1]);
 		for ($i = 0; $i < count($rule[1]); $i++) {
 			if (empty($rule[1][$i])) {
 				array_splice($rule[1], $i, 1);
@@ -57,16 +58,14 @@ class Router
 			'parameters' => []
 		];
 
-		// Get any parameters if they exist
-		if (count($rule[1]) > 1) {
-			// Get the order of parameters
-			$parameters = array_slice($rule[1], 1);
+		if (count($rule[1]) > 1) { // Get any parameters if they exist
+			$parameters = array_slice($rule[1], 1); // Get the order of parameters
 			
-			// Match the request URI with the route pattern
 			$pattern = Router::getRoutePattern();
-			if ($pattern == null) {
+			if ($pattern == null) { // Match the request URI with the route pattern
 				throw new RoutingException;
 			}
+
 			$pattern = '#^' . Router::replaceShorthand($pattern) . '/?$#i';
 			preg_match_all($pattern, $_SERVER['REQUEST_URI'], $matches);
 
@@ -101,8 +100,7 @@ class Router
 			}
 		}
 
-		// If no applicable route rule is found
-		return null;
+		return null; // If no applicable route rule is found
 	}
 
 	/**

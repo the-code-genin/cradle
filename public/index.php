@@ -1,10 +1,14 @@
 <?php
+
 /**
  * ------------------------------------------------------------------
  * Cradle
  * ------------------------------------------------------------------
  *
- * 
+ * Cradle is a lightweight MVC framework for building web apps with PHP.
+ *
+ * It is made with the aim to help php developers avoid working with spaghetti code
+ * and embrace the MVC software architecture in as little time as possible. It is totally free to use and open source.
  *
  * @package Cradle
  * @version 1.0
@@ -32,13 +36,13 @@ if (version_compare(PHP_VERSION, '7.2', '<')) {
  * Site constants are loaded and/or defined
  */
 
-
+define('DOCUMENT_ROOT', $_SERVER['DOCUMENT_ROOT']); // The document root
 define('CRADLE_ENVIRONMENT', 'development'); // The working environment
 define('CRADLE_START', time()); // The timestamp this app is started
-define('BASE_DIR', __DIR__); // Define the base directory
-define('CONFIG_DIR', __DIR__ . '/config'); // Define the site configurations directory
-define('VIEWS_DIR', __DIR__ . '/app/views'); // Define the views directory
-define('STORAGE_DIR', __DIR__ . '/storage'); // Define the storage directory
+define('BASE_DIR', DOCUMENT_ROOT); // Define the base directory
+define('CONFIG_DIR', DOCUMENT_ROOT . '/config'); // Define the site configurations directory
+define('VIEWS_DIR', DOCUMENT_ROOT . '/app/views'); // Define the views directory
+define('STORAGE_DIR', DOCUMENT_ROOT . '/storage'); // Define the storage directory
 
 ob_start(); // Start output buffering
 
@@ -48,7 +52,7 @@ session_start([
 	'use_strict_mode' => true,
 ]); // Start a new session
 
-require_once __DIR__ . '/vendor/autoload.php'; // Include the composer autoloader
+require_once DOCUMENT_ROOT . '/vendor/autoload.php'; // Include the composer autoloader
 
 
 

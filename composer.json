@@ -1,6 +1,6 @@
 {
-    "name": "iyiola/cradle",
-    "description": "",
+    "name": "iyiola-am/cradle",
+    "description": "A lightweight MVC framework for building web apps with PHP",
     "type": "project",
     "license": "MIT",
     "require": {
