@@ -36,13 +36,12 @@ if (version_compare(PHP_VERSION, '7.2', '<')) {
  * Site constants are loaded and/or defined
  */
 
-define('DOCUMENT_ROOT', $_SERVER['DOCUMENT_ROOT']); // The document root
 define('CRADLE_ENVIRONMENT', 'development'); // The working environment
 define('CRADLE_START', time()); // The timestamp this app is started
-define('BASE_DIR', DOCUMENT_ROOT); // Define the base directory
-define('CONFIG_DIR', DOCUMENT_ROOT . '/config'); // Define the site configurations directory
-define('VIEWS_DIR', DOCUMENT_ROOT . '/app/views'); // Define the views directory
-define('STORAGE_DIR', DOCUMENT_ROOT . '/storage'); // Define the storage directory
+define('BASE_DIR', $_SERVER['DOCUMENT_ROOT']); // Define the base directory
+define('CONFIG_DIR', BASE_DIR . '/config'); // Define the site configurations directory
+define('VIEWS_DIR', BASE_DIR . '/app/views'); // Define the views directory
+define('STORAGE_DIR', BASE_DIR . '/storage'); // Define the storage directory
 
 ob_start(); // Start output buffering
 
@@ -52,7 +51,7 @@ session_start([
 	'use_strict_mode' => true,
 ]); // Start a new session
 
-require_once DOCUMENT_ROOT . '/vendor/autoload.php'; // Include the composer autoloader
+require_once BASE_DIR . '/vendor/autoload.php'; // Include the composer autoloader
 
 
 

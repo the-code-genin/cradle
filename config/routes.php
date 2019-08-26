@@ -16,14 +16,12 @@ const ROUTES = [
 
 	// The routing rules
 	// The keys must be valid regex patterns and can contain shorthands
-	// To use a shorthand: {shorthand}
+	// To use a shorthand: {shorthand_key} i.e "/hello/{text}/world"
 	'routes' => [
-		'/' => 'Home@index'
+		'/' => 'Home@index', // Your home page
 	],
 
-	// The 404 error route
-	'404_error' => 'Home@error404',
+	'404_error' => 'Home@error404', // The 404 error route
 
-	// The maintenance route
-	'maintenance' => 'Home@maintenance',
+	'maintenance' => 'Home@maintenance', // The maintenance route
 ];

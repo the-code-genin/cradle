@@ -1,5 +1,4 @@
 <?php
-
 /**
  * ------------------------------------------------------------------
  * Cradle
@@ -17,6 +16,7 @@
 
 // Ensure the server is running the minimum PHP version.
 // Current minimum: 7.2
+
 if (version_compare(PHP_VERSION, '7.2', '<')) {
     http_response_code(503);
     echo <<<TXT
