@@ -6,8 +6,8 @@
  */
 
 $configFiles = scandir(__DIR__);
-array_walk($configFiles, function ($file, $key) {
-	if (preg_match('#[A-z\-\_0-9]+\.php#i', $file) && $file != 'autoload.php') {
+foreach ($configFiles as $file) { // Include every valid php file in the current directory apart from the autoload file
+	if (preg_match('#[a-z\-\_0-9]+\.php#i', $file) && $file != 'autoload.php') {
 		require_once __DIR__ . '/' . $file;
 	}
-});
+}

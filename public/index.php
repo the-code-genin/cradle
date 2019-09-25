@@ -112,17 +112,19 @@ set_error_handler('Cradle\Components\Logger::handleError');
  */
 
 try {
-	if (CRADLE_ENVIRONMENT != 'maintenance') { // Get the route rule to be used
+	// Get the route rule to be used to handle the request
+	if (CRADLE_ENVIRONMENT != 'maintenance') {
 		$rule = Cradle\Routing\Router::getRouteRule();
 	} else {
 		$rule = App\Config\ROUTES['maintenance'];
 	}
 
-	// Dispatch the route rule
+	// Dispatch the route rule to handle the request
 	$dispatcher = new Cradle\Routing\Dispatcher();
 	$dispatcher->dispatch($rule);
 } catch (Throwable $e) {
-	if ($showThrowables) { // Display the throwable if it is allowed
+	// Display the throwable if it is allowed
+	if ($showThrowables) {
 		Cradle\Components\Logger::logThrowable($e);
 	}
 	http_response_code(503);

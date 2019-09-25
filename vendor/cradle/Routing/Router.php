@@ -17,7 +17,7 @@ class Router
 	public static function getRouteRule(): string
 	{
 		// Get a route rule for the request URI by matching it with the defined routing rules patterns
-		$routePattern = Router::getRoutePattern();
+		$routePattern = self::getRoutePattern();
 		if ($routePattern != null) {
 			$rule = ROUTES['routes'][$routePattern];
 			return $rule;
@@ -28,18 +28,21 @@ class Router
 	}
 
 	/**
-	 * Parses a route rule and gets the controller, method and parameters to be used.
+	 * Parses a route rule and gets the controller class, controller method and controller method parameters to be used to handle
+	 * the current request.
 	 *
 	 * @param string $rule The routing rule to parse
 	 * @return array|null
 	 */
 	public static function parseRouteRule(string $rule): ?array
 	{
+		// Split the rule into the controller namespace and controller method
 		$rule = explode('@', $rule);
 		if (count($rule) != 2) {
 			throw new RoutingException;
 		}
 
+		// Parse the controller method section of the rule
 		$rule[1] = explode('/', $rule[1]);
 		for ($i = 0; $i < count($rule[1]); $i++) {
 			if (empty($rule[1][$i])) {
@@ -47,27 +50,29 @@ class Router
 			}
 		}
 
-		if (!class_exists('App\\Controllers\\' . $rule[0]) | count($rule[1]) < 1) { // If an invalid route rule was supplied
+		// Check if an invalid route rule was supplied
+		if (!class_exists('App\\Controllers\\' . $rule[0]) | count($rule[1]) < 1) {
 			throw new RoutingException;
 		}
 
-		// Get the controller and method to be used
+		// Get the controller class and controller method to be used
 		$route = [
 			'controller' => $rule[0],
 			'method' => $rule[1][0],
 			'parameters' => []
 		];
 
-		if (count($rule[1]) > 1) { // Get any parameters if they exist
+		// Get any controller method parameters if they exist
+		if (count($rule[1]) > 1) {
 			$parameters = array_slice($rule[1], 1); // Get the order of parameters
 			
-			$pattern = Router::getRoutePattern();
+			$pattern = self::getRoutePattern();
 			if ($pattern == null) { // Match the request URI with the route pattern
 				throw new RoutingException;
 			}
 
-			$pattern = '#^' . Router::replaceShorthand($pattern) . '/?$#i';
-			preg_match_all($pattern, $_SERVER['REQUEST_URI'], $matches);
+			$pattern = '#^' . self::replaceShorthand($pattern) . '/?$#i';
+			preg_match_all($pattern, self::getURIWithoutQueryString(), $matches);
 
 			// Insert the matched parameters in the right position
 			for ($i = 1; $i < count($matches); $i++) {
@@ -92,9 +97,9 @@ class Router
 	 */
 	protected static function getRoutePattern(): ?string
 	{
-		$requestURI = $_SERVER['REQUEST_URI'];
-		foreach (ROUTES['routes'] as $pattern => $rule) {
-			$pat = '#^' . Router::replaceShorthand($pattern) . '/?$#i';
+		$requestURI = self::getURIWithoutQueryString();
+		foreach (array_keys(ROUTES['routes']) as $pattern) {
+			$pat = '#^' . self::replaceShorthand($pattern) . '/?$#i';
 			if (preg_match($pat, $requestURI)) {
 				return $pattern;
 			}
@@ -104,10 +109,9 @@ class Router
 	}
 
 	/**
-	 * Auto-completes a route pattern by replacing the route shorthands with the correct regex.
+	 * Auto-completes a route pattern by replacing the route shorthands with the correct regex as specified in the routes config file.
 	 *
 	 * @param string $pattern The pattern to autocomplete
-	 * 
 	 * @return string The autocompleted pattern
 	 */
 	protected static function replaceShorthand(string $pattern): string
@@ -116,5 +120,16 @@ class Router
 			$pattern = preg_replace("#\{$shorthand\}#", "($regex)", $pattern);
 		}
 		return $pattern;
+	}
+
+	/**
+	 * Gets the request URI without the query string
+	 * 
+	 * @return string The request URI without the query string
+	 */
+	protected static function getURIWithoutQueryString(): string
+	{
+		$requestURI = explode('?', $_SERVER['REQUEST_URI'], 2)[0];
+		return $requestURI;
 	}
 }

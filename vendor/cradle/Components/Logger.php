@@ -37,7 +37,7 @@ class Logger
 	 */
 	public static function handleError(int $errno, string $errstr, string $errfile, int $errline): void
 	{
-		Logger::logThrowable(new UncaughtError($errstr, $errfile, $errline));
+		self::logThrowable(new UncaughtError($errstr, $errfile, $errline));
 		http_response_code(503);
 		exit(1);
 	}
@@ -52,7 +52,7 @@ class Logger
 	public static function logThrowable(\Throwable $e): void
 	{
 		// Generate the output and send to stdout if error reporting is allowed
-		if (Logger::$showErrors) {
+		if (self::$showErrors) {
 			// Get the throwable's parameters
 			$params = [
 				'throwableType' => ucfirst(Logger::getThrowableType($e)),
