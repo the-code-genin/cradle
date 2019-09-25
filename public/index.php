@@ -76,7 +76,7 @@ switch (CRADLE_ENVIRONMENT) { // Configure the exceptions and error logging leve
 		error_reporting(E_ALL);
 		ini_set('display_errors', 'stdout');
 		$showThrowables = true;
-	break;
+		break;
 
 	case 'maintenance': // Site maintenance mode
 		// Fall through
@@ -85,7 +85,7 @@ switch (CRADLE_ENVIRONMENT) { // Configure the exceptions and error logging leve
 		error_reporting(0);
 		ini_set('display_errors', 'stderr');
 		$showThrowables = false;
-	break;
+		break;
 
 	default: // In case the environment was incorrectly set
 		http_response_code(503);

@@ -96,9 +96,9 @@ Views files are stored in the **app/views** directory. You may extend the defaul
 
 ### Routing
 
-The cradle routing process maps request URIs to an applicable controller and method as specified in the **app/config/routes.php** file. The routing procedure is similar to that of codeigniter and laravel.
+The cradle routing process maps request URIs to an applicable controller, the routing rules are defined in the **app/config/routes.php** file.
 
 
 ## License
 
-Licensed under the [MIT license](http://opensource.org/licenses/MIT).
+Cradle is licensed under the [MIT license](http://opensource.org/licenses/MIT). Feel free to use
