@@ -32,8 +32,8 @@ class Dispatcher
 		$route = Router::parseRouteRule($rule);
 
 		$controllerClass = 'App\\Controllers\\' . $route['controller']; // Get the controller class
-		
-		$controller = new $controllerClass(CRADLE_START);
+
+		$controller = new $controllerClass();
 		$method = $route['method'];
 		$parameters = $route['parameters'];
 

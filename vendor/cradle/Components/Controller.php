@@ -32,20 +32,16 @@ abstract class Controller
 	/** @var string $output Alternate output to be sent back to the client */
 	protected $output = '';
 
-	/** @var int $startTime The time this cradle app was fired up */
-	protected $startTime;
-
 	/**
 	 * @param int $startTime The time this cradle app was fired up
 	 */
-	public function __construct(int $startTime)
+	public function __construct()
 	{
 		$this->viewCompiler = new ViewCompiler();
 		$this->files = new FileManager();
 		$this->cookies = new CookieManager();
 		$this->session = new SessionManager();
 		$this->request = new RequestManager();
-		$this->startTime = $startTime;
 	}
 
 	/**
@@ -106,10 +102,10 @@ abstract class Controller
 	 */
 	protected function setOutputFile(string $path): bool
 	{
-		if (!$this->outputOverridden & $this->assetManager->fileExists($path)) {
+		if (!$this->outputOverridden & $this->files->fileExists($path)) {
 			$this->outputOverridden = true;
-			$this->setHeader('Content-Type', $this->assetManager->fileMIME($path));
-			$this->output = $this->assetManager->readFile($path);
+			$this->setHeader('Content-Type', $this->files->fileMIME($path));
+			$this->output = $this->files->readFile($path);
 			return true;
 		} else {
 			return false;
@@ -139,26 +135,6 @@ abstract class Controller
 	protected function setStatusCode(int $code): void
 	{
 		http_response_code($code);
-	}
-
-	/**
-	 * Gets how many seconds this cradle app has been running for.
-	 * 
-	 * @return int The amount of seconds this cradle app has been running for
-	 */
-	public function getExecutionTime(): int
-	{
-		return time() - $this->startTime;
-	}
-
-	/**
-	 * Gets the maximum execution time for this cradle app.
-	 * 
-	 * @return int The max execution time for the cradle app
-	 */
-	public function getMaxExecutionTime(): int
-	{
-		return (int) @ini_get('max_execution_time');
 	}
 
 	/**
