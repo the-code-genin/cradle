@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'cbe46a525a36d93b0c273657152b3e5e' => $baseDir . '/config/autoload.php',
+    '1303bf7bed053e26594580be0e508dba' => $baseDir . '/config/autoload.php',
 );
