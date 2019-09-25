@@ -3,6 +3,7 @@ namespace Cradle\Managers;
 
 /**
  * This class helps manage session data.
+ * The class also adds support for flash data which are only kept for the duration of one request.
  */
 class SessionManager
 {

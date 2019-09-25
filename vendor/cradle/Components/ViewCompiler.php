@@ -4,7 +4,7 @@ namespace Cradle\Components;
 use Cradle\Components\Exceptions\CompileException;
 
 /**
- * Acts as a compiler for the views that will eventually be sent to the client.
+ * A compiler for the views that will eventually be sent to the client.
  */
 class ViewCompiler
 {
@@ -15,7 +15,6 @@ class ViewCompiler
 	 * Adds a new view object to the array of view objects to be compiled later.
 	 *
 	 * @param View $view The view to be compiled
-	 *
 	 * @return null
 	 */
 	public function addView(View $view): void
@@ -27,7 +26,6 @@ class ViewCompiler
 	 * Compiles a view object for output.
 	 *
 	 * @param View $view The view to be compiled
-	 *
 	 * @return string|null The output of the compiled view
 	 */
 	protected function compileView(View $view): ?string

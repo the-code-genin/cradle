@@ -32,9 +32,6 @@ abstract class Controller
 	/** @var string $output Alternate output to be sent back to the client */
 	protected $output = '';
 
-	/**
-	 * @param int $startTime The time this cradle app was fired up
-	 */
 	public function __construct()
 	{
 		$this->viewCompiler = new ViewCompiler();

@@ -12,14 +12,18 @@ class View
 	/** @var array $parameters Holds the parameters to be passed into the view file for dynamic page rendering */
 	protected $parameters;
 
-	public function __construct(string $file, array $param = [])
+	/**
+	 * @param string $file The file path relative to the views directory
+	 * @param array @params An associative array of parameters to be passed into the view file at compile time
+	 */
+	public function __construct(string $file, array $params = [])
 	{
 		$this->filePath = $file;
-		$this->parameters = $param;
+		$this->parameters = $params;
 	}
 
 	/**
-	 * Gets the file path of the view file relative to the document root.
+	 * Gets the absolute file path of the view file relative to the document root.
 	 * 
 	 * @return string The complete file path to the view file
 	 */
