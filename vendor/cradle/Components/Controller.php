@@ -21,7 +21,7 @@ abstract class Controller
 	protected $session;
 
 	/** @var RequestManager $request A request manager instance */
-	protected $request;
+	protected $input;
 
 	/** @var ViewCompiler $viewCompiler Holds the ViewCompiler object for the controller */
 	protected $viewCompiler;
@@ -38,7 +38,7 @@ abstract class Controller
 		$this->files = new FileManager();
 		$this->cookies = new CookieManager();
 		$this->session = new SessionManager();
-		$this->request = new RequestManager();
+		$this->input = new RequestManager();
 	}
 
 	/**
