@@ -71,7 +71,7 @@ require_once BASE_DIR . '/vendor/autoload.php'; // Include the composer autoload
 $showThrowables = true; // Determines if exceptions should be logged
 
 switch (CRADLE_ENVIRONMENT) { // Configure the exceptions and error logging levels based on the environment configuration
-	
+
 	case 'development': // All errors and exceptions are reported in development mode
 		error_reporting(E_ALL);
 		ini_set('display_errors', 'stdout');

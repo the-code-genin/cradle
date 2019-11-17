@@ -84,6 +84,7 @@ class Router
 				}
 			}
 
+			// Assign the route parameters
 			$route['parameters'] = $parameters;
 		}
 
