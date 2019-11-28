@@ -65,7 +65,7 @@ class Logger
 			];
 
 			$viewCompiler = new ViewCompiler();
-			$viewCompiler->addView(new View('framework/error_exception', $params));
+			$viewCompiler->addView(new View('framework/error_exception.twig', $params));
 			echo $viewCompiler->compileViews();
 		}
 	}
