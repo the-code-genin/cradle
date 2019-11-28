@@ -40,7 +40,7 @@ define('CRADLE_ENVIRONMENT', 'development'); // The working environment
 define('CRADLE_START', time()); // The timestamp this app is started
 define('BASE_DIR', $_SERVER['DOCUMENT_ROOT']); // Define the base directory
 define('CONFIG_DIR', BASE_DIR . '/config'); // Define the site configurations directory
-define('VIEWS_DIR', BASE_DIR . '/app/views'); // Define the views directory
+define('VIEWS_DIR', BASE_DIR . '/resources/views'); // Define the views directory
 define('STORAGE_DIR', BASE_DIR . '/storage'); // Define the storage directory
 
 ob_start(); // Start output buffering
@@ -49,7 +49,7 @@ session_start([
 	'cookie_httponly' => true,
 	'cookie_secure' => isset($_SERVER['HTTPS']),
 	'use_strict_mode' => true,
-]); // Start a new session
+]); // Start a new native session
 
 require_once BASE_DIR . '/vendor/autoload.php'; // Include the composer autoloader
 
