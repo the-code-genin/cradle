@@ -18,6 +18,8 @@ Developed and maintained by [Mohammed I. Adekunle](https://github.com/Iyiola-am)
 - Download (clone the repo) and place the files in your web server's root directory
 - Configure your web server to direct all requests to the **public** folder if the applicable file or directory being requested exists in the folder
 - Redirect all other requests to the **public/index.php** file (A sample configuration for apache server has already been provided by default)
+- Run composer install
+- Build something awesome
 
 
 ## Requirements
@@ -35,9 +37,11 @@ Cradle features a simple directory structure
 
 - **app:** This is where an app's controllers, models and view files are stored.
 - **config:** This directory contains all of an app's configuration files, e.g the database and email configurations.
-- **core:** This directory contains custom app components that are specific to the app but aren't third-party dependencies, e.g extensions of default cradle components. 
+- **framework:** This directory contains custom app components that are specific to the app but aren't third-party dependencies, e.g extensions of default cradle components. 
 - **public:** This is where all publicly available files are stored, the favicon.ico, robots.txt, javascript files and so on are located here.
+- **resources:**
 - **storage:** This directory contains all the files that are not meant to be accessible to the public by default e.g font files, system logs e.t.c
+- **tests:**
 - **vendor:** This directory contains the project's third-party dependencies.
 
 ### Configurations
