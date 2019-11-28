@@ -29,7 +29,7 @@ class View
 	 */
 	public function getFilePath(): string
 	{
-		return VIEWS_DIR . "/{$this->filePath}.php";
+		return VIEWS_DIR . "/{$this->filePath}";
 	}
 
 	/**
