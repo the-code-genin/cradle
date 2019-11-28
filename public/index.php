@@ -127,6 +127,7 @@ try {
 	if ($showThrowables) {
 		Cradle\Components\Logger::logThrowable($e);
 	}
+	ob_end_flush();
 	http_response_code(503);
 	exit(1);
 }
