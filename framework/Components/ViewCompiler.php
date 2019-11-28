@@ -2,6 +2,8 @@
 namespace Cradle\Components;
 
 use Cradle\Components\Exceptions\CompileException;
+use Twig\Loader\FilesystemLoader;
+use Twig\Environment;
 
 /**
  * A compiler for the views that will eventually be sent to the client.
@@ -31,23 +33,19 @@ class ViewCompiler
 	protected function compileView(View $view): ?string
 	{
 		// Check if the file to be compiled exists
-		$filePath = $view->getFilePath();
+		$filePath = $view->getFullFilePath();
 		if (!file_exists($filePath)) {
 			throw new CompileException($filePath);
 		}
 
-		// Create the variables to be passed into the view file
-		$viewParameters = $view->getParameters();
-		foreach ($viewParameters as $parameter => $value) {
-			$$parameter = $value;
-		}
-
 		// Compile the view file
-		ob_start();
-		require $filePath;
-		$output = ob_get_contents();
-		ob_end_clean();
+		$filePath = $view->getRelativeFilePath();
+		$parameters = $view->getParameters();
+		$loader = new FilesystemLoader(VIEWS_DIR);
+		$twig = new Environment($loader, []);
+		$output = $twig->render($filePath, $parameters);
 
+		// Return the parsed view
 		return $output;
 	}
 
