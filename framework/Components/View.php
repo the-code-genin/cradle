@@ -23,11 +23,21 @@ class View
 	}
 
 	/**
+	 * Gets the file path relative to the views directory
+	 * 
+	 * @return string The file path relative to the views directory
+	 */
+	public function getRelativeFilePath(): string
+	{
+		return $this->filePath;
+	}
+
+	/**
 	 * Gets the absolute file path of the view file relative to the document root.
 	 * 
 	 * @return string The complete file path to the view file
 	 */
-	public function getFilePath(): string
+	public function getFullFilePath(): string
 	{
 		return VIEWS_DIR . "/{$this->filePath}";
 	}
