@@ -25,12 +25,10 @@ class ComposerStaticInitd3c9595ae8d315755250366c096df934
         'C' => 
         array (
             'Cradle\\' => 7,
-            'Core\\' => 5,
         ),
         'A' => 
         array (
-            'App\\Models\\' => 11,
-            'App\\Controllers\\' => 16,
+            'App\\' => 4,
         ),
     );
 
@@ -49,19 +47,11 @@ class ComposerStaticInitd3c9595ae8d315755250366c096df934
         ),
         'Cradle\\' => 
         array (
-            0 => __DIR__ . '/..' . '/cradle',
+            0 => __DIR__ . '/../..' . '/framework',
         ),
-        'Core\\' => 
+        'App\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/core',
-        ),
-        'App\\Models\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/app/models',
-        ),
-        'App\\Controllers\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/app/controllers',
+            0 => __DIR__ . '/../..' . '/app',
         ),
     );
 

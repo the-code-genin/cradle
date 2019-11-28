@@ -9,8 +9,6 @@ return array(
     'Twig\\' => array($vendorDir . '/twig/twig/src'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Polyfill\\Ctype\\' => array($vendorDir . '/symfony/polyfill-ctype'),
-    'Cradle\\' => array($vendorDir . '/cradle'),
-    'Core\\' => array($baseDir . '/core'),
-    'App\\Models\\' => array($baseDir . '/app/models'),
-    'App\\Controllers\\' => array($baseDir . '/app/controllers'),
+    'Cradle\\' => array($baseDir . '/framework'),
+    'App\\' => array($baseDir . '/app'),
 );
