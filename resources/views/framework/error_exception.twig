@@ -1,0 +1,27 @@
+{% extends 'framework/layout.twig' %}
+
+{% block title %}{{ throwableType }} Encountered{% endblock %}
+
+{% block content %}
+	<div class="box">
+
+		<h1>An {{throwableType}} was encountered</h1>
+
+		<div class="divider"></div>
+
+		<p><b>Type:</b> {{throwableClass}}</p>
+		<p><b>Message:</b> {{throwableMessage}}</p>
+		<p><b>Code:</b> {{throwableCode}}</p>
+		<p><b>File:</b> {{throwableFile}}</p>
+		<p><b>Line:</b> {{throwableLine}}</p>
+		<p><b>BackTrace:</b>
+			<ul>
+				{% for trace in throwableTrace %}
+					<li>
+						{{ trace.class ~ trace.type ~ trace.function }}({{trace.args|join(', ')}}) in file <b>{{trace.file}} on link {{trace.line}}
+					</li>
+				{% endfor %}
+			</ul>
+		</p>
+	</div>
+{% endblock %}

@@ -10,7 +10,7 @@ class Home extends Controller
      */
     public function index(): void
     {
-        $this->loadView('home.php');
+        $this->loadView('home.twig');
     }
 
     /**
@@ -18,7 +18,7 @@ class Home extends Controller
      */
     public function maintenance(): void
     {
-        $this->loadView('framework/maintenance.php');
+        $this->loadView('framework/maintenance.twig');
     }
 
     /**
@@ -27,6 +27,6 @@ class Home extends Controller
     public function error404(): void
     {
         $this->setStatusCode(404);
-        $this->loadView('framework/error404.php');
+        $this->loadView('framework/error404.twig');
     }
 }
