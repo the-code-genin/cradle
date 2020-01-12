@@ -101,7 +101,7 @@ abstract class Controller
 	{
 		if (!$this->outputOverridden & $this->files->fileExists($path)) {
 			$this->outputOverridden = true;
-			$this->setHeader('Content-Type', $this->files->fileMIME($path));
+			$this->setHeader('Content-Type', $this->files->getFileMIME($path));
 			$this->output = $this->files->readFile($path);
 			return true;
 		} else {
