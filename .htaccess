@@ -5,4 +5,4 @@ RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f
 RewriteRule ^(.*) public/$1 [END,L]
 
 # Redirect all other URI requests to the framework
-RewriteRule ^(.*)$ public/index.php [END,L]
+RewriteRule ^(.*)$ index.php [END,L]
