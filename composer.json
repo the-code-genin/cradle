@@ -5,7 +5,8 @@
     "license": "MIT",
     "require": {
     	"php": "^7.2",
-        "twig/twig": "^2.11"
+        "twig/twig": "^2.11",
+        "vlucas/phpdotenv": "^4.1"
     },
     "autoload": {
     	"psr-4": {
