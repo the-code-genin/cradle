@@ -8,5 +8,5 @@ use Cradle\Components\Model;
  */
 class SampleModel extends Model
 {
-	//
+	public $table = '';
 }
