@@ -8,7 +8,8 @@
  * Cradle is an MVC microframework for building web apps with PHP.
  *
  * It is made with the aim to help php developers avoid working with spaghetti code
- * and embrace the MVC software architecture in as little time as possible. It is totally free to use and open source.
+ * and embrace the MVC software architecture in as little time as possible.
+ * It is totally free to use and open source.
  *
  * @package Cradle
  * @version 1.0
@@ -17,36 +18,7 @@
 
 
 
-
-/**
- * ------------------------------------------------------------------
- * BOOTSTRAPPING
- * ------------------------------------------------------------------
- *
- * The session is started and output buffering is initiated.
- * The composer autoloader is included.
- * Site constants are loaded and/or defined
- */
-
-define('STORAGE_DIR', BASE_DIR . '/storage'); // Define the storage directory
-define('RESOURCES_DIR', BASE_DIR . '/resources'); // Define resources directory
-define('ROUTES_DIR', RESOURCES_DIR . '/routes'); // Define the routes directory
-define('VIEWS_DIR', RESOURCES_DIR . '/views'); // Define the views directory
-
-define('CRADLE_ENVIRONMENT', getenv('CRADLE_ENVIRONMENT')); // The working environment
-define('CRADLE_START', time()); // The timestamp this app is started
-
-ob_start(); // Start output buffering
-
-session_start([
-	'cookie_httponly' => true,
-	'cookie_secure' => isset($_SERVER['HTTPS']),
-	'use_strict_mode' => true,
-]); // Start a new native php session
-
-
-
-
+ 
 /**
  * ------------------------------------------------------------------
  * ERROR HANDLING
@@ -60,7 +32,7 @@ session_start([
 
 $showThrowables = true; // Determines if exceptions should be logged
 
-switch (CRADLE_ENVIRONMENT) { // Configure the exceptions and error logging levels based on the environment configuration
+switch (getenv('APP_ENVIRONMENT')) { // Configure the exceptions and error logging levels based on the environment configuration
 
 	case 'development': // All errors and exceptions are reported in development mode
 		error_reporting(E_ALL);
@@ -93,19 +65,6 @@ set_error_handler('Cradle\Components\Logger::handleError');
 
 /**
  * ------------------------------------------------------------------
- * Database connection
- * ------------------------------------------------------------------
- * 
- * Set up a connection to the database
- */
-
-// Intentionally left empty
-
-
-
-
-/**
- * ------------------------------------------------------------------
  * ROUTING
  * ------------------------------------------------------------------
  *
@@ -116,7 +75,7 @@ set_error_handler('Cradle\Components\Logger::handleError');
 
 try {
 	// Get the route rule to be used to handle the request
-	if (CRADLE_ENVIRONMENT != 'maintenance') {
+	if (getenv('APP_ENVIRONMENT') != 'maintenance') {
 		$rule = Cradle\Routing\Router::getRouteRule();
 	} else {
 		$rule = App\Config\ROUTES['maintenance'];

@@ -8,7 +8,8 @@
  * Cradle is an MVC microframework for building web apps with PHP.
  *
  * It is made with the aim to help php developers avoid working with spaghetti code
- * and embrace the MVC software architecture in as little time as possible. It is totally free to use and open source.
+ * and embrace the MVC software architecture in as little time as possible.
+ * It is totally free to use and open source.
  *
  * @package Cradle
  * @version 1.0
@@ -24,9 +25,13 @@ if (version_compare(PHP_VERSION, '7.2', '<')) {
 }
 
 define('BASE_DIR', __DIR__); // Define the base directory
+define('STORAGE_DIR', BASE_DIR . '/storage'); // Define the storage directory
+define('RESOURCES_DIR', BASE_DIR . '/resources'); // Define resources directory
+define('ROUTES_DIR', RESOURCES_DIR . '/routes'); // Define the routes directory
+define('VIEWS_DIR', RESOURCES_DIR . '/views'); // Define the views directory
 
 require_once BASE_DIR . '/vendor/autoload.php'; // Include the composer autoloader
 
 Dotenv\Dotenv::createImmutable(BASE_DIR)->load(); // Load environment values from the .env file
 
-require_once BASE_DIR . '/public/index.php'; // Fire up cradle...
+require_once BASE_DIR . '/public/index.php'; // Fire up cradle to handle an HTTP request...
