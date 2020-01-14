@@ -1,13 +1,12 @@
 {
     "name": "iyiola-am/cradle",
-    "description": "A lightweight MVC framework for building web apps with PHP",
+    "description": "An MVC microframework for building web apps with PHP",
     "type": "project",
     "license": "MIT",
     "require": {
     	"php": "^7.2",
         "twig/twig": "^2.11",
-        "vlucas/phpdotenv": "^4.1",
-        "illuminate/database": "^6.10"
+        "vlucas/phpdotenv": "^4.1"
     },
     "autoload": {
     	"psr-4": {

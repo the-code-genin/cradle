@@ -16,15 +16,6 @@
  */
 
 
-// Ensure the server is running the minimum PHP version.
-// Current minimum: 7.2
-if (version_compare(PHP_VERSION, '7.2', '<')) {
-	http_response_code(503);
-	echo "<b>Error:</b> Cradle requires a minimum PHP version of 7.2 to run.<br/><b>Current PHP version:</b> PHP_VERSION";
-	exit(1);
-}
-
-
 
 
 /**
@@ -108,21 +99,7 @@ set_error_handler('Cradle\Components\Logger::handleError');
  * Set up a connection to the database
  */
 
-$capsule = new Illuminate\Database\Capsule\Manager;
-$capsule->addConnection([
-	'driver' => getenv('DB_DRIVER'),
-	'host' => getenv('DB_HOST'),
-	'database' => getenv('DB_NAME'),
-	'username' => getenv('DB_USER'),
-	'password' => getenv('DB_PASS'),
-	'charset' => 'utf8',
-	'collation' => 'utf8_unicode_ci',
-	'prefix' => '',
-]);
-
-// Setup the Eloquent ORM
-$capsule->setAsGlobal();
-$capsule->bootEloquent();
+// Intentionally left empty
 
 
 
