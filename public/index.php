@@ -28,9 +28,10 @@
  * Site constants are loaded and/or defined
  */
 
-define('CONFIG_DIR', BASE_DIR . '/config'); // Define the site configurations directory
-define('VIEWS_DIR', BASE_DIR . '/resources/views'); // Define the views directory
 define('STORAGE_DIR', BASE_DIR . '/storage'); // Define the storage directory
+define('RESOURCES_DIR', BASE_DIR . '/resources'); // Define resources directory
+define('ROUTES_DIR', RESOURCES_DIR . '/routes'); // Define the routes directory
+define('VIEWS_DIR', RESOURCES_DIR . '/views'); // Define the views directory
 
 define('CRADLE_ENVIRONMENT', getenv('CRADLE_ENVIRONMENT')); // The working environment
 define('CRADLE_START', time()); // The timestamp this app is started
@@ -56,7 +57,6 @@ session_start([
  * but 'production' and 'maintenance' will hide them.
  * If you define a custom environment setting you should make sure to create a case for it.
  */
-
 
 $showThrowables = true; // Determines if exceptions should be logged
 
@@ -146,7 +146,6 @@ try {
  * Response is sent back to the user.
  * Output buffering is ended.
  */
-
 
 echo $dispatcher->getResult(); // Send the final output to the client
 ob_end_flush();
