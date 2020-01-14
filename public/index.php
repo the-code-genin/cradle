@@ -5,7 +5,7 @@
  * Cradle
  * ------------------------------------------------------------------
  *
- * Cradle is a lightweight MVC framework for building web apps with PHP.
+ * Cradle is an MVC microframework for building web apps with PHP.
  *
  * It is made with the aim to help php developers avoid working with spaghetti code
  * and embrace the MVC software architecture in as little time as possible. It is totally free to use and open source.

@@ -12,9 +12,6 @@
     	"psr-4": {
     		"App\\": "app/",
             "Cradle\\": "framework/"
-        },
-        "files": [
-            "config/autoload.php"
-        ]
+        }
     }
 }
