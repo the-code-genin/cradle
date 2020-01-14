@@ -17,52 +17,6 @@
  */
 
 
-
- 
-/**
- * ------------------------------------------------------------------
- * ERROR HANDLING
- * ------------------------------------------------------------------
- *
- * Different environments will require different levels of error reporting.
- * By default 'development' will show all errors and exceptions
- * but 'production' and 'maintenance' will hide them.
- * If you define a custom environment setting you should make sure to create a case for it.
- */
-
-$showThrowables = true; // Determines if exceptions should be logged
-
-switch (getenv('APP_ENVIRONMENT')) { // Configure the exceptions and error logging levels based on the environment configuration
-
-	case 'development': // All errors and exceptions are reported in development mode
-		error_reporting(E_ALL);
-		ini_set('display_errors', 'stdout');
-		$showThrowables = true;
-		break;
-
-	case 'maintenance': // Site maintenance mode
-		// Fall through
-
-	case 'production': // No errors and exceptions are reported in production mode
-		error_reporting(0);
-		ini_set('display_errors', 'stderr');
-		$showThrowables = false;
-		break;
-
-	default: // In case the environment was incorrectly set
-		http_response_code(503);
-		echo '<b>Error:</b> The application environment is not set correctly.';
-		exit(1);
-}
-
-// Define a custom error handler for uncaught errors
-// You errors shall not pass ;)
-Cradle\Components\Logger::$showErrors = $showThrowables;
-set_error_handler('Cradle\Components\Logger::handleError');
-
-
-
-
 /**
  * ------------------------------------------------------------------
  * ROUTING
@@ -86,9 +40,7 @@ try {
 	$dispatcher->dispatch($rule);
 } catch (Throwable $e) {
 	// Display the throwable if it is allowed
-	if ($showThrowables) {
-		Cradle\Components\Logger::logThrowable($e);
-	}
+	\Cradle\Components\Logger::logThrowable($e);
 	ob_end_flush();
 	http_response_code(503);
 	exit(1);

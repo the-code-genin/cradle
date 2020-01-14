@@ -16,22 +16,10 @@
  * @author Mohammed Adekunle (Iyiola) <adekunle3317@gmail.com>
  */
 
-// Ensure the server is running the minimum allowed PHP version.
-// Current minimum: 7.2
-if (version_compare(PHP_VERSION, '7.2', '<')) {
-	http_response_code(503);
-	echo "<b>Error:</b> Cradle requires a minimum PHP version of 7.2 to run.<br/><b>Current PHP version:</b> PHP_VERSION";
-	exit(1);
-}
 
-define('BASE_DIR', __DIR__); // Define the base directory
-define('STORAGE_DIR', BASE_DIR . '/storage'); // Define the storage directory
-define('RESOURCES_DIR', BASE_DIR . '/resources'); // Define resources directory
-define('ROUTES_DIR', RESOURCES_DIR . '/routes'); // Define the routes directory
-define('VIEWS_DIR', RESOURCES_DIR . '/views'); // Define the views directory
+// Bootstrap cradle
+require_once __DIR__ . '/bootstrap.php';
 
-require_once BASE_DIR . '/vendor/autoload.php'; // Include the composer autoloader
 
-Dotenv\Dotenv::createImmutable(BASE_DIR)->load(); // Load environment values from the .env file
-
-require_once BASE_DIR . '/public/index.php'; // Fire up cradle to handle an HTTP request...
+// Fire up cradle to handle an HTTP request
+require_once __DIR__ . '/public/index.php';
