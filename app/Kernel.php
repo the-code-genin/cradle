@@ -3,8 +3,10 @@
 namespace App;
 
 use Slim\App;
-use Cradle\Kernel as CradleKernel;
+use Cradle\View;
 use Cradle\Logger;
+use Cradle\ViewCompiler;
+use Cradle\Kernel as CradleKernel;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -59,6 +61,14 @@ abstract class Kernel implements CradleKernel
     }
 
     /**
+     * To be called before app handling is done.
+     * To be defined in a kernel.
+     * 
+     * @return void
+     */
+    abstract protected function boot(): void;
+
+    /**
      * Run the kernel.
      *
      * @param \Psr\Http\Message\ServerRequestInterface|null $request
@@ -72,13 +82,26 @@ abstract class Kernel implements CradleKernel
         // Include the routes to be used by the app
         $this->includeRouteFiles();
 
+        // Any miscellenous configuration
+        $this->boot();
+
         // Register error handler
         $logger = new Logger($this->app);
         $errorMiddleware = $this->app->addErrorMiddleware(SHOW_ERRORS, true, true);
         $errorMiddleware->setDefaultErrorHandler($logger);
 
         // Handle the request
-        $response = $this->app->handle($request);
+        if (getenv('APP_ENVIRONMENT') != 'maintenance') {
+            $response = $this->app->handle($request);
+        } else {
+            /** @var ViewCompiler $viewCompiler A view compiler. */
+            $viewCompiler = $this->app->getContainer()->get('view');
+			$viewCompiler->addView(new View('framework/maintenance.twig'));
+
+            $response = $this->app->getResponseFactory()->createResponse();
+            $response->getBody()->write($viewCompiler->compileViews());
+        }
+
         return $response;
     }
 }

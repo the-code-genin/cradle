@@ -13,4 +13,15 @@ class HTTPKernel extends Kernel
     protected $routesFiles = [
         'web.php',
     ];
+
+    /**
+     * To be called before app handling is done.
+     * To be defined in a kernel.
+     * 
+     * @return void
+     */
+    protected function boot(): void
+    {
+
+    }
 }
