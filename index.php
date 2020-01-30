@@ -18,7 +18,7 @@
 
 
 // Bootstrap cradle
-require_once __DIR__ . '/bootstrap.php';
+$app = require_once __DIR__ . '/bootstrap.php';
 
 
 // Fire up cradle to handle an HTTP request
