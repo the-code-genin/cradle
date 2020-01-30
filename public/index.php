@@ -21,12 +21,6 @@ use Slim\ResponseEmitter;
  */
 
 
-/**
- * ------------------------------------------------------------------
- * HANDLE REQUEST
- * ------------------------------------------------------------------
- */
-
 // Create request
 $requestFactory = ServerRequestCreatorFactory::create();
 $request = $requestFactory->createServerRequestFromGlobals();

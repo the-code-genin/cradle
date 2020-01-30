@@ -39,7 +39,7 @@ abstract class Controller
 			break;
 
 			case 'object': // If a view file is returned
-				if (get_class($body) != View::class) {
+				if (get_class($body) != View::class & !is_subclass_of($body, View::class)) {
 					break;
 				}
 

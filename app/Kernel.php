@@ -4,7 +4,6 @@ namespace App;
 
 use Slim\App;
 use Cradle\View;
-use Cradle\Logger;
 use Cradle\ViewCompiler;
 use Cradle\Kernel as CradleKernel;
 use Psr\Http\Message\ResponseInterface;
@@ -79,16 +78,16 @@ abstract class Kernel implements CradleKernel
         // Register middleware
         $this->registerMiddleWare();
 
-        // Include the routes to be used by the app
-        $this->includeRouteFiles();
-
-        // Any miscellenous configuration
-        $this->boot();
-
         // Register error handler
-        $logger = new Logger($this->app);
+        $logger = $this->app->getContainer()->get('logger');
         $errorMiddleware = $this->app->addErrorMiddleware(SHOW_ERRORS, true, true);
         $errorMiddleware->setDefaultErrorHandler($logger);
+
+        // Any miscellenous configuration in the kernel.
+        $this->boot();
+
+        // Include the routes to be used by the app.
+        $this->includeRouteFiles();
 
         // Handle the request
         if (getenv('APP_ENVIRONMENT') != 'maintenance') {

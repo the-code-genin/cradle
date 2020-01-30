@@ -1,10 +1,13 @@
 <?php
 namespace Cradle;
 
-use Slim\App;
 use Throwable;
 use Cradle\ViewCompiler;
+use Slim\Psr7\Factory\ResponseFactory;
+use Psr\Http\Message\ResponseInterface;
+
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpSpecializedException;
 
 /**
@@ -12,15 +15,12 @@ use Slim\Exception\HttpSpecializedException;
  */
 class Logger
 {
-	/** @var App $app The slim app instance. */
-	protected $app;
-	
-	/**
-     * @param App $app The slim app instance to be used by the kernel.
-     */
-    public function __construct(App $app)
+	/** @var ViewCompiler $viewCompiler The view compiler instance. */
+	protected $viewCompiler;
+
+    public function __construct()
     {
-        $this->app = $app;
+        $this->viewCompiler = new ViewCompiler();
 	}
 
 	/**
@@ -41,7 +41,7 @@ class Logger
 	}
 
 	/**
-	 * Parse a stack trace
+	 * Parse a stack tracehan
 	 *
 	 * @param array $trace
 	 * @return array
@@ -88,7 +88,7 @@ class Logger
 	 * @param boolean $displayErrorDetails
 	 * @param boolean $logErrors
 	 * @param boolean $logErrorDetails
-	 * @return void
+	 * @return ResponseInterface
 	 */
 	public function __invoke (
 		ServerRequestInterface $request,
@@ -96,9 +96,9 @@ class Logger
 		bool $displayErrorDetails,
 		bool $logErrors,
 		bool $logErrorDetails
-	) {
+	): ResponseInterface {
 		$params = [
-			'throwableType' => ucfirst(Logger::getThrowableType($e)),
+			'throwableType' => ucfirst($this->getThrowableType($e)),
 			'throwableClass' => get_class($e),
 			'throwableCode' => $e->getCode(),
 			'throwableMessage' => $e->getMessage(),
@@ -107,17 +107,22 @@ class Logger
 			'throwableTrace' => $this->parseTrace($e->getTrace()),
 		];
 
-		/** @var ViewCompiler $viewCompiler A view compiler. */
-		$viewCompiler = $this->app->getContainer()->get('view');
+		$viewCompiler = $this->viewCompiler;
 
 		if (is_subclass_of($e, HttpSpecializedException::class)) { // Routing error
-			$viewCompiler->addView(new View('framework/error_http.twig', ['exception' => $e]));
+			$view = new View('framework/error_http.twig', ['exception' => $e]);
 		} else if ($displayErrorDetails == true) { // If errors are to be displayed
-			$viewCompiler->addView(new View('framework/error_exception.twig', $params));
+			$view = new View('framework/error_exception.twig', $params);
+		} else { // If in errors are not to be displayed
+			$exception = new HttpInternalServerErrorException($request);
+			$view = new View('framework/error_http.twig', ['exception' => $exception]);
 		}
 
+		$viewCompiler->addView($view);
+
 		// Get the response
-		$response = $this->app->getResponseFactory()->createResponse();
+		$responseFactory = new ResponseFactory();
+		$response = $responseFactory->createResponse()->withHeader('Content-Type', 'text/html');
 		$response->getBody()->write($viewCompiler->compileViews());
 
 		return $response;

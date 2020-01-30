@@ -1,5 +1,6 @@
 <?php
 
+use Cradle\Logger;
 use DI\Container;
 use Slim\Factory\AppFactory;
 use Cradle\ViewCompiler;
@@ -31,19 +32,21 @@ if (version_compare(PHP_VERSION, '7.2', '<')) {
 }
 
 
-// Define file structure
+// Define file structure.
 define('BASE_DIR', __DIR__); // Define the base directory
 define('PUBLIC_DIR', BASE_DIR . '/public'); // Define the public directory
 define('RESOURCES_DIR', BASE_DIR . '/resources'); // Define resources directory
 define('STORAGE_DIR', BASE_DIR . '/storage'); // Define the storage directory
 
 
-// Include the composer autoloader
+// Include the composer autoloader.
 require_once BASE_DIR . '/vendor/autoload.php';
 
 
-// Load environment values from the .env file
-\Dotenv\Dotenv::createImmutable(BASE_DIR)->load();
+// Load environment values from the .env file if a .env file exists.
+if (file_exists(BASE_DIR . '/.env')) {
+	\Dotenv\Dotenv::createImmutable(BASE_DIR)->load();
+}
 
 
 // Set up error handling based on app environment configuration
@@ -70,14 +73,23 @@ switch (getenv('APP_ENVIRONMENT')) { // Configure the exceptions and error loggi
 	break;
 }
 
-// Create a new slim app
+
+// Create a dependency container.
 $container = new Container();
 
-// Add view compiler object
-$container->set('view', function (ContainerInterface $container) {
+
+// Add the view compiler object.
+$container->set('view', function (ContainerInterface $container) use (&$viewCompiler) {
     return new ViewCompiler();
 });
 
+// Add the logger object.
+$container->set('logger', function (ContainerInterface $container) use (&$logger) {
+    return new Logger();
+});
+
+
+// Create a new slim app.
 $app = AppFactory::createFromContainer($container);
 
 
