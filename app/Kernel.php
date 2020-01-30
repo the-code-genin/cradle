@@ -18,7 +18,7 @@ abstract class Kernel implements CradleKernel
     protected $app;
 
     /** @var array $middleware The middlewares to be registered for all routes for every request. */
-    protected $middleware = [];
+    protected $middlewares = [];
 
     /** @var string $routesFile The path(s) to the routes file(s) to be used by the kernel. */
     protected $routesFiles = [];
@@ -39,7 +39,8 @@ abstract class Kernel implements CradleKernel
      */
     protected function registerMiddleWare(): App
     {
-        foreach ($this->middleware as $middleware) {
+        foreach ($this->middlewares as $middlewareClass) {
+            $middleware = new $middlewareClass;
             $this->app->add($middleware);
         }
 

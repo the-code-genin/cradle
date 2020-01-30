@@ -3,14 +3,14 @@ namespace App\Controllers;
 
 use Cradle\View;
 use Cradle\Controller;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class Home extends Controller
 {
     /**
      * The index page.
      */
-    protected function index(RequestInterface $request, object $params)
+    protected function index(ServerRequestInterface $request, object $params)
     {
         return new View('home.twig');
     }
