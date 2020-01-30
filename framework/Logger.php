@@ -66,7 +66,7 @@ class Logger
 						$parsedArg .= get_class($arg);
 						break;
 					default:
-						$parsedArg .= (string) $arg;
+						$parsedArg .= sprintf('"%s"', (string) $arg);
 					break;
 				}
 

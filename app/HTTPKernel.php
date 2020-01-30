@@ -2,6 +2,9 @@
 
 namespace App;
 
+/**
+ * This kernel serves HTTP requests.
+ */
 class HTTPKernel extends Kernel
 {
     /** @var array $middleware The middlewares to be registered for all routes for every request. */

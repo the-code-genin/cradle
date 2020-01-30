@@ -1,32 +1,17 @@
 <?php
 namespace App\Controllers;
 
-use Cradle\Components\Controller;
+use Cradle\View;
+use Cradle\Controller;
+use Psr\Http\Message\RequestInterface;
 
 class Home extends Controller
 {
     /**
      * The index page.
      */
-    public function index(): void
+    protected function index(RequestInterface $request, object $params)
     {
-        $this->loadView('home.twig');
-    }
-
-    /**
-     * The site maintenance page.
-     */
-    public function maintenance(): void
-    {
-        $this->loadView('framework/maintenance.twig');
-    }
-
-    /**
-     * The 404 error page.
-     */
-    public function error404(): void
-    {
-        $this->setStatusCode(404);
-        $this->loadView('framework/error404.twig');
+        return new View('home.twig');
     }
 }
