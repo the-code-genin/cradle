@@ -1,6 +1,9 @@
 <?php
 
+use DI\Container;
 use Slim\Factory\AppFactory;
+use Cradle\ViewCompiler;
+use Psr\Container\ContainerInterface;
 
 /**
  * ------------------------------------------------------------------
@@ -68,7 +71,14 @@ switch (getenv('APP_ENVIRONMENT')) { // Configure the exceptions and error loggi
 }
 
 // Create a new slim app
-$app = AppFactory::create();
+$container = new Container();
+
+// Add view compiler object
+$container->set('view', function (ContainerInterface $container) {
+    return new ViewCompiler();
+});
+
+$app = AppFactory::createFromContainer($container);
 
 
 // Return the new app instance
