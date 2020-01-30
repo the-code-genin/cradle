@@ -3,7 +3,6 @@
 namespace Cradle;
 
 use Psr\Http\Message\ResponseInterface;
-use Slim\App;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -11,5 +10,11 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 interface Kernel
 {
-    public function run(App $app, ServerRequestInterface $request = null): ResponseInterface;
+    /**
+     * Run the kernel.
+     *
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
+     */
+    public function run(ServerRequestInterface $request = null): ResponseInterface;
 }
