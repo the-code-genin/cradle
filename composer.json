@@ -6,7 +6,9 @@
     "require": {
     	"php": "^7.2",
         "twig/twig": "^2.11",
-        "vlucas/phpdotenv": "^4.1"
+        "vlucas/phpdotenv": "^4.1",
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.0"
     },
     "autoload": {
     	"psr-4": {
