@@ -1,5 +1,5 @@
 <?php
-namespace Cradle\Components;
+namespace Cradle;
 
 /**
  * Acts as an abstract representation of a view file.
@@ -39,7 +39,7 @@ class View
 	 */
 	public function getFullFilePath(): string
 	{
-		return VIEWS_DIR . "/{$this->filePath}";
+		return RESOURCES_DIR . '/views/' . $this->filePath;
 	}
 
 	/**

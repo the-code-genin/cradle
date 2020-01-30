@@ -1,9 +1,10 @@
 <?php
-namespace Cradle\Components;
+namespace Cradle;
 
-use Cradle\Components\Exceptions\CompileException;
-use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
+use Cradle\View;
+use Twig\Loader\FilesystemLoader;
+use Cradle\Exceptions\CompileException;
 
 /**
  * A compiler for the views that will eventually be sent to the client.
@@ -41,7 +42,7 @@ class ViewCompiler
 		// Compile the view file
 		$filePath = $view->getRelativeFilePath();
 		$parameters = $view->getParameters();
-		$loader = new FilesystemLoader(VIEWS_DIR);
+		$loader = new FilesystemLoader(RESOURCES_DIR . '/views');
 		$twig = new Environment($loader, []);
 		$output = $twig->render($filePath, $parameters);
 
