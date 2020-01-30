@@ -1,5 +1,9 @@
 <?php
 
+use App\HTTPKernel;
+use Slim\Factory\ServerRequestCreatorFactory;
+use Slim\ResponseEmitter;
+
 /**
  * ------------------------------------------------------------------
  * Cradle
@@ -19,46 +23,22 @@
 
 /**
  * ------------------------------------------------------------------
- * ROUTING
+ * HANDLE REQUEST
  * ------------------------------------------------------------------
- *
- * The URI is matched with a routing rule.
- * If no valid rule is found the 404 error route is served.
- * In maintenance mode the maiantenance route is served.
  */
 
-try {
-	// Get the route rule to be used to handle the request
-	if (getenv('APP_ENVIRONMENT') != 'maintenance') {
-		$rule = Cradle\Routing\Router::getRouteRule();
-	} else {
-		$rule = App\Config\ROUTES['maintenance'];
-	}
-
-	// Dispatch the route rule to handle the request
-	$dispatcher = new Cradle\Routing\Dispatcher();
-	$dispatcher->dispatch($rule);
-} catch (Throwable $e) {
-	// Display the throwable if it is allowed
-	\Cradle\Components\Logger::logThrowable($e);
-	ob_end_flush();
-	http_response_code(503);
-	exit(1);
-}
+// Create request
+$requestFactory = ServerRequestCreatorFactory::create();
+$request = $requestFactory->createServerRequestFromGlobals();
 
 
+// Handle request
+$kernel = new HTTPKernel($app);
+$response = $kernel->run($request);
 
 
-/**
- * ------------------------------------------------------------------
- * OUTPUT
- * ------------------------------------------------------------------
- *
- * Response is sent back to the user.
- * Output buffering is ended.
- */
-
-echo $dispatcher->getResult(); // Send the final output to the client
-ob_end_flush();
+// Send response
+$responseEmitter = new ResponseEmitter();
+$responseEmitter->emit($response);
 
 exit(0); // Exit successfully

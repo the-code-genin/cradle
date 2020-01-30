@@ -51,6 +51,7 @@ abstract class Kernel implements CradleKernel
      */
     protected function includeRouteFiles(): void
     {
+        $app = $this->app;
         foreach ($this->routesFiles as $file) {
             require_once RESOURCES_DIR . '/routes/' . $file;
         }
@@ -62,7 +63,7 @@ abstract class Kernel implements CradleKernel
      * @param \Psr\Http\Message\ServerRequestInterface|null $request
      * @return ResponseInterface
      */
-    public function run(?ServerRequestInterface $request = null): ResponseInterface
+    public function run(ServerRequestInterface $request = null): ResponseInterface
     {
         // Register middleware
         $this->registerMiddleWare();
