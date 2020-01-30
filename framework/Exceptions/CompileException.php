@@ -1,5 +1,5 @@
 <?php
-namespace Cradle\Components\Exceptions;
+namespace Cradle\Exceptions;
 
 /**
  * This exception is thrown when there is an error while compiling a view.

@@ -1,0 +1,15 @@
+{% extends 'framework/layout.twig' %}
+
+{% block title %}{{ exception.title }}{% endblock %}
+
+{% block content %}
+	<div class="box">
+		
+		<h1>{{ exception.code ~ ' ' ~ attribute(exception, 'getMessage') }}</h1>
+
+		<div class="divider"></div>
+
+		<p>{{ exception.description }}</p>
+
+	</div>
+{% endblock %}
