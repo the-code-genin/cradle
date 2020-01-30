@@ -79,12 +79,12 @@ $container = new Container();
 
 
 // Add the view compiler object.
-$container->set('view', function (ContainerInterface $container) use (&$viewCompiler) {
+$container->set('view', function (ContainerInterface $container) {
     return new ViewCompiler();
 });
 
 // Add the logger object.
-$container->set('logger', function (ContainerInterface $container) use (&$logger) {
+$container->set('logger', function (ContainerInterface $container) {
     return new Logger();
 });
 
