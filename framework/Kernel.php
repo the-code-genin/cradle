@@ -6,15 +6,15 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * An app kernel interface
+ * An app kernel interface.
  */
 interface Kernel
 {
     /**
-     * Run the kernel.
+     * Handle a server request.
      *
      * @param ServerRequestInterface $request
      * @return ResponseInterface
      */
-    public function run(ServerRequestInterface $request = null): ResponseInterface;
+    public function handle(ServerRequestInterface $request = null): ResponseInterface;
 }

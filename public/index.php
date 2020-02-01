@@ -28,7 +28,7 @@ $request = $requestFactory->createServerRequestFromGlobals();
 
 // Handle request
 $kernel = new HTTPKernel($app);
-$response = $kernel->run($request);
+$response = $kernel->handle($request);
 
 
 // Send response

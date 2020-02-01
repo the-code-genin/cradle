@@ -75,6 +75,7 @@ switch (getenv('APP_ENVIRONMENT')) { // Configure the exceptions and error loggi
 
 
 // Create a dependency container.
+// All your container bindings should be defined here.
 $container = new Container();
 
 

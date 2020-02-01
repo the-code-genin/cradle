@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Representation of an abstract kernel
+ * Abstract representation of a kernel
  */
 abstract class Kernel implements CradleKernel
 {
@@ -69,12 +69,12 @@ abstract class Kernel implements CradleKernel
     abstract protected function boot(): void;
 
     /**
-     * Run the kernel.
+     * Handle a server request.
      *
      * @param \Psr\Http\Message\ServerRequestInterface|null $request
      * @return ResponseInterface
      */
-    public function run(ServerRequestInterface $request = null): ResponseInterface
+    public function handle(ServerRequestInterface $request = null): ResponseInterface
     {
         // Register middleware
         $this->registerMiddleWare();
