@@ -65,4 +65,14 @@ class ViewCompiler
 
 		return $output;
 	}
+
+	/**
+	 * Clears the views in the view compiler.
+	 *
+	 * @return void
+	 */
+	public function clearViews(): void
+	{
+		$this->views = [];
+	}
 }
