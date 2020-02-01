@@ -1,6 +1,6 @@
 {
     "name": "iyiola-am/cradle",
-    "description": "An PHP MVC microframework built on Slim.",
+    "description": "A PHP MVC microframework built on Slim.",
     "type": "project",
     "license": "MIT",
     "require": {
