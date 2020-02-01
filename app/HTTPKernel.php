@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Middleware\SampleMiddleware;
+use Slim\Middleware\MethodOverrideMiddleware;
 
 /**
  * This kernel serves HTTP requests.
@@ -11,6 +12,7 @@ class HTTPKernel extends Kernel
 {
     /** @var array $middleware The middleware classes to be registered for all routes for every request. */
     protected $middlewares = [
+        MethodOverrideMiddleware::class,
         SampleMiddleware::class,
     ];
 
