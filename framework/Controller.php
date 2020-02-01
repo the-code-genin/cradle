@@ -10,8 +10,11 @@ use Psr\Http\Message\ResponseInterface;
  */
 abstract class Controller
 {
-	/** @var Container $container A container instance */
+	/** @var Container $container A container instance. */
 	protected $container;
+
+	/** @var ResponseInterface $response The current response being handled by the controller. */
+	protected $response;
 
 	public function __construct(Container $container)
 	{
@@ -44,6 +47,7 @@ abstract class Controller
 				}
 
 				$viewCompiler = $this->container->get('view');
+				$viewCompiler->clearViews();
 				$viewCompiler->addView($body);
 				$response->getBody()->write($viewCompiler->compileViews());
 				$response = $response->withHeader('Content-Type', 'text/html');
@@ -65,6 +69,7 @@ abstract class Controller
 		$request = $arguments[0];
 		$response = $arguments[1];
 		$params = (object) $arguments[2];
+		$this->response = $response;
 
 		$body = call_user_func_array([$this, $name], [$request, $params]);
 		$response = $this->parseResponseBody($response, $body);

@@ -41,7 +41,7 @@ class Logger
 	}
 
 	/**
-	 * Parse a stack tracehan
+	 * Parse a stack trace.
 	 *
 	 * @param array $trace
 	 * @return array
