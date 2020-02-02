@@ -12,10 +12,11 @@ Developed and maintained by [Mohammed I. Adekunle](https://github.com/Iyiola-am)
 
 ## Installation
 
-- Download (or clone the repository) and place the files in your web server's root directory.
+- Download (or clone the repository **RECOMMENDED**) and place the files in your web server's root directory.
 - Configure your web server to direct requests to the **public** folder if the applicable asset file or directory being requested exists in the folder.
 - Else, redirect all other requests to the **index.php** file in the root directory (A sample configuration for apache server has already been provided by default).
 - Run "composer install".
+- Copy the **.env.example** file to **.env** and configure your app.
 - Build something awesome.
 
 ## Requirements
