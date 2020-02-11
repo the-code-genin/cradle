@@ -33,12 +33,12 @@ abstract class Controller
 		switch (gettype($body)) {
 			case 'string': // Plain text
 				$response->getBody()->write($body);
-				$response = $response->withHeader('Content-Type', 'text/plain');
+				$contentType = 'text/plain';
 			break;
 
 			case 'array': // An array
 				$response->getBody()->write(json_encode($body));
-				$response = $response->withHeader('Content-Type', 'application/json');
+				$contentType = 'application/json';
 			break;
 
 			case 'object': // If a view file is returned
@@ -50,8 +50,16 @@ abstract class Controller
 				$viewCompiler->clearViews();
 				$viewCompiler->addView($body);
 				$response->getBody()->write($viewCompiler->compileViews());
-				$response = $response->withHeader('Content-Type', 'text/html');
+				$contentType = 'text/html';
 			break;
+
+			default: // If now response from the controller
+				$contentType = null;
+			break;
+		}
+
+		if (!is_null($contentType) && count($response->getHeader('Content-Type')) == 0) { // If a content type was not set and one was detected.
+			$response = $response->withHeader('Content-Type', $contentType);
 		}
 
 		return $response;
