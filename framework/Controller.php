@@ -66,6 +66,30 @@ abstract class Controller
 	}
 
 	/**
+	 * Set a header
+	 *
+	 * @param string $name
+	 * @param string $value
+	 * @return array The array of header values for that header
+	 */
+	protected function setHeader(string $name, string $value): array
+	{
+		$this->response = $this->response->withHeader($name, $value);
+		return $this->response->getHeader($name);
+	}
+
+	/**
+	 * Get an array of header values for a particular header
+	 *
+	 * @param string $name
+	 * @return array
+	 */
+	protected function getHeader(string $name): array
+	{
+		return $this->response->getHeader($name);
+	}
+
+	/**
 	 * When a controller method is called
 	 *
 	 * @param string $name
