@@ -23,7 +23,7 @@ use Slim\ResponseEmitter;
 
 
 // Bootstrap cradle
-$app = require_once __DIR__ . '/bootstrap.php';
+$app = require_once dirname(__DIR__) . '/bootstrap.php';
 
 
 // Create request
