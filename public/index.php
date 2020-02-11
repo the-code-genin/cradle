@@ -21,6 +21,11 @@ use Slim\ResponseEmitter;
  */
 
 
+
+// Bootstrap cradle
+$app = require_once __DIR__ . '/bootstrap.php';
+
+
 // Create request
 $requestFactory = ServerRequestCreatorFactory::create();
 $request = $requestFactory->createServerRequestFromGlobals();
