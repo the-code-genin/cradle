@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers;
+namespace App\Controllers\Web;
 
 use Cradle\View;
 use Cradle\Controller;

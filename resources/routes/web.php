@@ -1,6 +1,6 @@
 <?php
 
-use App\Controllers\Home;
+use App\Controllers\Web\Home;
 
 /**
  * Routing rules are defined here.
