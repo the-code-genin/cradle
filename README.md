@@ -6,6 +6,8 @@ Cradle features a well structured directory and uses composer for dependency man
 
 You should get familiar with [the Slim microframework](http://www.slimframework.com/) first before trying out cradle as most Cradle components are built on it's components.
 
+Cradle can be used as a framework for regular web apps, APIs and more. It is component agnostic and only defines a router and application structure. The rest is left to you to figure out.
+
 If you appreciate the project, remember to leave a star, thank you.
 
 Developed and maintained by [Mohammed I. Adekunle](https://github.com/Iyiola-am).
@@ -31,8 +33,8 @@ Developed and maintained by [Mohammed I. Adekunle](https://github.com/Iyiola-am)
 
 Cradle features a simple directory structure;
 
-- **app:** This is where an app's controller, model, middleware and view files are stored.
-- **framework:** This directory contains custom app components that are specific to the app but aren't third-party dependencies, e.g extensions of default cradle components.
+- **app:** This is where an app's controllers, models, middleware and view files are stored.
+- **framework:** This directory contains custom app components that are specific to the app but aren't third-party dependencies, e.g. extensions of default cradle components.
 - **public:** This is where all publicly available files are stored, the favicon.ico, robots.txt, javascript files and so on are located here.
 - **resources:** This is where you app's resources (view files, routes e.t.c) are stored. The files in this directory typical don't change throughout the lifetime of your app.
 - **storage:** This directory contains all the files that are not meant to be accessible to the public by default e.g font files, system logs e.t.c For Twelve factor apps, you should consider using an external service for storing your files.
@@ -65,11 +67,11 @@ Views files are stored in the **resources/views** directory. You may extend the 
 
 ### Middleware
 
-Cradle being built on [the Slim microframework](http://www.slimframework.com/) also supports middlewares, middlewares are located in **app/Middleware** directory. A sample before middleware has been provided in the code.
+Cradle being built on [the Slim microframework](http://www.slimframework.com/) also supports middlewares, middlewares are located in **app/Middleware** directory. A sample before middleware has been provided in the code. A CORS middleware also comes with cradle for the API.
 
 ### Routing
 
-Cradle uses the default router used in [the Slim microframework](http://www.slimframework.com/).
+Cradle uses the default router used in [the Slim microframework](http://www.slimframework.com/). The route are defined in the **resources/routes** directory. You can use one or more route files to specify your routes but you must include the files in the HTTPKernel class for them to be acknowledged while routing.
 
 ## License
 
