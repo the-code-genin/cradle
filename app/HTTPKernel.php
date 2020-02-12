@@ -19,6 +19,7 @@ class HTTPKernel extends Kernel
     /** @var string $routesFile The path(s) to the routes file(s) to be used by the kernel. */
     protected $routesFiles = [
         'web.php',
+        'api.php',
     ];
 
     /**

@@ -7,7 +7,7 @@ use Psr\Http\Message\ServerRequestInterface;
 class Home extends Controller
 {
     /**
-     * The index page.
+     * The index route.
      */
     protected function index(ServerRequestInterface $request, object $params)
     {
