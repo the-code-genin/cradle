@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Middleware\SampleMiddleware;
 use Slim\Middleware\MethodOverrideMiddleware;
 
 /**
@@ -13,7 +12,6 @@ class HTTPKernel extends Kernel
     /** @var array $middleware The middleware classes to be registered for all routes for every request. */
     protected $middlewares = [
         MethodOverrideMiddleware::class,
-        SampleMiddleware::class,
     ];
 
     /** @var string $routesFile The path(s) to the routes file(s) to be used by the kernel. */
