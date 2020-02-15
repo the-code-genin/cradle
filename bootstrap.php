@@ -45,6 +45,10 @@ define('RESOURCES_DIR', BASE_DIR . '/resources'); // Define resources directory
 define('STORAGE_DIR', BASE_DIR . '/storage'); // Define the storage directory
 
 
+// Set default timezone for app to UTC.
+date_default_timezone_set('UTC');
+
+
 // Include the composer autoloader.
 require_once BASE_DIR . '/vendor/autoload.php';
 

@@ -3,7 +3,7 @@
 use Dotenv\Dotenv;
 use Cradle\Migration;
 
-require __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 define('BASE_DIR', __DIR__); // Define the base directory
 
