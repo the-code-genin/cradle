@@ -18,7 +18,7 @@ class CORSMiddleware extends MiddleWare
             ->withHeader('Access-Control-Allow-Credentials', 'true')
             ->withHeader('Access-Control-Max-Age', '86400')
             ->withHeader('Access-Control-Allow-Headers', [
-                'Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization', 'X-Http-Method-Override'
+                'Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization', 'X-Http-Method-Override', 'Cookie'
             ])
             ->withHeader('Access-Control-Allow-Methods', ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'])
             ->withHeader('Access-Control-Allow-Origin', '*');
