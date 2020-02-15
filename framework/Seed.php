@@ -9,10 +9,10 @@ use \Illuminate\Database\Capsule\Manager as Capsule;
 abstract class Seed extends AbstractSeed
 {
     /** @var \Illuminate\Database\Capsule\Manager $capsule */
-    public $capsule;
+    protected $capsule;
 
     /** @var Generator $factory */
-    public $factory;
+    protected $faker;
 
     public function init()
     {
