@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\Globals;
 use DI\Container;
 use Cradle\Logger;
 use Cradle\ViewCompiler;
@@ -130,6 +131,7 @@ $filesystem = new Filesystem($adapter);
 // Create a dependency container.
 // All your container bindings should be defined here.
 $container = new Container();
+Globals::set('container', $container);
 
 
 // Add the view compiler object.
