@@ -4,7 +4,7 @@
 # directories reside.
 # The path is relative to this config file.
 # Trailing slashes will be ignored.
-source: /
+source: /resources/tasks
 
 # The suffix is meant to target the task files inside the ":source" directory.
 # Please note if you change this value, you need

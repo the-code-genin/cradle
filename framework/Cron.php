@@ -2,6 +2,7 @@
 
 namespace Cradle;
 
+use Slim\App;
 use DI\Container;
 
 /**
@@ -13,9 +14,11 @@ abstract class Cron
 	/** @var Container $container A container instance. */
 	protected $container;
 
-	public function __construct(Container $container)
+	public function __construct()
 	{
-		$this->container = $container;
+		/** @var App $app */
+		$app = require_once dirname(__DIR__) . '/bootstrap.php';
+		$this->container = $app->getContainer();
 	}
 
 	/**

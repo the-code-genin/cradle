@@ -12,7 +12,7 @@ class SampleCron extends Cron
      * @param object $params
      * @return void
      */
-    public function everyMinute(object $params): void
+    public function everyMinute(): void
     {
         // Code
     }
