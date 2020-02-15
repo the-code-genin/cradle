@@ -79,58 +79,8 @@ switch (getenv('APP_ENVIRONMENT')) { // Configure the exceptions and error loggi
 	break;
 }
 
-
 // Set default timezone for app to UTC.
 date_default_timezone_set(getenv('TIME_ZONE') ? getenv('TIME_ZONE') : 'UTC');
-
-
-// Set up a the database connection.
-$capsule = new Capsule;
-
-$capsule->addConnection([
-    'driver'    => getenv('DB_DRIVER') ? getenv('DB_DRIVER') : 'mysql',
-    'host'      => getenv('DB_HOST') ? getenv('DB_HOST') : 'localhost',
-	'port'      => getenv('DB_PORT') ? getenv('DB_PORT') : '3306',
-    'database'  => getenv('DB_NAME') ? getenv('DB_NAME') : 'test',
-    'username'  => getenv('DB_USERNAME') ? getenv('DB_USERNAME') : 'root',
-    'password'  => getenv('DB_PASSWORD') ? getenv('DB_PASSWORD') : '',
-    'charset'   => 'utf8',
-    'collation' => 'utf8_unicode_ci',
-    'prefix'    => '',
-]);
-
-$capsule->setAsGlobal();
-$capsule->bootEloquent();
-
-
-// Set up email library
-$mailer = new PHPMailer(SHOW_ERRORS);
-
-// Server settings
-$mailer->SMTPDebug = SMTP::DEBUG_SERVER;
-$mailer->isSMTP();
-$mailer->Host       = getenv('SMTP_HOST') ? getenv('SMTP_HOST') : 'smtp.host.com';
-$mailer->SMTPAuth   = (bool) getenv('SMTP_VALIDATION') ? getenv('SMTP_VALIDATION') : 1;
-$mailer->Username   = getenv('SMTP_USERNAME') ? getenv('SMTP_USERNAME') : 'username';
-$mailer->Password   = getenv('SMTP_PASSWORD') ? getenv('SMTP_PASSWORD') : 'password';
-$mailer->SMTPSecure = getenv('SMTP_CRYPTO') ? getenv('SMTP_CRYPTO') : 'tls';
-$mailer->Port       = getenv('SMTP_PORT') ? getenv('SMTP_PORT') : '587';
-
-
-// Set up filesystem
-switch (getenv('FS_DRIVER')) {
-	case 'local':
-		$adapter = new Local(STORAGE_DIR);
-		break;
-	
-	default:
-		http_response_code(503);
-		echo '<b>Error:</b> Invalid file system driver.';
-		exit(1);
-}
-
-$filesystem = new Filesystem($adapter);
-
 
 
 // Create a dependency container.
@@ -150,18 +100,61 @@ $container->set('logger', function (ContainerInterface $container) {
 });
 
 // Add the database connection object.
-$container->set('db', function (ContainerInterface $container) use (&$capsule) {
+$container->set('db', function (ContainerInterface $container) {
+	// Set up a the database connection.
+	$capsule = new Capsule;
+
+	$capsule->addConnection([
+		'driver'    => getenv('DB_DRIVER') ? getenv('DB_DRIVER') : 'mysql',
+		'host'      => getenv('DB_HOST') ? getenv('DB_HOST') : 'localhost',
+		'port'      => getenv('DB_PORT') ? getenv('DB_PORT') : '3306',
+		'database'  => getenv('DB_NAME') ? getenv('DB_NAME') : 'test',
+		'username'  => getenv('DB_USERNAME') ? getenv('DB_USERNAME') : 'root',
+		'password'  => getenv('DB_PASSWORD') ? getenv('DB_PASSWORD') : '',
+		'charset'   => 'utf8',
+		'collation' => 'utf8_unicode_ci',
+		'prefix'    => '',
+	]);
+
+	$capsule->setAsGlobal();
+	$capsule->bootEloquent();
+
     return $capsule;
 });
 
 // Add the database connection object.
-$container->set('mailer', function (ContainerInterface $container) use (&$mailer) {
+$container->set('mailer', function (ContainerInterface $container) {
+	// Set up email library
+	$mailer = new PHPMailer(SHOW_ERRORS);
+
+	// Server settings
+	$mailer->SMTPDebug = SMTP::DEBUG_SERVER;
+	$mailer->isSMTP();
+	$mailer->Host       = getenv('SMTP_HOST') ? getenv('SMTP_HOST') : 'smtp.host.com';
+	$mailer->SMTPAuth   = (bool) getenv('SMTP_VALIDATION') ? getenv('SMTP_VALIDATION') : 1;
+	$mailer->Username   = getenv('SMTP_USERNAME') ? getenv('SMTP_USERNAME') : 'username';
+	$mailer->Password   = getenv('SMTP_PASSWORD') ? getenv('SMTP_PASSWORD') : 'password';
+	$mailer->SMTPSecure = getenv('SMTP_CRYPTO') ? getenv('SMTP_CRYPTO') : 'tls';
+	$mailer->Port       = getenv('SMTP_PORT') ? getenv('SMTP_PORT') : '587';
+
     return $mailer;
 });
 
 // Add the file system object.
-$container->set('filesystem', function (ContainerInterface $container) use (&$filesystem) {
-    return $filesystem;
+$container->set('filesystem', function (ContainerInterface $container) {
+	// Set up filesystem
+	switch (getenv('FS_DRIVER')) {
+		case 'local':
+			$adapter = new Local(STORAGE_DIR);
+			break;
+		
+		default:
+			http_response_code(503);
+			echo '<b>Error:</b> Invalid file system driver.';
+			exit(1);
+	}
+
+    return new Filesystem($adapter);
 });
 
 
