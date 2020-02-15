@@ -3,6 +3,7 @@
 use DI\Container;
 use Cradle\Logger;
 use App\Helpers\Globals;
+use Aura\Session\SessionFactory;
 use Cradle\ViewCompiler;
 use Slim\Factory\AppFactory;
 use PHPMailer\PHPMailer\SMTP;
@@ -11,6 +12,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use League\Flysystem\Adapter\Local;
 use Psr\Container\ContainerInterface;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * ------------------------------------------------------------------
@@ -155,6 +157,13 @@ $container->set('filesystem', function (ContainerInterface $container) {
 	}
 
     return new Filesystem($adapter);
+});
+
+// Add the session object.
+$container->set('session', function (ContainerInterface $container) {
+	$session = new Session();
+	$session->start();
+	return $session;
 });
 
 
