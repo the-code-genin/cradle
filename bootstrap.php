@@ -89,6 +89,7 @@ $capsule->addConnection([
 ]);
 
 $capsule->setAsGlobal();
+$capsule->bootEloquent();
 
 
 // Create a dependency container.
