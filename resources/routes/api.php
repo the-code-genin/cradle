@@ -9,5 +9,5 @@ use Slim\Routing\RouteCollectorProxy;
  */
 
 $app->group('/api/v0', function (RouteCollectorProxy $group) {
-    $group->any('', Home::class.':index');
+    $group->any('[{any:.*}]', Home::class.':index');
 })->add(new CORSMiddleware);
