@@ -5,6 +5,8 @@ use Cradle\Migration;
 
 require __DIR__ . '/vendor/autoload.php';
 
+define('BASE_DIR', __DIR__); // Define the base directory
+
 // Load environment values from the .env file if a .env file exists.
 if (file_exists(BASE_DIR . '/.env')) {
     Dotenv::createImmutable(BASE_DIR)->load();

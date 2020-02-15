@@ -17,6 +17,7 @@ class Migration extends AbstractMigration
     public function init()
     {
         // Load environment values from the .env file if a .env file exists.
+        define('BASE_DIR', '../'); // Define the base directory
         if (file_exists(BASE_DIR . '/.env')) {
             Dotenv::createImmutable(BASE_DIR)->load();
         }
