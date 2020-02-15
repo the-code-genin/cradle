@@ -5,7 +5,9 @@ use Cradle\Logger;
 use Cradle\ViewCompiler;
 use Slim\Factory\AppFactory;
 use PHPMailer\PHPMailer\SMTP;
+use League\Flysystem\Filesystem;
 use PHPMailer\PHPMailer\PHPMailer;
+use League\Flysystem\Adapter\Local;
 use Psr\Container\ContainerInterface;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -76,6 +78,7 @@ switch (getenv('APP_ENVIRONMENT')) { // Configure the exceptions and error loggi
 	break;
 }
 
+
 // Set up a the database connection.
 $capsule = new Capsule;
 
@@ -97,7 +100,7 @@ $capsule->bootEloquent();
 // Set up email library
 $mailer = new PHPMailer(SHOW_ERRORS);
 
-//Server settings
+// Server settings
 $mailer->SMTPDebug = SMTP::DEBUG_SERVER;
 $mailer->isSMTP();
 $mailer->Host       = getenv('SMTP_HOST');
@@ -106,6 +109,23 @@ $mailer->Username   = getenv('SMTP_USERNAME');
 $mailer->Password   = getenv('SMTP_PASSWORD');
 $mailer->SMTPSecure = getenv('SMTP_CRYPTO');
 $mailer->Port       = getenv('SMTP_PORT');
+
+
+// Set up filesystem
+switch (getenv('FS_DRIVER')) {
+	case 'local':
+		$adapter = new Local(STORAGE_DIR);
+		break;
+	
+	default:
+		http_response_code(503);
+		echo '<b>Error:</b> Invalid file system driver.';
+		exit(1);
+}
+
+$filesystem = new Filesystem($adapter);
+
+
 
 // Create a dependency container.
 // All your container bindings should be defined here.
@@ -130,6 +150,11 @@ $container->set('db', function (ContainerInterface $container) use (&$capsule) {
 // Add the database connection object.
 $container->set('mailer', function (ContainerInterface $container) use (&$mailer) {
     return $mailer;
+});
+
+// Add the file system object.
+$container->set('filesystem', function (ContainerInterface $container) use (&$filesystem) {
+    return $filesystem;
 });
 
 

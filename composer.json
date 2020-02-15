@@ -16,7 +16,8 @@
         "nesbot/carbon": "^2.30",
         "robmorgan/phinx": "^0.11.4",
         "league/flysystem": "^1.0",
-        "vlucas/valitron": "^1.4"
+        "vlucas/valitron": "^1.4",
+        "carbon-cli/carbon-cli": "^1.2"
     },
     "autoload": {
     	"psr-4": {
