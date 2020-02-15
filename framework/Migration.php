@@ -5,7 +5,7 @@ namespace Cradle;
 use Phinx\Migration\AbstractMigration;
 use \Illuminate\Database\Capsule\Manager as Capsule;
 
-class Migration extends AbstractMigration
+abstract class Migration extends AbstractMigration
 {
     /** @var \Illuminate\Database\Capsule\Manager $capsule */
     public $capsule;

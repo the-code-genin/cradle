@@ -6,7 +6,7 @@ use Phinx\Seed\AbstractSeed;
 use Faker\{Factory, Generator};
 use \Illuminate\Database\Capsule\Manager as Capsule;
 
-class Seed extends AbstractSeed
+abstract class Seed extends AbstractSeed
 {
     /** @var \Illuminate\Database\Capsule\Manager $capsule */
     public $capsule;
