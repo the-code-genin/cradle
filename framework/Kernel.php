@@ -14,7 +14,7 @@ interface Kernel
      * Handle a server request.
      *
      * @param ServerRequestInterface $request
-     * @return ?ResponseInterface
+     * @return ResponseInterface
      */
-    public function handle(ServerRequestInterface $request = null): ?ResponseInterface;
+    public function handle(ServerRequestInterface $request = null): ResponseInterface;
 }
