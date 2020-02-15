@@ -15,10 +15,12 @@ class SeedUsersTable extends Seed
      */
     public function run()
     {
+        $hex = bin2hex(random_bytes(64));
+
         $user = new User;
         $user->username = $this->faker->username;
         $user->password = password_hash('password', PASSWORD_DEFAULT);
-        $user->auth_token = password_hash(bin2hex(random_bytes(100)), PASSWORD_DEFAULT);
+        $user->auth_token = password_hash($hex, PASSWORD_DEFAULT) . '.' . $hex;
         $user->save();
     }
 }
