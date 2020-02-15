@@ -4,6 +4,8 @@ use DI\Container;
 use Cradle\Logger;
 use Cradle\ViewCompiler;
 use Slim\Factory\AppFactory;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\PHPMailer;
 use Psr\Container\ContainerInterface;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -92,6 +94,19 @@ $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
 
+// Set up email library
+$mailer = new PHPMailer(SHOW_ERRORS);
+
+//Server settings
+$mailer->SMTPDebug = SMTP::DEBUG_SERVER;
+$mailer->isSMTP();
+$mailer->Host       = getenv('SMTP_HOST');
+$mailer->SMTPAuth   = (bool) getenv('SMTP_VALIDATION');
+$mailer->Username   = getenv('SMTP_USERNAME');
+$mailer->Password   = getenv('SMTP_PASSWORD');
+$mailer->SMTPSecure = getenv('SMTP_CRYPTO');
+$mailer->Port       = getenv('SMTP_PORT');
+
 // Create a dependency container.
 // All your container bindings should be defined here.
 $container = new Container();
@@ -110,6 +125,11 @@ $container->set('logger', function (ContainerInterface $container) {
 // Add the database connection object.
 $container->set('db', function (ContainerInterface $container) use (&$capsule) {
     return $capsule;
+});
+
+// Add the database connection object.
+$container->set('mailer', function (ContainerInterface $container) use (&$mailer) {
+    return $mailer;
 });
 
 
