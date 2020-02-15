@@ -3,6 +3,7 @@ namespace Cradle;
 
 use DI\Container;
 use Psr\Http\Message\ResponseInterface;
+use Illuminate\Database\Capsule\Manager;
 
 /**
  * The base class for all controllers in the system.
@@ -16,9 +17,13 @@ abstract class Controller
 	/** @var ResponseInterface $response The current response being handled by the controller. */
 	protected $response;
 
+	/** @var Manager $db The database connection instance. */
+	protected $db;
+
 	public function __construct(Container $container)
 	{
 		$this->container = $container;
+		$this->db = $container->get('db');
 	}
 
 	/**

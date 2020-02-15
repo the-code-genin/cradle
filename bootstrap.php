@@ -1,10 +1,11 @@
 <?php
 
-use Cradle\Logger;
 use DI\Container;
-use Slim\Factory\AppFactory;
+use Cradle\Logger;
 use Cradle\ViewCompiler;
+use Slim\Factory\AppFactory;
 use Psr\Container\ContainerInterface;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 /**
  * ------------------------------------------------------------------
@@ -73,6 +74,22 @@ switch (getenv('APP_ENVIRONMENT')) { // Configure the exceptions and error loggi
 	break;
 }
 
+// Set up a the database connection.
+$capsule = new Capsule;
+
+$capsule->addConnection([
+    'driver'    => getenv('DB_DRIVER') ? getenv('DB_DRIVER') : 'mysql',
+    'host'      => getenv('DB_HOST') ? getenv('DB_HOST') : 'localhost',
+    'database'  => getenv('DB_NAME') ? getenv('DB_NAME') : 'test',
+    'username'  => getenv('DB_USERNAME') ? getenv('DB_USERNAME') : 'root',
+    'password'  => getenv('DB_PASSWORD') ? getenv('DB_PASSWORD') : '',
+    'charset'   => 'utf8',
+    'collation' => 'utf8_unicode_ci',
+    'prefix'    => '',
+]);
+
+$capsule->setAsGlobal();
+
 
 // Create a dependency container.
 // All your container bindings should be defined here.
@@ -87,6 +104,11 @@ $container->set('view', function (ContainerInterface $container) {
 // Add the logger object.
 $container->set('logger', function (ContainerInterface $container) {
     return new Logger();
+});
+
+// Add the database connection object.
+$container->set('db', function (ContainerInterface $container) use (&$capsule) {
+    return $capsule;
 });
 
 
