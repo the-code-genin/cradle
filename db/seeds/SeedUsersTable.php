@@ -18,7 +18,7 @@ class SeedUsersTable extends Seed
         $user = new User;
         $user->username = $this->faker->username;
         $user->password = password_hash('password', PASSWORD_DEFAULT);
-        $user->auth_token = md5('auth_token');
+        $user->auth_token = password_hash(bin2hex(random_bytes(100)), PASSWORD_DEFAULT);
         $user->save();
     }
 }
