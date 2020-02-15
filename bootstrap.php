@@ -1,8 +1,8 @@
 <?php
 
-use App\Helpers\Globals;
 use DI\Container;
 use Cradle\Logger;
+use App\Helpers\Globals;
 use Cradle\ViewCompiler;
 use Slim\Factory\AppFactory;
 use PHPMailer\PHPMailer\SMTP;
@@ -45,10 +45,6 @@ define('RESOURCES_DIR', BASE_DIR . '/resources'); // Define resources directory
 define('STORAGE_DIR', BASE_DIR . '/storage'); // Define the storage directory
 
 
-// Set default timezone for app to UTC.
-date_default_timezone_set('UTC');
-
-
 // Include the composer autoloader.
 require_once BASE_DIR . '/vendor/autoload.php';
 
@@ -84,6 +80,10 @@ switch (getenv('APP_ENVIRONMENT')) { // Configure the exceptions and error loggi
 }
 
 
+// Set default timezone for app to UTC.
+date_default_timezone_set(getenv('TIME_ZONE') ? getenv('TIME_ZONE') : 'UTC');
+
+
 // Set up a the database connection.
 $capsule = new Capsule;
 
@@ -109,12 +109,12 @@ $mailer = new PHPMailer(SHOW_ERRORS);
 // Server settings
 $mailer->SMTPDebug = SMTP::DEBUG_SERVER;
 $mailer->isSMTP();
-$mailer->Host       = getenv('SMTP_HOST');
-$mailer->SMTPAuth   = (bool) getenv('SMTP_VALIDATION');
-$mailer->Username   = getenv('SMTP_USERNAME');
-$mailer->Password   = getenv('SMTP_PASSWORD');
-$mailer->SMTPSecure = getenv('SMTP_CRYPTO');
-$mailer->Port       = getenv('SMTP_PORT');
+$mailer->Host       = getenv('SMTP_HOST') ? getenv('SMTP_HOST') : 'smtp.host.com';
+$mailer->SMTPAuth   = (bool) getenv('SMTP_VALIDATION') ? getenv('SMTP_VALIDATION') : 1;
+$mailer->Username   = getenv('SMTP_USERNAME') ? getenv('SMTP_USERNAME') : 'username';
+$mailer->Password   = getenv('SMTP_PASSWORD') ? getenv('SMTP_PASSWORD') : 'password';
+$mailer->SMTPSecure = getenv('SMTP_CRYPTO') ? getenv('SMTP_CRYPTO') : 'tls';
+$mailer->Port       = getenv('SMTP_PORT') ? getenv('SMTP_PORT') : '587';
 
 
 // Set up filesystem

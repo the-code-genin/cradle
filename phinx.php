@@ -12,6 +12,11 @@ if (file_exists(BASE_DIR . '/.env')) {
     Dotenv::createImmutable(BASE_DIR)->load();
 }
 
+
+// Set default timezone for app to UTC.
+date_default_timezone_set(getenv('TIME_ZONE') ? getenv('TIME_ZONE') : 'UTC');
+
+
 return
 [
     'paths' => [
