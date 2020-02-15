@@ -16,7 +16,7 @@ class SeedUsersTable extends Seed
     public function run()
     {
         $user = new User;
-        $user->username = $this->faker->name;
+        $user->username = $this->faker->username;
         $user->password = password_hash('password', PASSWORD_DEFAULT);
         $user->auth_token = md5('auth_token');
         $user->save();
