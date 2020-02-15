@@ -4,7 +4,6 @@
     "type": "project",
     "license": "MIT",
     "require": {
-
     	"php": "^7.2",
         "twig/twig": "^2.11",
         "vlucas/phpdotenv": "^4.1",
@@ -21,7 +20,8 @@
         "carbon-cli/carbon-cli": "^1.2",
         "fzaninotto/faker": "^1.9",
         "aura/session": "^2.1",
-        "lavary/crunz": "^2.1"
+        "lavary/crunz": "^2.1",
+        "guzzlehttp/guzzle": "^6.5"
     },
     "autoload": {
     	"psr-4": {
