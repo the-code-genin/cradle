@@ -8,6 +8,7 @@ use DI\Container;
 /**
  * The base class for all crons in the system.
  * All valid crons must either extend this class or extend one of its subclasses.
+ * Cron methods should be made protected.
  */
 abstract class Cron
 {
@@ -26,11 +27,16 @@ abstract class Cron
 	 *
 	 * @param string $name
 	 * @param array $arguments
-	 * @return void
+	 * @return mixed
 	 */
-	public function __call(string $name, array $arguments): void
+	public function __call(string $name, array $arguments)
 	{
-		$params = (object) $arguments[0];
-		call_user_func_array([$this, $name], [$params]);
+		// If the app is in maintenenance mode don't execute the cron.
+		if (getenv('APP_ENVIRONMENT') == 'maintenance') {
+			return;
+		}
+
+		$result = call_user_func_array([$this, $name], $arguments);
+		return $result;
 	}
 }
