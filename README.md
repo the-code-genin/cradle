@@ -2,7 +2,7 @@
 
 A personal implementation of [the Cradle microframework](https://github.com/Iyiola-am/cradle).
 
-This implementation comes bundled with a cron job scheduler, uses eloquent for database abstraction, features a database migration architecture, and is more robust compared with the base micro framework.
+This implementation comes bundled with a cron job scheduler, uses eloquent for database abstraction, features a database migration architecture, session manager, and is overall more robust compared with the base micro framework. It uses open source components.
 
 ## Installation
 
