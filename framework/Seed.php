@@ -6,6 +6,10 @@ use Phinx\Seed\AbstractSeed;
 use Faker\{Factory, Generator};
 use \Illuminate\Database\Capsule\Manager as Capsule;
 
+/**
+ * Base class for all seeds.
+ * All seeds should extend this class.
+ */
 abstract class Seed extends AbstractSeed
 {
     /** @var \Illuminate\Database\Capsule\Manager $capsule */

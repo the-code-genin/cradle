@@ -5,10 +5,9 @@ use Throwable;
 use Cradle\ViewCompiler;
 use Slim\Psr7\Factory\ResponseFactory;
 use Psr\Http\Message\ResponseInterface;
-
 use Psr\Http\Message\ServerRequestInterface;
-use Slim\Exception\HttpInternalServerErrorException;
 use Slim\Exception\HttpSpecializedException;
+use Slim\Exception\HttpInternalServerErrorException;
 
 /**
  * This class logs errors and exceptions.

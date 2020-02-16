@@ -28,6 +28,6 @@ class HTTPKernel extends Kernel
      */
     protected function boot(): void
     {
-
+        // Code.
     }
 }

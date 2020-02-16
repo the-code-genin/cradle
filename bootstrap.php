@@ -2,9 +2,9 @@
 
 use DI\Container;
 use Cradle\Logger;
-use App\Helpers\Globals;
-use Aura\Session\SessionFactory;
+use Dotenv\Dotenv;
 use Cradle\ViewCompiler;
+use GuzzleHttp\Client;
 use Slim\Factory\AppFactory;
 use PHPMailer\PHPMailer\SMTP;
 use League\Flysystem\Filesystem;
@@ -53,7 +53,7 @@ require_once BASE_DIR . '/vendor/autoload.php';
 
 // Load environment values from the .env file if a .env file exists.
 if (file_exists(BASE_DIR . '/.env')) {
-	\Dotenv\Dotenv::createImmutable(BASE_DIR)->load();
+	Dotenv::createImmutable(BASE_DIR)->load();
 }
 
 
@@ -88,7 +88,6 @@ date_default_timezone_set(getenv('TIME_ZONE') ? getenv('TIME_ZONE') : 'UTC');
 // Create a dependency container.
 // All your container bindings should be defined here.
 $container = new Container();
-Globals::set('container', $container);
 
 
 // Add the view compiler object.
@@ -159,6 +158,11 @@ $container->set('filesystem', function (ContainerInterface $container) {
     return new Filesystem($adapter);
 });
 
+// Add the web client object.
+$container->set('guzzle', function (ContainerInterface $container) {
+    return new Client(['allow_redirects' => true]);
+});
+
 // Add the session object.
 $container->set('session', function (ContainerInterface $container) {
 	$session = new Session();
@@ -171,5 +175,5 @@ $container->set('session', function (ContainerInterface $container) {
 $app = AppFactory::createFromContainer($container);
 
 
-// Return the new app instance
+// Return the new app instance.
 return $app;
