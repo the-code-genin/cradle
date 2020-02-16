@@ -1,21 +1,8 @@
 <?php
 
-use Dotenv\Dotenv;
 use Cradle\Migration;
 
-require_once __DIR__ . '/vendor/autoload.php';
-
-define('BASE_DIR', __DIR__); // Define the base directory
-
-// Load environment values from the .env file if a .env file exists.
-if (file_exists(BASE_DIR . '/.env')) {
-    Dotenv::createImmutable(BASE_DIR)->load();
-}
-
-
-// Set default timezone for app to UTC.
-date_default_timezone_set(getenv('TIME_ZONE') ? getenv('TIME_ZONE') : 'UTC');
-
+require __DIR__ . '/bootstrap.php';
 
 return
 [
