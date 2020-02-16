@@ -3,16 +3,17 @@
 use DI\Container;
 use Cradle\Logger;
 use Dotenv\Dotenv;
-use Cradle\ViewCompiler;
 use GuzzleHttp\Client;
+use Cradle\ViewCompiler;
+use Slab\Session\Driver;
 use Slim\Factory\AppFactory;
 use PHPMailer\PHPMailer\SMTP;
+use Slab\Session\Handlers\File;
 use League\Flysystem\Filesystem;
 use PHPMailer\PHPMailer\PHPMailer;
 use League\Flysystem\Adapter\Local;
 use Psr\Container\ContainerInterface;
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * ------------------------------------------------------------------
@@ -165,9 +166,13 @@ $container->set('guzzle', function (ContainerInterface $container) {
 
 // Add the session object.
 $container->set('session', function (ContainerInterface $container) {
-	$session = new Session();
-	$session->start();
-	return $session;
+	$handler = new File;
+	$handler->setSavePath(ini_get('session.save_path'));
+	
+	$driver = new Driver();
+	$driver->setHandler($handler)->start();
+
+	return $driver;
 });
 
 
