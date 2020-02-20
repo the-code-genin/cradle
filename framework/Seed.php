@@ -12,16 +12,16 @@ use \Illuminate\Database\Capsule\Manager as Capsule;
  */
 abstract class Seed extends AbstractSeed
 {
-    /** @var \Illuminate\Database\Capsule\Manager $capsule */
-    protected $capsule;
+    /** @var \Illuminate\Database\Capsule\Manager $db */
+    protected $db;
 
     /** @var Generator $factory */
     protected $faker;
 
     public function init()
     {
-        $this->capsule = new Capsule;
-        $this->capsule->addConnection([
+        $this->db = new Capsule;
+        $this->db->addConnection([
             'driver'    => getenv('DB_DRIVER') ? getenv('DB_DRIVER') : 'mysql',
             'host'      => getenv('DB_HOST') ? getenv('DB_HOST') : 'localhost',
             'port'      => getenv('DB_PORT') ? getenv('DB_PORT') : '3306',
@@ -33,8 +33,8 @@ abstract class Seed extends AbstractSeed
             'prefix'    => '',
         ]);
 
-        $this->capsule->bootEloquent();
-        $this->capsule->setAsGlobal();
+        $this->db->bootEloquent();
+        $this->db->setAsGlobal();
         $this->faker = Factory::create();
     }
 }

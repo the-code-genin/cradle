@@ -15,11 +15,15 @@ abstract class Cron
 	/** @var Container $container A container instance. */
 	protected $container;
 
+	/** @var Manager $db The database connection instance. */
+	protected $db;
+
 	public function __construct()
 	{
 		/** @var App $app */
 		$app = require_once dirname(__DIR__) . '/bootstrap.php';
 		$this->container = $app->getContainer();
+		$this->db = $container->get('db');
 	}
 
 	/**

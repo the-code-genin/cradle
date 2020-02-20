@@ -10,16 +10,16 @@ use \Illuminate\Database\Capsule\Manager as Capsule;
  */
 abstract class Migration extends AbstractMigration
 {
-    /** @var \Illuminate\Database\Capsule\Manager $capsule */
-    protected $capsule;
+    /** @var \Illuminate\Database\Capsule\Manager $db */
+    protected $db;
 
     /** @var \Illuminate\Database\Schema\Builder $capsule */
     protected $schema;
 
     public function init()
     {
-        $this->capsule = new Capsule;
-        $this->capsule->addConnection([
+        $this->db = new Capsule;
+        $this->db->addConnection([
             'driver'    => getenv('DB_DRIVER') ? getenv('DB_DRIVER') : 'mysql',
             'host'      => getenv('DB_HOST') ? getenv('DB_HOST') : 'localhost',
             'port'      => getenv('DB_PORT') ? getenv('DB_PORT') : '3306',
@@ -31,8 +31,8 @@ abstract class Migration extends AbstractMigration
             'prefix'    => '',
         ]);
 
-        $this->capsule->bootEloquent();
-        $this->capsule->setAsGlobal();
-        $this->schema = $this->capsule->schema();
+        $this->db->bootEloquent();
+        $this->db->setAsGlobal();
+        $this->schema = $this->db->schema();
     }
 }
