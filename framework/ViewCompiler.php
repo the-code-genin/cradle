@@ -21,11 +21,12 @@ class ViewCompiler
 	 * Adds a new view object to the array of view objects to be compiled later.
 	 *
 	 * @param View $view The view to be compiled
-	 * @return null
+	 * @return ViewCompiler
 	 */
-	public function addView(View $view): void
+	public function addView(View $view): ViewCompiler
 	{
 		array_push($this->views, $view);
+		return $this;
 	}
 
 	/**
@@ -72,11 +73,12 @@ class ViewCompiler
 	/**
 	 * Clears the views in the view compiler.
 	 *
-	 * @return void
+	 * @return ViewCompiler
 	 */
-	public function clearViews(): void
+	public function clearViews(): ViewCompiler
 	{
 		$this->views = [];
+		return $this;
 	}
 
 	/**
@@ -84,11 +86,12 @@ class ViewCompiler
 	 *
 	 * @param string $name
 	 * @param string $value
-	 * @return boolean
+	 * @return ViewCompiler
 	 */
-	public function setDefaultParameter(string $name, string $value): void
+	public function setDefaultParameter(string $name, string $value): ViewCompiler
 	{
 		$this->defaultParameters[$name] = $value;
+		return $this;
 	}
 
 	/**
@@ -106,11 +109,12 @@ class ViewCompiler
 	 * Unset a default parameter.
 	 *
 	 * @param string $name
-	 * @return void
+	 * @return ViewCompiler
 	 */
-	public function removeDefaultParameter(string $name): void
+	public function removeDefaultParameter(string $name): ViewCompiler
 	{
 		unset($this->defaultParameters[$name]);
+		return $this;
 	}
 
 	/**
