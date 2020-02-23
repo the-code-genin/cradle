@@ -81,7 +81,7 @@ abstract class Controller
 	protected function setHeader(string $name, string $value): array
 	{
 		$this->response = $this->response->withHeader($name, $value);
-		return $this->response->getHeader($name);
+		return $this->getHeader($name);
 	}
 
 	/**
@@ -109,13 +109,12 @@ abstract class Controller
 		}
 
 		$request = $arguments[0];
-		$response = $arguments[1];
 		$params = (object) $arguments[2];
-		$this->response = $response;
+		$this->response = $arguments[1];
 
 		$body = call_user_func_array([$this, $name], [$request, $params]);
-		$response = $this->parseResponseBody($response, $body);
+		$this->response = $this->parseResponseBody($this->response, $body);
 
-		return $response;
+		return $this->response;
 	}
 }
