@@ -4,6 +4,7 @@ namespace Cradle;
 use DI\Container;
 use Psr\Http\Message\ResponseInterface;
 use Illuminate\Database\Capsule\Manager;
+use Slim\Exception\HttpInternalServerErrorException;
 
 /**
  * The base class for all controllers in the system.
@@ -103,6 +104,10 @@ abstract class Controller
 	 */
 	public function __call(string $name, array $arguments): ResponseInterface
 	{
+		if (!method_exists($this, $name)) { // Method doesn't exist
+			throw new HttpInternalServerErrorException($arguments[0]);
+		}
+
 		$request = $arguments[0];
 		$response = $arguments[1];
 		$params = (object) $arguments[2];
