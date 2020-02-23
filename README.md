@@ -32,7 +32,7 @@ Developed and maintained by [Mohammed I. Adekunle](https://github.com/Iyiola-am)
 
 Cradle features a simple directory structure;
 
-- **app:** This is where an app's controllers, models, middleware and view files are stored.
+- **app:** This is where an app's controllers, models, and middleware files are stored.
 - **framework:** This directory contains custom app components that are specific to the app but aren't third-party dependencies, e.g. extensions of default cradle components.
 - **public:** This is where all publicly available files are stored, the favicon.ico, robots.txt, javascript files and so on are located here.
 - **resources:** This is where you app's resources (view files, routes e.t.c) are stored. The files in this directory typical don't change throughout the lifetime of your app.
