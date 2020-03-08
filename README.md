@@ -1,4 +1,4 @@
-# CRADLE-Personal
+# CRADLE V2
 
 A personal implementation of [the Cradle microframework](https://github.com/Iyiola-am/cradle).
 
@@ -32,7 +32,7 @@ Cradle features a simple directory structure;
 
 ### Configurations
 
-Cradle uses environmental variables to store configuration files, by default a **.env.example** file is present in the root directory, you need to copy and rename this to **.env**, then fill in the necessary details. These variables will be loaded into the app at bootstrap time and can be used any where in your code by calling the `getenv()` function or as a key in the global `$_ENV` variable.
+Cradle uses environmental variables to store configuration files, by default a **.env.example** file is present in the root directory. If you didn't run the `composer setup` command, you will need to copy and rename this file to **.env**, then fill in the necessary details. These variables will be loaded into the app at bootstrap time and can be used any where in your code by calling the `getenv()` function or as a key in the global `$_ENV` variable.
 
 ### MVC
 
@@ -47,7 +47,7 @@ Controllers are stored in the **app/Controllers** directory. You may use subdire
 
 #### Models
 
-The choice of implementation is up to you, but your model files are expected to be located in the **app\Models** directory.
+This version of cradle uses the eloquent database abstraction layer by default. Your model files are expected to reside in the **app\Models** directory or any of it's subdirectories.
 
 #### Views
 
@@ -57,11 +57,11 @@ Views files are stored in the **resources/views** directory. You may extend the 
 
 ### Middleware
 
-Cradle being built on [the Slim microframework](http://www.slimframework.com/) also supports middlewares, middlewares are located in **app/Middleware** directory. A sample before middleware has been provided in the code. A CORS middleware also comes with cradle for the API.
+Cradle being built on [the Slim microframework](http://www.slimframework.com/) also supports middlewares, middlewares are located in **app/Middleware** directory. A sample before middleware has been provided in the code. A CORS middleware also comes with cradle by default.
 
 ### Routing
 
-Cradle uses the default router used in [the Slim microframework](http://www.slimframework.com/). The route are defined in the **resources/routes** directory. You can use one or more route files to specify your routes but you must include the files in the HTTPKernel class for them to be acknowledged while routing.
+Cradle uses the default router used in [the Slim microframework](http://www.slimframework.com/). The routes are defined in the **resources/routes** directory. You can use one or more route files to specify your routes but you must include the files in the [HTTPKernel](app/HTTPKernel.php) class for them to be acknowledged while routing.
 
 ## License
 
