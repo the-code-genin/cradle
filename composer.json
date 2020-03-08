@@ -30,5 +30,41 @@
     		"App\\": "app/",
             "Cradle\\": "framework/"
         }
+    },
+    "scripts": {
+        "migrate": "@migrate:run",
+        "migrate:run": "php vendor/bin/phinx migrate",
+        "migrate:create": "php vendor/bin/phinx create",
+        "migrate:rollback": "php vendor/bin/phinx rollback",
+        "migrate:clear": "php vendor/bin/phinx rollback -d 2000",
+        "migrate:refresh": [
+            "@migrate:clear",
+            "@migrate:run"
+        ],
+        "migrate:status": "php vendor/bin/phinx status",
+        "seed": "@seed:run",
+        "seed:run": "php vendor/bin/phinx seed:run",
+        "seed:create": "php vendor/bin/phinx seed:create",
+        "schedule:create": "php vendor/bin/crunz make:task",
+        "schedule:status": "php vendor/bin/crunz schedule:list",
+        "schedule:run": "php vendor/bin/crunz schedule:run"
+    },
+    "scripts-descriptions": {
+        "migrate": "Run all your migrations.",
+        "migrate:run": "Run all your migrations.",
+        "migrate:create": "Create a migration.",
+        "migrate:rollback": "Rollback recent migration.",
+        "migrate:clear": "Rollback all your migrations.",
+        "migrate:refresh": "Rollback and remigrate.",
+        "migrate:status": "Show your migration status.",
+        "seed": "Seed your database.",
+        "seed:run": "Seed your database.",
+        "seed:create": "Create a seeder.",
+        "schedule:create": "Generates a task file with one task.",
+        "schedule:status": "Displays the list of scheduled tasks.",
+        "schedule:run": "Starts the event runner."
+    },
+    "config": {
+        "process-timeout": 0
     }
 }
