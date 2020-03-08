@@ -6,11 +6,8 @@ This implementation comes bundled with a cron job scheduler, uses eloquent for d
 
 ## Installation
 
-- Download (or clone the repository **RECOMMENDED**) and place the files in your web server's root directory.
-- Configure your web server to direct requests to the **public** folder if the applicable asset file or directory being requested exists in the folder, else, redirect all other requests to the **public/index.php** file (A sample configuration for apache server has already been provided by default).
-- Run `composer install`.
-- Copy the **.env.example** file to **.env** and configure your app.
-- Copy the **.gitignore.example** file to **.gitignore** (RECOMMENDED).
+- Download and place the repository's files in your web server's root directory.
+- Run `composer setup`.
 - Build something awesome.
 
 ## Requirements
