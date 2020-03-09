@@ -114,7 +114,6 @@ abstract class Controller
 
 		$body = call_user_func_array([$this, $name], [$request, $params]);
 		$this->response = $this->parseResponseBody($this->response, $body);
-
 		return $this->response;
 	}
 }
