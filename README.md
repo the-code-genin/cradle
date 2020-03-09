@@ -1,4 +1,4 @@
-# CRADLE
+# CRADLE V1
 
 Cradle is a PHP MVC microframework built on top of [the Slim microframework](http://www.slimframework.com/).
 
@@ -12,6 +12,12 @@ If you appreciate the project, remember to leave a star, thank you.
 
 Developed and maintained by [Mohammed I. Adekunle](https://github.com/Iyiola-am).
 
+## Requirements
+
+- PHP 7.2+
+- Apache's mod_rewrite module or similar.
+- Composer.
+
 ## Installation
 
 - Download (or clone the repository **RECOMMENDED**) and place the files in your web server's root directory.
@@ -19,12 +25,6 @@ Developed and maintained by [Mohammed I. Adekunle](https://github.com/Iyiola-am)
 - Run `composer install`.
 - Copy the **.env.example** file to **.env** and configure your app's environment settings.
 - Build something awesome.
-
-## Requirements
-
-- PHP 7.2+
-- Apache's mod_rewrite module or similar.
-- Composer.
 
 ## Usage
 
