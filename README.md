@@ -1,20 +1,30 @@
 # CRADLE V2
 
-A personal implementation of [the Cradle microframework](https://github.com/Iyiola-am/cradle).
+Cradle is a PHP MVC microframework built on top of [the Slim microframework](http://www.slimframework.com/).
 
-This implementation comes bundled with a cron job scheduler, uses eloquent for database abstraction, features a database migration architecture, session manager, and is overall more robust compared with the base micro framework. It uses open source components.
+Cradle features a well structured directory and uses composer for dependency management. It requires at least PHP 7.2 to work properly. It follows an MVC architecture.
 
-## Installation
+You should get familiar with [the Slim microframework](http://www.slimframework.com/) first before trying out cradle as most Cradle components are built on it's components.
 
-- Download and place the repository's files in your web server's root directory.
-- Run `composer setup`.
-- Build something awesome.
+Cradle can be used as a framework for regular web apps, APIs and more. It is component agnostic and only defines a router and application structure. The rest is left to you to figure out.
+
+If you appreciate the project, remember to leave a star, thank you.
+
+This version comes bundled with a cron job scheduler, uses eloquent for database abstraction, features a database migration system, a session manager, and is overall more robust compared with the base micro framework. It leverages open source components.
+
+Developed and maintained by [Mohammed I. Adekunle](https://github.com/Iyiola-am).
 
 ## Requirements
 
 - PHP 7.2+
 - Apache's mod_rewrite module or similar.
 - Composer.
+
+## Installation
+
+- Download and place the repository's files in your web server's root directory.
+- Run `composer setup`.
+- Build something awesome.
 
 ## Usage
 
@@ -36,8 +46,7 @@ Cradle uses environmental variables to store configuration files, by default a *
 
 ### MVC
 
-Cradle follows the MVC software architecture, it uses controllers for handling requests, models for interacting with the database and views for displaying the result of a controller operation to the client. Base Views and Controllers have been perbuilt in cradle, the model implementaion is up to you, fancy an ORM? Query builder? Simple PDO? Or something else?
-The choice of implementation is up to you.
+Cradle follows the MVC software architecture, it uses controllers for handling requests, models for interacting with the database and views for displaying the result of a controller operation to the client.
 
 #### Controllers
 
@@ -47,7 +56,7 @@ Controllers are stored in the **app/Controllers** directory. You may use subdire
 
 #### Models
 
-This version of cradle uses the eloquent database abstraction layer by default. Your model files are expected to reside in the **app\Models** directory or any of it's subdirectories.
+This version of cradle uses the eloquent database abstraction layer by default. Your model files are expected to reside in the **app\Models** directory or any of it's subdirectories. A sample model has already been predefined.
 
 #### Views
 
