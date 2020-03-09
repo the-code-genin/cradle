@@ -6,11 +6,9 @@ Cradle features a well structured directory and uses composer for dependency man
 
 You should get familiar with [the Slim microframework](http://www.slimframework.com/) first before trying out cradle as most Cradle components are built on it's components.
 
-Cradle can be used as a framework for regular web apps, APIs and more. It is component agnostic and only defines a router and application structure. The rest is left to you to figure out.
+This version comes bundled with a cron job scheduler, uses eloquent for database abstraction, features a database migration system, a session manager, and is overall more robust compared with the base micro framework. It leverages open source components.
 
 If you appreciate the project, remember to leave a star, thank you.
-
-This version comes bundled with a cron job scheduler, uses eloquent for database abstraction, features a database migration system, a session manager, and is overall more robust compared with the base micro framework. It leverages open source components.
 
 Developed and maintained by [Mohammed I. Adekunle](https://github.com/Iyiola-am).
 
