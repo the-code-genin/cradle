@@ -47,12 +47,7 @@
         "seed:create": "php vendor/bin/phinx seed:create",
         "schedule:create": "php vendor/bin/crunz make:task",
         "schedule:status": "php vendor/bin/crunz schedule:list",
-        "schedule:run": "php vendor/bin/crunz schedule:run",
-        "setup": [
-            "@composer install",
-            "cp .env.example .env",
-            "cp .gitignore.example .gitignore"
-        ]
+        "schedule:run": "php vendor/bin/crunz schedule:run"
     },
     "scripts-descriptions": {
         "migrate": "Run all your migrations.",
@@ -67,8 +62,7 @@
         "seed:create": "Create a seeder.",
         "schedule:create": "Generates a task file with one task.",
         "schedule:status": "Displays the list of scheduled tasks.",
-        "schedule:run": "Starts the event runner.",
-        "setup": "First time setup of your app."
+        "schedule:run": "Starts the event runner."
     },
     "config": {
         "process-timeout": 0
