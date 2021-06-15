@@ -1,6 +1,6 @@
-# CRADLE V2
+# CRADLE
 
-Cradle is a PHP MVC microframework built on top of [the Slim microframework](http://www.slimframework.com/).
+Cradle is a PHP MVC microframework built on top of [the Slim microframework](http://www.slimframework.com/) and open source components.
 
 Cradle features a well structured directory and uses composer for dependency management. It requires at least PHP 7.2 to work properly. It follows an MVC architecture.
 
