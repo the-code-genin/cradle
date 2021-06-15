@@ -1,5 +1,5 @@
 {
-    "name": "iyiola-am/cradle-personal",
+    "name": "iyiola-am/cradle",
     "description": "A PHP MVC microframework built on Slim and open source components.",
     "type": "project",
     "license": "MIT",
