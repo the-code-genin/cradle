@@ -5,12 +5,12 @@ namespace Controllers;
 use Lib\JWT;
 use Models\User;
 use Lib\ApiResponse;
+use Models\AuthToken;
 use Valitron\Validator;
 use Lib\Errors\ServerError;
 use Lib\Errors\ConflictError;
 use Lib\Errors\NotFoundError;
 use Lib\Errors\InvalidFormDataError;
-use Models\AuthToken;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -108,8 +108,34 @@ class AuthController {
 
     public static function updateMe(Request $request, Response $response, array $args): Response
     {
-        // $validator = new Validator($request->);
-        return $response;
+        /** @var User $user */
+        $user = $request->getAttribute('authUser');
+
+        // Get parsed body
+        $body = (object) $request->getParsedBody();
+
+
+        // Validate the user input
+        $v = new Validator((array) $body);
+        $v->rule('minLength', ['password'], 6);
+
+        if (!$v->validate()) {
+            $response->getBody()->write((string) new InvalidFormDataError(array_shift($v->errors())[0]));
+            return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+        }
+
+
+        // Update the user account
+        if (!empty($body->name)) $user->name = $body->name;
+        if (!empty($body->password)) $user->password = password_hash($body->password, PASSWORD_DEFAULT);
+        $user->save();
+
+
+        // Return the response
+        $response->getBody()->write((string) new ApiResponse([
+            'data' => $user->fresh(),
+        ]));
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
     }
 
     public static function logout(Request $request, Response $response, array $args): Response
