@@ -10,7 +10,7 @@ class HomeController
     /**
      * The index route.
      */
-    static public function index(Request $request, Response $response, array $args)
+    public static function index(Request $request, Response $response, array $args)
     {
         $response->getBody()->write(ViewRenderer::render('home.twig'));
         return $response;

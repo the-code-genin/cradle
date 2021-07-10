@@ -40,6 +40,8 @@ $capsule->bootEloquent();
 
 // Create slim app from container
 $app = AppFactory::create();
+$app->addBodyParsingMiddleware();
+$app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, false, false);
 
 // Register app routes
