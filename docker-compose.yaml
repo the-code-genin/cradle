@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+    mysql-database:
+        image: mysql:latest
+        volumes:
+            - "mysql-db-data:/var/lib/mysql"
+        networks:
+            - "cradle-app"
+
+    cradle-service:
+        image: cradle:1.0.0
+        volumes:
+            - "cradle-app-data:/var/www/html/storage"
+        networks:
+            - "cradle-app"
+        environment:
+            APP_NAME: Cradle
+            APP_ENVIRONMENT: production
+            APP_URL: http://127.0.0.1:8080
+            APP_KEY: # Set the app key
+            DB_DRIVER: mysql
+            DB_HOST: mysql-database
+            DB_PORT: 3306
+            DB_NAME: cradle
+            DB_USERNAME: root
+            DB_PASSWORD:
+            SMTP_HOST: smtp1.example.com
+            SMTP_PORT: 587
+            SMTP_ENCRYPTION: tls
+            SMTP_USERNAME: user
+            SMTP_PASSWORD: password
+            SMTP_FROM_NAME:
+            SMTP_FROM_EMAIL:
+        ports:
+            - "8080:80"
+
+volumes:
+  mysql-db-data:
+  cradle-app-data:
+
+networks:
+  cradle-app:
