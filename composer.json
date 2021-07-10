@@ -1,6 +1,7 @@
 {
-    "name": "iyiola-am/cradle",
-    "description": "A PHP MVC microframework built on Slim and open source components.",
+    "name": "the-code-genin/cradle",
+    "version": "1.0.0",
+    "description": "A PHP MVC API boiler plate built on Slim and open source components.",
     "type": "project",
     "license": "MIT",
     "require": {
@@ -14,21 +15,18 @@
         "phpmailer/phpmailer": "~6.1",
         "nesbot/carbon": "^2.30",
         "robmorgan/phinx": "^0.11.4",
-        "league/flysystem": "^1.0",
         "vlucas/valitron": "^1.4",
-        "fzaninotto/faker": "^1.9",
-        "lavary/crunz": "^2.1",
         "guzzlehttp/guzzle": "^6.5",
         "doctrine/dbal": "^2.10",
-        "josantonius/cookie": "^1.1",
-        "slabphp/session-manager": "^0.1.11",
         "nyholm/psr7": "^1.2",
         "nyholm/psr7-server": "^0.4.1"
     },
     "autoload": {
     	"psr-4": {
-    		"App\\": "app/",
-            "Cradle\\": "framework/"
+    		"Controllers\\": "Controllers/",
+    		"Middleware\\": "Middleware/",
+    		"Models\\": "Models/",
+    		"Lib\\": "Lib/"
         }
     },
     "scripts": {
@@ -42,12 +40,6 @@
             "@migrate:run"
         ],
         "migrate:status": "php vendor/bin/phinx status",
-        "seed": "@seed:run",
-        "seed:run": "php vendor/bin/phinx seed:run",
-        "seed:create": "php vendor/bin/phinx seed:create",
-        "schedule:create": "php vendor/bin/crunz make:task",
-        "schedule:status": "php vendor/bin/crunz schedule:list",
-        "schedule:run": "php vendor/bin/crunz schedule:run"
     },
     "scripts-descriptions": {
         "migrate": "Run all your migrations.",
@@ -57,12 +49,6 @@
         "migrate:clear": "Rollback all your migrations.",
         "migrate:refresh": "Rollback and remigrate.",
         "migrate:status": "Show your migration status.",
-        "seed": "Seed your database.",
-        "seed:run": "Seed your database.",
-        "seed:create": "Create a seeder.",
-        "schedule:create": "Generates a task file with one task.",
-        "schedule:status": "Displays the list of scheduled tasks.",
-        "schedule:run": "Starts the event runner."
     },
     "config": {
         "process-timeout": 0
