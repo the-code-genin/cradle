@@ -18,7 +18,8 @@
         "guzzlehttp/guzzle": "^6.5",
         "doctrine/dbal": "^2.10",
         "nyholm/psr7": "^1.2",
-        "nyholm/psr7-server": "^0.4.1"
+        "nyholm/psr7-server": "^0.4.1",
+        "lcobucci/jwt": "^4.1"
     },
     "autoload": {
     	"psr-4": {
