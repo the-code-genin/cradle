@@ -1,6 +1,5 @@
 <?php
 
-use DI\Container;
 use Dotenv\Dotenv;
 use Slim\Factory\AppFactory;
 use Illuminate\Database\Capsule\Manager;
@@ -39,11 +38,8 @@ $capsule->addConnection([
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
-// Create Dependency Injection container
-$container = new Container();
-
 // Create slim app from container
-$app = AppFactory::createFromContainer($container);
+$app = AppFactory::create();
 
 // Register app routes
 require_once __DIR__ . '/routes/index.php';
