@@ -15,6 +15,14 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class AuthController {
+    /**
+     * Sign a user up.
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
     public static function signup(Request $request, Response $response, array $args): Response
     {
         // Get parsed body
@@ -58,6 +66,14 @@ class AuthController {
         return $response->withStatus(201)->withHeader('Content-Type', 'application/json');
     }
 
+    /**
+     * Log a user in.
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
     public static function login(Request $request, Response $response, array $args): Response
     {
         // Get parsed body
@@ -95,6 +111,14 @@ class AuthController {
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
     }
 
+    /**
+     * Get an authenticated user.
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
     public static function getMe(Request $request, Response $response, array $args): Response
     {
         /** @var User $user */
@@ -106,6 +130,14 @@ class AuthController {
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
     }
 
+    /**
+     * Update a user.
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
     public static function updateMe(Request $request, Response $response, array $args): Response
     {
         /** @var User $user */
@@ -138,6 +170,14 @@ class AuthController {
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
     }
 
+    /**
+     * Log a user out.
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
     public static function logout(Request $request, Response $response, array $args): Response
     {
         /** @var User $user */
