@@ -1,7 +1,7 @@
 <?php
 
 use Slim\App;
-use App\Controllers\Home;
+use Controllers\HomeController;
 
 /**
  * Routing rules are defined here.
@@ -9,4 +9,4 @@ use App\Controllers\Home;
  * @var App $app
  */
 
-$app->get('/', Home::class.':index');
+$app->get('/', HomeController::class.':index');
