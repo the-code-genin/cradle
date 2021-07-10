@@ -8,8 +8,8 @@ use Lib\ApiResponse;
 use Valitron\Validator;
 use Lib\Errors\ServerError;
 use Lib\Errors\ConflictError;
-use Lib\Errors\InvalidFormDataError;
 use Lib\Errors\NotFoundError;
+use Lib\Errors\InvalidFormDataError;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -94,13 +94,18 @@ class AuthController {
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
     }
 
-    public static function logout(Request $request, Response $response, array $args): Response
+    public static function getMe(Request $request, Response $response, array $args): Response
     {
-        // $validator = new Validator($request->);
-        return $response;
+        /** @var User $user */
+        $user = $request->getAttribute('authUser');
+
+        $response->getBody()->write((string) new ApiResponse([
+            'data' => $user
+        ]));
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
     }
 
-    public static function getMe(Request $request, Response $response, array $args): Response
+    public static function logout(Request $request, Response $response, array $args): Response
     {
         // $validator = new Validator($request->);
         return $response;
