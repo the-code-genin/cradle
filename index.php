@@ -3,7 +3,6 @@
 use DI\Container;
 use Dotenv\Dotenv;
 use Slim\Factory\AppFactory;
-use Psr\Container\ContainerInterface;
 use Illuminate\Database\Capsule\Manager;
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -26,32 +25,27 @@ switch (getenv('APP_ENVIRONMENT')) {
 	break;
 }
 
-// Dependency Injection container
+// Connect to the database
+$capsule = new Manager;
+$capsule->addConnection([
+	'driver'    => getenv('DB_DRIVER'),
+	'host'      => getenv('DB_HOST'),
+	'port'      => getenv('DB_PORT'),
+	'database'  => getenv('DB_NAME'),
+	'username'  => getenv('DB_USERNAME'),
+	'password'  => getenv('DB_PASSWORD'),
+]);
+
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
+
+// Create Dependency Injection container
 $container = new Container();
 
-// Set up a the database connection.
-$container->set('db', function (ContainerInterface $container) {
-	$capsule = new Manager;
-
-	$capsule->addConnection([
-		'driver'    => getenv('DB_DRIVER'),
-		'host'      => getenv('DB_HOST'),
-		'port'      => getenv('DB_PORT'),
-		'database'  => getenv('DB_NAME'),
-		'username'  => getenv('DB_USERNAME'),
-		'password'  => getenv('DB_PASSWORD'),
-	]);
-
-	$capsule->setAsGlobal();
-	$capsule->bootEloquent();
-
-    return $capsule;
-});
-
-// Create slim app
+// Create slim app from container
 $app = AppFactory::createFromContainer($container);
 
-// Register routes
+// Register app routes
 require_once __DIR__ . '/routes/index.php';
 
 // Run app
