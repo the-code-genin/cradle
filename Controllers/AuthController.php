@@ -10,6 +10,7 @@ use Lib\Errors\ServerError;
 use Lib\Errors\ConflictError;
 use Lib\Errors\NotFoundError;
 use Lib\Errors\InvalidFormDataError;
+use Models\AuthToken;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -105,15 +106,30 @@ class AuthController {
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
     }
 
-    public static function logout(Request $request, Response $response, array $args): Response
+    public static function updateMe(Request $request, Response $response, array $args): Response
     {
         // $validator = new Validator($request->);
         return $response;
     }
 
-    public static function updateMe(Request $request, Response $response, array $args): Response
+    public static function logout(Request $request, Response $response, array $args): Response
     {
-        // $validator = new Validator($request->);
-        return $response;
+        /** @var User $user */
+        $user = $request->getAttribute('authUser');
+
+        // Get the bearer token
+        $header = $request->getHeader('Authorization');
+        preg_match("/^Bearer (.+)$/i", $header[0], $matches);
+        $token = trim($matches[1]);
+
+        // Store the bearer token thereby invalidating it
+        $authToken = new AuthToken;
+        $authToken->user_id = $user->id;
+        $authToken->token = $token;
+        $authToken->save();
+
+        // Return an empty API response
+        $response->getBody()->write((string) new ApiResponse());
+        return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
     }
 }
