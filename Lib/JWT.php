@@ -3,6 +3,7 @@
 namespace Lib;
 
 use Models\User;
+use Carbon\CarbonImmutable;
 use Lcobucci\JWT\Token\Plain;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
@@ -33,6 +34,7 @@ class JWT {
         return $config
             ->builder()
             ->issuedBy(getenv('APP_URL'))
+            ->issuedAt(CarbonImmutable::now())
             ->identifiedBy($user->id)
             ->getToken($config->signer(), $config->signingKey())
             ->toString();
