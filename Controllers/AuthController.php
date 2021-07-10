@@ -117,7 +117,7 @@ class AuthController {
 
         // Validate the user input
         $v = new Validator((array) $body);
-        $v->rule('minLength', ['password'], 6);
+        $v->rule('lengthMin', ['password'], 6);
 
         if (!$v->validate()) {
             $response->getBody()->write((string) new InvalidFormDataError(array_shift($v->errors())[0]));
