@@ -1,14 +1,28 @@
 <?php
 
 use Dotenv\Dotenv;
+use Illuminate\Database\Capsule\Manager;
 
 require __DIR__ . '/vendor/autoload.php';
 
 // Load env variables
 if (file_exists(__DIR__ . '/.env')) Dotenv::createImmutable(__DIR__)->load();
 
-return
-[
+// Connect to the database
+$capsule = new Manager;
+$capsule->addConnection([
+	'driver'    => getenv('DB_DRIVER'),
+	'host'      => getenv('DB_HOST'),
+	'port'      => getenv('DB_PORT'),
+	'database'  => getenv('DB_NAME'),
+	'username'  => getenv('DB_USERNAME'),
+	'password'  => getenv('DB_PASSWORD'),
+]);
+
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
+
+return [
     'paths' => [
         'migrations' => __DIR__ . '/migrations'
     ],
