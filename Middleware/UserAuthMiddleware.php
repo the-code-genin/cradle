@@ -30,7 +30,7 @@ class UserAuthMiddleware implements MiddlewareInterface
             $parsedToken = JWT::parseAccessToken($token);
 
             /** @var mixed $id */
-            $id = $parsedToken->claims()->id;
+            $id = $parsedToken->claims()->get('jti');
 
 
             // Validate the user object
