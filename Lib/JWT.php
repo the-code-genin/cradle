@@ -49,16 +49,6 @@ class JWT {
     {
         $config = static::getConfig();
         $parsedToken = $config->parser()->parse($token);
-        $constraints = $config->validationConstraints();
-
-        // Validate the parsed token
-        try {
-            $config->validator()->assert($parsedToken, ...$constraints);
-        } catch (RequiredConstraintsViolated $e) {
-            throw new \Exception('Invalid access token.');
-        }
-
-        // Return the parsed token
         return $parsedToken;
     }
 }
