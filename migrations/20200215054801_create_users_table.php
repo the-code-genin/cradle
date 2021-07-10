@@ -1,14 +1,14 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class CreateUsersTable extends AbstractMigration
 {
     public function up()
     {
-        Manager::schema()->create('users', function (Blueprint $table) {
+        DB::schema()->create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('email');
@@ -20,6 +20,6 @@ class CreateUsersTable extends AbstractMigration
 
     public function down()
     {
-        Manager::schema()->drop('users');
+        DB::schema()->drop('users');
     }
 }
