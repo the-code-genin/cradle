@@ -3,11 +3,10 @@
 namespace Lib;
 
 use Models\User;
-use Lcobucci\JWT\Token;
+use Lcobucci\JWT\Token\Plain;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;
-use Lcobucci\JWT\Validation\RequiredConstraintsViolated;
 
 class JWT {
     /**
@@ -45,7 +44,7 @@ class JWT {
      * @param string $token
      * @return integer
      */
-    public static function parseAccessToken(string $token): Token
+    public static function parseAccessToken(string $token): Plain
     {
         $config = static::getConfig();
         $parsedToken = $config->parser()->parse($token);
