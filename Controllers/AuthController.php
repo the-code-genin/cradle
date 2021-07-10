@@ -79,7 +79,7 @@ class AuthController {
         if ($user == null) {
             $response->getBody()->write((string) new NotFoundError('No user was found with the email and password combination.'));
             return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
-        } else if (!password_verify($user->password, $body->password)) {
+        } else if (!password_verify($body->password, $user->password)) {
             $response->getBody()->write((string) new NotFoundError('No user was found with the email and password combination.'));
             return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
         }
