@@ -1,4 +1,11 @@
 <?php
 
-// Require all route config files
+use Slim\App;
+
+/**
+ * Require all route config files
+ * 
+ * @var App $app
+ */
+
 require_once __DIR__ . '/home.php';
