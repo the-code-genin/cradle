@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Model
 {
+    public $hidden = ['password'];
+
     public function authTokens(): HasMany
     {
         return $this->hasMany(AuthToken::class, 'user_id');
