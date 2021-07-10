@@ -7,6 +7,11 @@ services:
             - "mysql-db-data:/var/lib/mysql"
         networks:
             - "cradle-app"
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: cradle
+            MYSQL_USER: cradle
+            MYSQL_PASSWORD: password
 
     cradle-service:
         image: cradle:1.0.0
@@ -18,13 +23,13 @@ services:
             APP_NAME: Cradle
             APP_ENVIRONMENT: production
             APP_URL: http://127.0.0.1:8080
-            APP_KEY: # Set the app key
+            APP_KEY: dajyfleaefka=afekaufedae/efaufeialfea=
             DB_DRIVER: mysql
             DB_HOST: mysql-database
             DB_PORT: 3306
             DB_NAME: cradle
-            DB_USERNAME: root
-            DB_PASSWORD:
+            DB_USERNAME: cradle
+            DB_PASSWORD: password
             SMTP_HOST: smtp1.example.com
             SMTP_PORT: 587
             SMTP_ENCRYPTION: tls
