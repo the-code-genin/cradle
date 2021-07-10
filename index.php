@@ -40,6 +40,7 @@ $capsule->bootEloquent();
 
 // Create slim app from container
 $app = AppFactory::create();
+$app->addErrorMiddleware(true, false, false);
 
 // Register app routes
 require_once __DIR__ . '/routes/index.php';
