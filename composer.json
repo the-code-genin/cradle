@@ -39,7 +39,7 @@
             "@migrate:clear",
             "@migrate:run"
         ],
-        "migrate:status": "php vendor/bin/phinx status",
+        "migrate:status": "php vendor/bin/phinx status"
     },
     "scripts-descriptions": {
         "migrate": "Run all your migrations.",
@@ -48,7 +48,7 @@
         "migrate:rollback": "Rollback recent migration.",
         "migrate:clear": "Rollback all your migrations.",
         "migrate:refresh": "Rollback and remigrate.",
-        "migrate:status": "Show your migration status.",
+        "migrate:status": "Show your migration status."
     },
     "config": {
         "process-timeout": 0
