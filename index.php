@@ -2,7 +2,7 @@
 
 use Dotenv\Dotenv;
 use Slim\Factory\AppFactory;
-use Illuminate\Database\Capsule\Manager;
+use Illuminate\Database\Capsule\Manager as DB;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -25,8 +25,8 @@ switch (getenv('APP_ENVIRONMENT')) {
 }
 
 // Connect to the database
-$capsule = new Manager;
-$capsule->addConnection([
+$db = new DB;
+$db->addConnection([
 	'driver'    => getenv('DB_DRIVER'),
 	'host'      => getenv('DB_HOST'),
 	'port'      => getenv('DB_PORT'),
@@ -35,8 +35,8 @@ $capsule->addConnection([
 	'password'  => getenv('DB_PASSWORD'),
 ]);
 
-$capsule->setAsGlobal();
-$capsule->bootEloquent();
+$db->setAsGlobal();
+$db->bootEloquent();
 
 // Create slim app from container
 $app = AppFactory::create();
