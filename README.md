@@ -1,8 +1,8 @@
 # CRADLE
 
-Cradle is a PHP MVC API boilerplate built on top of [the Slim microframework](http://www.slimframework.com/) and open source components. It's intended to be used for micro service development.
+Cradle is a PHP microframework for architecting small and efficient microservices, built on top of [the Slim microframework](http://www.slimframework.com/) and open source components. It's intended to be used for micro service development but is powerful enough to be used to develop fullstack apps. Cradle is best used as an API with a frontend framework like VueJS or ReactJS.
 
-Cradle features a minimal and well structured directory, it uses Laravel's Eloquent as an ORM and uses composer for dependency management. It requires at least PHP 7.2 to work properly.
+Cradle features a minimal and well structured directory, it uses Laravel's Eloquent as an ORM, symfony's twig for view rendering and composer for dependency management. It requires at least PHP 7.2 to work properly.
 
 If you appreciate the project, remember to leave a star! Thank you.
 
@@ -15,7 +15,7 @@ Developed and maintained by [Mohammed I. Adekunle](https://github.com/Iyiola-am)
 - Composer.
 - MySQL or Similar.
 
-## Installation
+## Usage
 
 - Clone the repository's files in your web server's root directory.
 - Run `composer install`.
