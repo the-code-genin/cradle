@@ -46,13 +46,12 @@ class AuthController {
 
         // Create the user account
         $user = new User;
-        try {
-            $user->name = $body->name;
-            $user->email = $body->email;
-            $user->password = password_hash($body->password, PASSWORD_DEFAULT);
-            $user->save();
-        } catch(\Exception $e) {
-            $response->getBody()->write((string) new ServerError($e->getMessage()));
+        $user->name = $body->name;
+        $user->email = $body->email;
+        $user->password = password_hash($body->password, PASSWORD_DEFAULT);
+
+        if (!$user->save()) {
+            $response->getBody()->write((string) new ServerError());
             return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
         }
 
@@ -160,7 +159,11 @@ class AuthController {
         // Update the user account
         if (!empty($body->name)) $user->name = $body->name;
         if (!empty($body->password)) $user->password = password_hash($body->password, PASSWORD_DEFAULT);
-        $user->save();
+
+        if (!$user->save()) {
+            $response->getBody()->write((string) new ServerError());
+            return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
+        }
 
 
         // Return the response
