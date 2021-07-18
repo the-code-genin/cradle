@@ -21,6 +21,7 @@ Developed and maintained by [Mohammed I. Adekunle](https://github.com/Iyiola-am)
 - Run `composer install`.
 - Copy the `.env.example` file to `.env`.
 - Update your `.env` file according to your web server's environment.
+- Run `ln -sT $(pwd)/storage/public ./public/storage` to create a symbolic link.
 - Build something awesome.
 
 ## License
