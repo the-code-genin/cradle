@@ -24,6 +24,9 @@ switch (getenv('APP_ENVIRONMENT')) {
 	break;
 }
 
+// Set timezone
+date_default_timezone_set("UTC");
+
 // Connect to the database
 $db = new DB;
 $db->addConnection([

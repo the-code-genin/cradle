@@ -8,6 +8,9 @@ require __DIR__ . '/vendor/autoload.php';
 // Load env variables
 if (file_exists(__DIR__ . '/.env')) Dotenv::createImmutable(__DIR__)->load();
 
+// Set timezone
+date_default_timezone_set("UTC");
+
 // Connect to the database
 $db = new DB;
 $db->addConnection([
