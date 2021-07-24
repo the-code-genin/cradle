@@ -14,7 +14,8 @@ use Lib\Errors\InvalidFormDataError;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class AuthController {
+class AuthController
+{
     /**
      * Sign a user up.
      *

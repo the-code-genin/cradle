@@ -1,4 +1,5 @@
 <?php
+
 namespace Middleware;
 
 use Psr\Http\Server\MiddlewareInterface;
@@ -11,7 +12,7 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
  */
 class CORSMiddleware implements MiddlewareInterface
 {
-	public function process(Request $request, RequestHandler $handler): Response
+    public function process(Request $request, RequestHandler $handler): Response
     {
         $response = $handler->handle($request);
         return $response->withHeader('Cache-Control', ['no-cache', 'must-revalidate'])

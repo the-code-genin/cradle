@@ -1,4 +1,5 @@
 <?php
+
 namespace Middleware;
 
 use Lib\JWT;
@@ -15,14 +16,14 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
  */
 class UserAuthMiddleware implements MiddlewareInterface
 {
-	public function process(Request $request, RequestHandler $handler): Response
+    public function process(Request $request, RequestHandler $handler): Response
     {
         try {
             // Verify the bearer token header is set
             $header = $request->getHeader('Authorization');
             if (count($header) != 1) throw new \Exception('Authorization header not set!');
             else if (!preg_match("/^Bearer (.+)$/i", $header[0])) throw new \Exception('Bearer token not set!');
-        
+
 
             // Parse the bearer token
             preg_match("/^Bearer (.+)$/i", $header[0], $matches);
@@ -42,7 +43,7 @@ class UserAuthMiddleware implements MiddlewareInterface
 
             // Make the user object available for subsequent requests
             $request = $request->withAttribute('authUser', $user);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $response = new Psr7Response();
             $response->getBody()->write((string) new AuthenticationError($e->getMessage()));
             return $response->withStatus(401)->withHeader('Content-Type', 'application/json');

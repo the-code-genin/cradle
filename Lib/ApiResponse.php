@@ -2,7 +2,8 @@
 
 namespace Lib;
 
-class ApiResponse {
+class ApiResponse
+{
     protected array $payload;
 
     public function __construct(array $payload = [])

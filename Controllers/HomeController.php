@@ -1,4 +1,5 @@
 <?php
+
 namespace Controllers;
 
 use Lib\ViewRenderer;

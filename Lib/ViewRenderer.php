@@ -5,7 +5,8 @@ namespace Lib;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-class ViewRenderer {
+class ViewRenderer
+{
     /**
      * Render a view file from the views directory
      *
@@ -16,7 +17,7 @@ class ViewRenderer {
     static function render(string $path, array $args = []): string
     {
         $loader = new FilesystemLoader(dirname(__DIR__) . '/views');
-		$twig = new Environment($loader, []);
-		return $twig->render($path, $args);
+        $twig = new Environment($loader, []);
+        return $twig->render($path, $args);
     }
 }

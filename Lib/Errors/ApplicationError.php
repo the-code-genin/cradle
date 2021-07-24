@@ -2,7 +2,8 @@
 
 namespace Lib\Errors;
 
-class ApplicationError {
+class ApplicationError
+{
     protected int $code;
     protected string $type, $message;
 

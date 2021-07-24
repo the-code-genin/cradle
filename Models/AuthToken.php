@@ -5,7 +5,8 @@ namespace Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class AuthToken extends Model {
+class AuthToken extends Model
+{
     /**
      * Get the owning user.
      *

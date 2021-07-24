@@ -9,7 +9,8 @@ use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;
 
-class JWT {
+class JWT
+{
     /**
      * Get configuration for the JWT token.
      *
