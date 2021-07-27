@@ -1,7 +1,7 @@
 <?php
 
-use Middleware\CORSMiddleware;
 use Slim\App;
+use Middleware\CORSMiddleware;
 
 /**
  * Require all route config files
