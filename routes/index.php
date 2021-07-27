@@ -1,5 +1,6 @@
 <?php
 
+use Middleware\CORSMiddleware;
 use Slim\App;
 
 /**
@@ -7,6 +8,8 @@ use Slim\App;
  * 
  * @var App $app
  */
+
+$app->addMiddleware(new CORSMiddleware());
 
 require_once __DIR__ . '/home.php';
 require_once __DIR__ . '/auth.php';

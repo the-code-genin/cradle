@@ -18,4 +18,4 @@ $app->group('/api/v1/auth', function (RouteCollectorProxy $group) {
     $group->get('/me', AuthController::class.':getMe')->addMiddleware(new UserAuthMiddleware);
     $group->patch('/me', AuthController::class.':updateMe')->addMiddleware(new UserAuthMiddleware);
     $group->post('/logout', AuthController::class.':logout')->addMiddleware(new UserAuthMiddleware);
-})->addMiddleware(new CORSMiddleware);
+});
