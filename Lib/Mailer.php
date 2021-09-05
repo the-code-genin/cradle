@@ -20,13 +20,13 @@ class Mailer
         $mail = new PHPMailer(true);
 
         //Server settings
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+        $mail->SMTPDebug = SMTP::DEBUG_OFF;
         $mail->isSMTP();
         $mail->Host       = getenv("SMTP_HOST");
         $mail->SMTPAuth   = true;
         $mail->Username   = getenv("SMTP_USERNAME");
         $mail->Password   = getenv("SMTP_PASSWORD");
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->SMTPSecure = getenv("SMTP_ENCRYPTION") == "ssl" ? PHPMailer::ENCRYPTION_SMTPS : PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = (int) getenv("SMTP_PORT");
 
         //Recipients
