@@ -1,7 +1,7 @@
 <?php
 
 use Dotenv\Dotenv;
-use Illuminate\Database\Capsule\Manager as DB;
+use Pixie\Connection;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -12,18 +12,16 @@ if (file_exists(__DIR__ . '/.env')) Dotenv::createImmutable(__DIR__)->load();
 date_default_timezone_set("UTC");
 
 // Connect to the database
-$db = new DB;
-$db->addConnection([
-	'driver'    => getenv('DB_DRIVER'),
-	'host'      => getenv('DB_HOST'),
-	'port'      => getenv('DB_PORT'),
-	'database'  => getenv('DB_NAME'),
-	'username'  => getenv('DB_USERNAME'),
-	'password'  => getenv('DB_PASSWORD'),
-]);
-
-$db->setAsGlobal();
-$db->bootEloquent();
+new Connection(
+	"mysql", 
+	[
+		"driver" => getenv('DB_DRIVER'),
+		"host" => sprintf("%s:%s", getenv('DB_HOST'), getenv('DB_PORT')),
+		"database" => getenv('DB_NAME'),
+		"username" => getenv('DB_USERNAME'),
+		"password" => getenv('DB_PASSWORD'),
+	]
+);
 
 return [
     'paths' => [
