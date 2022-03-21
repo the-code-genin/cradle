@@ -2,17 +2,13 @@
 
 namespace Controllers;
 
+use Database\Entities\User;
+use Database\Repositories\Users;
 use Lib\JWT;
-use Models\User;
-use Lib\ApiResponse;
-use Models\AuthToken;
-use Valitron\Validator;
-use Lib\Errors\ServerError;
-use Lib\Errors\ConflictError;
-use Lib\Errors\NotFoundError;
-use Lib\Errors\InvalidFormDataError;
+use Lib\ApiResponses;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Validators\AuthValidator;
 
 class AuthController
 {
@@ -29,41 +25,34 @@ class AuthController
         // Get parsed body
         $body = (object) $request->getParsedBody();
 
-
-        // Validate the user input
-        $v = new Validator((array) $body);
-        $v->rule('required', ['name', 'email', 'password']);
-        $v->rule('email', ['email']);
-        $v->rule('lengthMin', ['password'], 6);
-
-        if (!$v->validate()) {
-            $response->getBody()->write((string) new InvalidFormDataError(array_shift($v->errors())[0]));
-            return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
-        } else if (User::where('email', $body->email)->count() != 0) {
-            $response->getBody()->write((string) new ConflictError('This email is taken.'));
-            return $response->withStatus(409)->withHeader('Content-Type', 'application/json');
+        // Data validation
+        $validationError = AuthValidator::validateSignup($body);
+        if ($validationError != null) {
+            return ApiResponses::generateInvalidFormDataError($response, $validationError);
+        } else if (Users::getUsersWithEmailCount($body->email) != 0) {
+            return ApiResponses::generateConflictError($response, "This email is taken.");
         }
-
 
         // Create the user account
         $user = new User;
-        $user->name = $body->name;
-        $user->email = $body->email;
-        $user->password = password_hash($body->password, PASSWORD_DEFAULT);
-
-        if (!$user->save()) {
-            $response->getBody()->write((string) new ServerError());
-            return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
+        try {
+            $user->name = $body->name;
+            $user->email = $body->email;
+            $user->password = password_hash($body->password, PASSWORD_DEFAULT);
+            $user = Users::insert($user);
+        } catch (\Exception $e) {
+            return ApiResponses::generateServerError($response, $e->getMessage());
         }
 
-
-        // Return the response
-        $response->getBody()->write((string) new ApiResponse([
-            'data' => $user->fresh(),
-            'access_token' => JWT::generateAccessToken($user),
-            'token_type' => 'bearer'
-        ]));
-        return $response->withStatus(201)->withHeader('Content-Type', 'application/json');
+        return ApiResponses::generateSuccessResponse(
+            $response,
+            [
+                'data' => Users::toJSON($user),
+                'access_token' => JWT::generateAccessToken($user),
+                'token_type' => 'bearer'
+            ],
+            201
+        );
     }
 
     /**
@@ -79,36 +68,26 @@ class AuthController
         // Get parsed body
         $body = (object) $request->getParsedBody();
 
-
-        // Validate the user input
-        $v = new Validator((array) $body);
-        $v->rule('required', ['email', 'password']);
-        $v->rule('email', ['email']);
-
-        if (!$v->validate()) {
-            $response->getBody()->write((string) new InvalidFormDataError(array_shift($v->errors())[0]));
-            return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+        // Data validation
+        $validationError = AuthValidator::validateLogin($body);
+        if ($validationError != null) {
+            return ApiResponses::generateInvalidFormDataError($response, $validationError);
         }
-
 
         // Get and validate the user account
-        $user = User::where('email', $body->email)->first();
+        $user = Users::getUserByEmail($body->email);
         if ($user == null) {
-            $response->getBody()->write((string) new NotFoundError('No user was found with the email and password combination.'));
-            return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
+            return ApiResponses::generateNotFoundError($response, "No user was found with the email and password combination.");
         } else if (!password_verify($body->password, $user->password)) {
-            $response->getBody()->write((string) new NotFoundError('No user was found with the email and password combination.'));
-            return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
+            return ApiResponses::generateInvalidFormDataError($response, "No user was found with the email and password combination.");
         }
 
-
         // Return the response
-        $response->getBody()->write((string) new ApiResponse([
-            'data' => $user->fresh(),
+        return ApiResponses::generateSuccessResponse($response, [
+            'data' => Users::toJSON($user),
             'access_token' => JWT::generateAccessToken($user),
             'token_type' => 'bearer'
-        ]));
-        return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
+        ]);
     }
 
     /**
@@ -124,10 +103,9 @@ class AuthController
         /** @var User $user */
         $user = $request->getAttribute('authUser');
 
-        $response->getBody()->write((string) new ApiResponse([
-            'data' => $user
-        ]));
-        return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
+        return ApiResponses::generateSuccessResponse($response, [
+            "data" => Users::toJSON($user)
+        ]);
     }
 
     /**
@@ -146,32 +124,25 @@ class AuthController
         // Get parsed body
         $body = (object) $request->getParsedBody();
 
-
         // Validate the user input
-        $v = new Validator((array) $body);
-        $v->rule('lengthMin', ['password'], 6);
-
-        if (!$v->validate()) {
-            $response->getBody()->write((string) new InvalidFormDataError(array_shift($v->errors())[0]));
-            return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+        $validationError = AuthValidator::validateLogin($body);
+        if ($validationError != null) {
+            return ApiResponses::generateInvalidFormDataError($response, $validationError);
         }
-
 
         // Update the user account
-        if (!empty($body->name)) $user->name = $body->name;
-        if (!empty($body->password)) $user->password = password_hash($body->password, PASSWORD_DEFAULT);
-
-        if (!$user->save()) {
-            $response->getBody()->write((string) new ServerError());
-            return $response->withStatus(500)->withHeader('Content-Type', 'application/json');
+        try {
+            if (!empty($body->name)) $user->name = $body->name;
+            if (!empty($body->password)) $user->password = password_hash($body->password, PASSWORD_DEFAULT);
+            $user = Users::updateById($user->id, $user);
+        } catch(\Exception $e) {
+            return ApiResponses::generateServerError($response, $e->getMessage());
         }
 
-
         // Return the response
-        $response->getBody()->write((string) new ApiResponse([
-            'data' => $user->fresh(),
-        ]));
-        return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
+        return ApiResponses::generateSuccessResponse($response, [
+            "data" => Users::toJSON($user)
+        ]);
     }
 
     /**
@@ -193,13 +164,11 @@ class AuthController
         $token = trim($matches[1]);
 
         // Store the bearer token thereby invalidating it
-        $authToken = new AuthToken;
-        $authToken->user_id = $user->id;
-        $authToken->token = $token;
-        $authToken->save();
-
-        // Return an empty API response
-        $response->getBody()->write((string) new ApiResponse());
-        return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
+        try {
+            Users::addUserAuthToken($user->id, $token);
+            return ApiResponses::generateSuccessResponse($response);
+        } catch (\Exception $e) {
+            return ApiResponses::generateServerError($response, $e->getMessage());
+        }
     }
 }
