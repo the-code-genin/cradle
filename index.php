@@ -2,7 +2,7 @@
 
 use Dotenv\Dotenv;
 use Slim\Factory\AppFactory;
-use Illuminate\Database\Capsule\Manager as DB;
+use Pixie\Connection;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -28,18 +28,16 @@ switch (getenv('APP_ENVIRONMENT')) {
 date_default_timezone_set("UTC");
 
 // Connect to the database
-$db = new DB;
-$db->addConnection([
-	'driver'    => getenv('DB_DRIVER'),
-	'host'      => getenv('DB_HOST'),
-	'port'      => getenv('DB_PORT'),
-	'database'  => getenv('DB_NAME'),
-	'username'  => getenv('DB_USERNAME'),
-	'password'  => getenv('DB_PASSWORD'),
-]);
-
-$db->setAsGlobal();
-$db->bootEloquent();
+new Connection(
+	"mysql", 
+	[
+		"driver" => getenv('DB_DRIVER'),
+		"host" => sprintf("%s:%s", getenv('DB_HOST'), getenv('DB_PORT')),
+		"database" => getenv('DB_NAME'),
+		"username" => getenv('DB_USERNAME'),
+		"password" => getenv('DB_PASSWORD'),
+	]
+);
 
 // Create slim app from container
 $app = AppFactory::create();
