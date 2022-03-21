@@ -50,7 +50,7 @@ class ApiResponses
         return ApiResponses::generateApplicationError($response, 500, "ServerError", $message);
     }
 
-    public static function generateSuccessResponse(Response $response, $payload, int $code = 200)
+    public static function generateSuccessResponse(Response $response, $payload = [], int $code = 200)
     {
         $data = json_encode([
             'success' => true,
