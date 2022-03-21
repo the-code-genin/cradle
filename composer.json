@@ -1,6 +1,6 @@
 {
     "name": "the-code-genin/cradle",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "description": "A PHP MVC API boiler plate built on Slim and open source components.",
     "type": "project",
     "license": "MIT",
@@ -9,14 +9,12 @@
         "twig/twig": "^2.11",
         "vlucas/phpdotenv": "^4.1",
         "slim/slim": "4.*",
-        "illuminate/database": "^6.15",
-        "illuminate/pagination": "^6.15",
+        "usmanhalalit/pixie": "2.*@dev",
         "phpmailer/phpmailer": "~6.1",
         "nesbot/carbon": "^2.30",
         "robmorgan/phinx": "^0.11.4",
         "vlucas/valitron": "^1.4",
         "guzzlehttp/guzzle": "^6.5",
-        "doctrine/dbal": "^2.10",
         "nyholm/psr7": "^1.2",
         "nyholm/psr7-server": "^0.4.1",
         "lcobucci/jwt": "^4.1"
