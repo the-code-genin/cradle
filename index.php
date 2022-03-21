@@ -28,7 +28,7 @@ switch (getenv('APP_ENVIRONMENT')) {
 date_default_timezone_set("UTC");
 
 // Connect to the database
-new Connection(
+$dbConn = new Connection(
 	"mysql", 
 	[
 		"driver" => getenv('DB_DRIVER'),
@@ -38,6 +38,8 @@ new Connection(
 		"password" => getenv('DB_PASSWORD'),
 	]
 );
+$qb = $dbConn->getQueryBuilder();
+$GLOBALS["query_builder"] = $qb;
 
 // Create slim app from container
 $app = AppFactory::create();

@@ -3,16 +3,25 @@
 namespace Database\Repositories;
 
 use Database\Entities\User;
-use Pixie\QueryBuilder\QueryBuilderHandler as QB;
+use Pixie\QueryBuilder\QueryBuilderHandler;
 
 class Users
 {
+    /**
+     * @return QueryBuilderHandler
+     */
+    private static function getQueryBuilder()
+    {
+        return $GLOBALS["query_builder"];
+    }
+
     /**
      * @return User|null
      */
     public static function getUserById(int $id)
     {
-        return QB::table("users")
+        return Users::getQueryBuilder()
+            ->table("users")
             ->where("id", $id)
             ->asObject(User::class)
             ->first();
@@ -22,7 +31,8 @@ class Users
      */
     public static function getUserByEmail(string $email)
     {
-        return QB::table("users")
+        return Users::getQueryBuilder()
+            ->table("users")
             ->where("email", $email)
             ->asObject(User::class)
             ->first();
@@ -33,7 +43,8 @@ class Users
      */
     public static function getUsersWithEmailCount(string $email)
     {
-        return QB::table("users")
+        return Users::getQueryBuilder()
+            ->table("users")
             ->where("email", $email)
             ->count();
     }
@@ -43,7 +54,8 @@ class Users
      */
     public static function checkUserHasAuthToken(int $userId, string $token)
     {
-        return QB::table("user_auth_tokens")
+        return Users::getQueryBuilder()
+            ->table("user_auth_tokens")
             ->where("user_id", $userId)
             ->where("token", $token)
             ->count() != 0;
@@ -58,7 +70,8 @@ class Users
             throw new \Exception("User already has this auth token.");
         }
 
-        QB::table("user_auth_tokens")
+        Users::getQueryBuilder()
+            ->table("user_auth_tokens")
             ->insert([
                 "user_id" => $userId,
                 "token" => $token
@@ -69,8 +82,9 @@ class Users
      * @return User
      */
     public static function insert(User $user) {
-        $insertId = QB::table("users")
-            ->insert($user);
+        $insertId = Users::getQueryBuilder()
+            ->table("users")
+            ->insert((array) $user);
         return Users::getUserById($insertId);
     }
 
@@ -78,9 +92,10 @@ class Users
      * @return User
      */
     public static function updateById(int $userId, User $user) {
-        QB::table("users")
+        Users::getQueryBuilder()
+            ->table("users")
             ->where("id", $userId)
-            ->update($user);
+            ->update((array) $user);
         return Users::getUserById($userId);
     }
 
