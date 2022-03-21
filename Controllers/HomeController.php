@@ -13,7 +13,6 @@ class HomeController
      */
     public static function index(Request $request, Response $response, array $args)
     {
-        $response->getBody()->write(ViewRenderer::render('home.twig'));
-        return $response;
+        return ViewRenderer::generateViewResponse($response, "home.twig");
     }
 }
