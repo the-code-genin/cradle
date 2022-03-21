@@ -5,7 +5,7 @@
     "type": "project",
     "license": "MIT",
     "require": {
-    	"php": "^7.2",
+        "php": "^7.2",
         "twig/twig": "^2.11",
         "vlucas/phpdotenv": "^4.1",
         "slim/slim": "4.*",
@@ -20,11 +20,11 @@
         "lcobucci/jwt": "^4.1"
     },
     "autoload": {
-    	"psr-4": {
-    		"Controllers\\": "Controllers/",
-    		"Middleware\\": "Middleware/",
-    		"Models\\": "Models/",
-    		"Lib\\": "Lib/"
+        "psr-4": {
+            "Controllers\\": "Controllers/",
+            "Database\\": "Database/",
+            "Lib\\": "Lib/",
+            "Middleware\\": "Middleware/"
         }
     },
     "scripts": {
