@@ -1,25 +1,28 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Capsule\Manager as DB;
 
 class CreateAuthTokensTable extends AbstractMigration
 {
     public function up()
     {
-        DB::schema()->create('auth_tokens', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('user_id');
-            $table->string('token');
-            $table->timestamps();
+        $this->table("user_auth_tokens")
+            ->addColumn("user_id", "biginteger", ["signed" => false])
+            ->addColumn("token", "string")
+            ->addColumn("created_at", "timestamp", ["default" => "CURRENT_TIMESTAMP"])
+            ->addColumn("updated_at", "timestamp", ["default" => "CURRENT_TIMESTAMP"])
+            ->create();
 
-            $table->foreign('user_id')->references('id')->on('users');
-        });
+        $this->table("user_auth_tokens")
+            ->addIndex(["user_id"], ["name" => "USER_AUTH_TOKENS"])
+            ->addIndex(["created_at"], ["name" => "USER_AUTH_TOKENS_CREATED_AT"])
+            ->addIndex(["updated_at"], ["name" => "USER_AUTH_TOKENS_UPDATED_AT"])
+            ->save();
     }
 
     public function down()
     {
-        DB::schema()->drop('auth_tokens');
+        $this->table("auth_tokens")
+            ->drop();
     }
 }

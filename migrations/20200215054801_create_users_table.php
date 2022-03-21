@@ -1,25 +1,30 @@
 <?php
 
 use Phinx\Migration\AbstractMigration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Capsule\Manager as DB;
 
 class CreateUsersTable extends AbstractMigration
 {
     public function up()
     {
-        DB::schema()->create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('email');
-            $table->string('password');
-            $table->enum('status', ['active', 'banned'])->default('active');
-            $table->timestamps();
-        });
+        $this->table("users")
+            ->addColumn("name", "string")
+            ->addColumn("email", "string")
+            ->addColumn("password", "string")
+            ->addColumn("status", "enum", ["values" => ["active", "banned"], "default" => "active"])
+            ->addColumn("created_at", "timestamp", ["default" => "CURRENT_TIMESTAMP"])
+            ->addColumn("updated_at", "timestamp", ["default" => "CURRENT_TIMESTAMP"])
+            ->create();
+
+        $this->table("users")
+            ->addIndex(["email"], ["unique" => true, "name" => "USERS_EMAIL"])
+            ->addIndex(["created_at"], ["name" => "USERS_CREATED_AT"])
+            ->addIndex(["updated_at"], ["name" => "USERS_UPDATED_AT"])
+            ->save();
     }
 
     public function down()
     {
-        DB::schema()->drop('users');
+        $this->table("users")
+            ->drop();
     }
 }
