@@ -20,9 +20,9 @@ class SearchPayloadGenerator
         $queries = (object) $request->getQueryParams();
         $payload = [];
 
-        if (!empty($queries->page) || !empty($queries->per_page)) { // If pagination is to be applied.
-            $page = !empty($queries->page) ? $queries->page : 1;
-            $perPage = !empty($queries->per_page) ? $queries->per_page : 10;
+        if (is_int($queries->page) || is_int($queries->per_page)) { // If pagination is to be applied.
+            $page = is_int($queries->page) ? $queries->page : 1;
+            $perPage = is_int($queries->per_page) ? $queries->per_page : 10;
 
             /** @var Paginator */
             $results = $results->paginate($perPage, ['*'], 'results', $page);
