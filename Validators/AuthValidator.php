@@ -15,8 +15,12 @@ class AuthValidator {
         $v->rule('email', ['email']);
         $v->rule('lengthMin', ['password'], 6);
 
-        if (!$v->validate()) return array_shift($v->errors())[0];
-        else return null;
+        if (!$v->validate()) {
+            $errors = $v->errors();
+            return array_shift($errors)[0];
+        }
+
+        return null;
     }
 
     /**
@@ -28,8 +32,12 @@ class AuthValidator {
         $v->rule('required', ['email', 'password']);
         $v->rule('email', ['email']);
 
-        if (!$v->validate()) return array_shift($v->errors())[0];
-        else return null;
+        if (!$v->validate()) {
+            $errors = $v->errors();
+            return array_shift($errors)[0];
+        }
+
+        return null;
     }
 
     /**
@@ -40,7 +48,11 @@ class AuthValidator {
         $v = new Validator((array) $data);
         $v->rule('lengthMin', ['password'], 6);
 
-        if (!$v->validate()) return array_shift($v->errors())[0];
-        else return null;
+        if (!$v->validate()) {
+            $errors = $v->errors();
+            return array_shift($errors)[0];
+        }
+
+        return null;
     }
 }
