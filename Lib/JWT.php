@@ -45,7 +45,7 @@ class JWT
      * Verify an access token and return the user id
      *
      * @param string $token
-     * @return integer
+     * @return Plain
      */
     public static function parseAccessToken(string $token): Plain
     {
