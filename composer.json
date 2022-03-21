@@ -24,7 +24,8 @@
             "Controllers\\": "Controllers/",
             "Database\\": "Database/",
             "Lib\\": "Lib/",
-            "Middleware\\": "Middleware/"
+            "Middleware\\": "Middleware/",
+            "Validators\\": "Validators/"
         }
     },
     "scripts": {
