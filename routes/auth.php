@@ -12,7 +12,7 @@ use Slim\Routing\RouteCollectorProxy;
  * @var App $app
  */
 
-$app->group('/api/v1/auth', function (RouteCollectorProxy $group) {
+$app->group('/api/auth', function (RouteCollectorProxy $group) {
     $group->post('/signup', AuthController::class.':signup');
     $group->post('/login', AuthController::class.':login');
     $group->get('/me', AuthController::class.':getMe')->addMiddleware(new UserAuthMiddleware);
